@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Які документи потрібні для закордонного паспорта</title>
+<style>
+/* ------------------------------------------------------------------
+   Гарнітура e-Ukraine (дизайн-система «Дія»).
+   Покладіть файли поруч із цим HTML і розкоментуйте блок — форма
+   набуде типографіки державної дизайн-системи. Без них працює на
+   системному стеку, підібраному під ту саму пластику.
+   Джерело: thedigital.gov.ua/fonts
+
+@font-face{font-family:"e-Ukraine";src:url("e-Ukraine-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"e-Ukraine";src:url("e-Ukraine-Medium.woff2")  format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"e-Ukraine";src:url("e-Ukraine-Bold.woff2")    format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"e-Ukraine Head";src:url("e-UkraineHead-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+------------------------------------------------------------------- */
+
+:root{
+  /* Палітра без опори на колір: усі стани розрізняються світлістю,
+     товщиною межі та підписом. Читається у відтінках сірого. */
+  --ink:#0d0e10;
+  --ink-2:#4f555d;
+  --line:#dcdfe4;
+  --line-2:#a9b0b9;
+  --page:#f2f3f5;
+  --paper:#ffffff;
+  --focus:#1a3fc4;
+  --pick:#eef1fb;
+  --link:#0b57d0;
+  --soft:#f5f6f8;
+  --r:16px;
+  --r-sm:12px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;padding:28px 16px 80px;background:var(--page);color:var(--ink);
+  font-family:"e-Ukraine",-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:18px;line-height:1.55;font-weight:400;
+}
+.wrap{max-width:800px;margin:0 auto}
+
+h1{
+  font-family:"e-Ukraine Head","e-Ukraine",inherit;
+  font-size:clamp(30px,5.4vw,44px);line-height:1.12;letter-spacing:-.022em;
+  font-weight:700;margin:0 0 14px;
+}
+.lede{margin:0 0 26px;font-size:19px;line-height:1.5;color:var(--ink-2);max-width:56ch}
+
+.panel{background:var(--paper);border-radius:var(--r);padding:24px 20px}
+@media(min-width:640px){.panel{padding:38px 44px}}
+
+.stage{margin-top:38px;padding-top:32px;border-top:1px solid var(--line)}
+.stage:first-child{margin-top:0;padding-top:0;border-top:0}
+.stage-name{
+  display:flex;align-items:center;gap:12px;margin:0 0 26px;
+  font-size:15px;font-weight:500;letter-spacing:.02em;color:var(--ink-2);
+}
+.stage-num{
+  flex:none;width:30px;height:30px;border-radius:50%;
+  background:var(--ink);color:#fff;font-size:15px;font-weight:500;
+  display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;
+}
+
+fieldset{border:0;margin:0 0 34px;padding:0}
+fieldset:last-child{margin-bottom:0}
+legend{padding:0;font-size:21px;line-height:1.35;font-weight:500;letter-spacing:-.01em;margin-bottom:6px}
+.help{margin:0 0 14px;font-size:17px;line-height:1.5;color:var(--ink-2);max-width:60ch}
+.basis{margin:12px 0 0;font-size:15px;color:var(--ink-2)}
+
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{
+  display:flex;gap:14px;align-items:flex-start;
+  border:2px solid var(--line);border-radius:var(--r-sm);
+  padding:16px 18px;cursor:pointer;background:var(--paper);font-size:18px;line-height:1.45;
+}
+.opt:hover{border-color:var(--line-2)}
+.opt input{flex:none;margin:2px 0 0;width:22px;height:22px;accent-color:var(--ink)}
+.opt:has(input:checked){border-color:var(--ink);background:var(--pick)}
+.opt:has(input:checked) span{font-weight:500}
+.opt:focus-within{outline:3px solid var(--focus);outline-offset:2px}
+
+.num-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.num-input{
+  font:inherit;font-size:26px;font-weight:500;width:150px;padding:14px 18px;
+  border:2px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper);color:inherit;
+  font-variant-numeric:tabular-nums;text-align:center;
+}
+.num-input:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-color:var(--ink)}
+.num-input.bad{border-color:var(--ink);background:#f7f7f8}
+.suffix{font-size:18px;color:var(--ink-2)}
+a{color:var(--link);text-decoration:underline;text-underline-offset:2px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+select.country{
+  font:inherit;font-size:18px;padding:16px 18px;width:100%;max-width:520px;
+  border:2px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper);color:inherit;
+}
+select.country:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-color:var(--ink)}
+.print-only{display:none}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}
+.tile{position:relative}
+.tile input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+.tile span{
+  display:flex;align-items:center;justify-content:center;
+  min-width:76px;height:72px;padding:0 16px;
+  border:2px solid var(--line);border-radius:var(--r-sm);background:var(--paper);
+  font-size:26px;font-weight:500;font-variant-numeric:tabular-nums;cursor:pointer;
+}
+.tile span:hover{border-color:var(--line-2)}
+.tile input:checked + span{border-color:var(--ink);background:var(--ink);color:#fff}
+.tile input:focus-visible + span{outline:3px solid var(--focus);outline-offset:2px}
+.legal-basis{
+  background:var(--paper);border-radius:var(--r);padding:20px 22px;margin:0 0 22px;font-size:17px;
+}
+.legal-basis p{margin:0 0 8px;font-weight:500}
+.legal-basis ul{margin:0;padding-left:20px}
+.legal-basis li{margin-bottom:4px;color:var(--ink-2)}
+.field-error{margin:12px 0 0;font-size:17px;font-weight:500;
+  border-left:4px solid var(--ink);padding-left:12px}
+
+.actions{margin-top:36px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+button{
+  font:inherit;font-size:18px;font-weight:500;padding:16px 30px;
+  border-radius:100px;border:2px solid transparent;cursor:pointer;
+}
+button:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover:not(:disabled){background:#2a2d32}
+.btn-primary:disabled{background:var(--line);color:#7c838c;cursor:not-allowed}
+.btn-quiet{background:var(--paper);color:var(--ink);border-color:var(--line-2)}
+.btn-quiet:hover{background:var(--page)}
+.pending{margin:0;font-size:17px;color:var(--ink-2)}
+
+h2{font-family:"e-Ukraine Head","e-Ukraine",inherit;
+   font-size:clamp(24px,4vw,32px);line-height:1.2;letter-spacing:-.018em;font-weight:700;margin:0 0 26px}
+.sect{margin-top:38px}
+.sect:first-child{margin-top:0}
+.sect-head{
+  font-size:14px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-2);margin:0 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line);
+}
+
+ul.docs{list-style:none;margin:0;padding:0}
+ul.docs li{
+  border-left:4px solid var(--ink);
+  padding:2px 0 2px 20px;margin-bottom:26px;
+}
+ul.docs li:last-child{margin-bottom:0}
+ul.docs li.opt-doc{border-left-style:dotted;border-left-color:var(--line-2)}
+.doc-title{font-size:19px;font-weight:600;line-height:1.4;letter-spacing:-.005em}
+.doc-note{margin:7px 0 0;font-size:17px;line-height:1.55;color:var(--ink-2);max-width:60ch}
+ul.sub{margin:8px 0 0;padding:0;list-style:none;max-width:60ch}
+ul.sub li{border:0;padding:0 0 0 16px;margin:0 0 7px;position:relative;
+  font-size:17px;line-height:1.5;color:var(--ink-2)}
+ul.sub li::before{content:"—";position:absolute;left:0;color:var(--line-2)}
+.toggle-basis{background:none;border:0;padding:0;margin:26px 0 0;
+  font-size:16px;font-weight:400;color:var(--link);text-decoration:underline;
+  text-underline-offset:2px;cursor:pointer}
+body:not(.show-basis) .basis{display:none}
+
+.card{border-radius:var(--r);padding:22px 24px;margin-bottom:14px}
+.card h3{margin:0 0 8px;font-size:19px;font-weight:500;line-height:1.35}
+.card p{margin:0;font-size:17px;line-height:1.5;max-width:60ch}
+.card .basis{margin-top:12px}
+.card--stop{background:var(--paper);border:3px solid var(--ink)}
+.card--note{background:var(--soft);border:1px solid var(--line)}
+
+.label-strip{font-size:14px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  margin:0 0 10px;color:var(--ink-2)}
+.card--stop .label-strip{color:var(--ink)}
+
+table.facts{border-collapse:collapse;width:100%;font-size:18px}
+table.facts th,table.facts td{text-align:left;padding:16px 0;border-top:1px solid var(--line);vertical-align:top}
+table.facts tr:first-child th,table.facts tr:first-child td{border-top:0;padding-top:0}
+table.facts th{font-weight:400;color:var(--ink-2);width:42%;padding-right:20px}
+.sum{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+
+.footnote{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:15px}
+[hidden]{display:none !important}
+
+@media print{
+  body{background:#fff;padding:0;font-size:12pt}
+  .noprint{display:none !important}
+  .panel{padding:0}
+  .card{break-inside:avoid;border:1px solid #000}
+  .print-only{display:block;margin-top:14px;font-size:11pt}
+  .card--stop{border-width:3px}
+  ul.docs li{break-inside:avoid;border-left-color:#000}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Які документи потрібні для закордонного паспорта</h1>
+  <p class="lede">Відповіді залишаються у вашому браузері й нікуди не передаються. Наприкінці ви отримаєте перелік, який можна роздрукувати та взяти з собою.</p>
+
+  <div class="legal-basis" id="legal-basis"></div>
+
+  <main class="panel">
+    <form id="survey" novalidate>
+      <div id="stages"></div>
+      <div class="actions noprint">
+        <button type="button" id="go" class="btn-primary">Показати перелік документів</button>
+        <p class="pending" id="pending" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+
+    <section id="results" hidden aria-live="polite">
+      <div id="results-body"></div>
+      <button type="button" class="toggle-basis noprint" id="toggle-basis"
+              aria-pressed="false">Показати правові підстави</button>
+
+      <div class="actions noprint">
+        <button type="button" id="again" class="btn-quiet">Заповнити заново</button>
+        <button type="button" id="print" class="btn-quiet">Роздрукувати результати</button>
+        <a id="equeue" class="btn-primary" style="text-decoration:none;display:inline-block"
+           target="_blank" rel="noopener noreferrer">Перейти до реєстрації в е-Черзі</a>
+      </div>
+      <p class="footnote" id="stamp"></p>
+    </section>
+  </main>
+</div>
+
+<script type="application/json" id="rules">{
+  "meta": {
+    "version": "5.0",
+    "scope": "Оформлення паспорта громадянина України для виїзду за кордон у закордонній дипломатичній установі",
+    "sources": {
+      "Закон": "ЗУ № 5492-VI від 20.11.2012, ред. від 14.06.2025",
+      "Порядок": "затв. ПКМУ № 152 від 07.05.2014, ред. від 01.01.2026 (ПКМУ № 1709 від 24.12.2025)"
+    },
+    "note": "ПКМУ № 152 містить три додатки з власною нумерацією. Усі посилання — на Порядок.",
+    "legal_links": [
+      {
+        "label": "Закон № 5492-VI «Про Єдиний державний демографічний реєстр…»",
+        "url": "https://zakon.rada.gov.ua/laws/show/5492-17#Text"
+      },
+      {
+        "label": "Порядок, затв. ПКМУ № 152 (із змінами за ПКМУ № 1709)",
+        "url": "https://zakon.rada.gov.ua/laws/show/152-2014-%D0%BF#Text"
+      },
+      {
+        "label": "Наказ МВС № 875 — вимоги до фотокарток",
+        "url": "https://zakon.rada.gov.ua/laws/show/z1146-19#Text"
+      }
+    ],
+    "open_questions": [
+      "Звільнені з полону: Закон ст.20 ч.4 знімає «адміністративний (консульський) збір» — 0 € чи 37 €?"
+    ]
+  },
+  "facts": [
+    {
+      "id": "age",
+      "type": "number",
+      "min": 0,
+      "max": 120,
+      "default": null
+    },
+    {
+      "id": "incapacitated",
+      "type": "enum",
+      "values": [
+        "no",
+        "yes"
+      ],
+      "default": "no"
+    },
+    {
+      "id": "filer",
+      "type": "enum",
+      "values": [
+        "self",
+        "parent",
+        "other_rep"
+      ],
+      "default": "self"
+    },
+    {
+      "id": "purpose",
+      "type": "enum",
+      "values": [
+        "first",
+        "exchange",
+        "lost"
+      ],
+      "default": null
+    },
+    {
+      "id": "exchange_ground",
+      "type": "enum",
+      "values": [
+        "expired",
+        "unusable",
+        "info_change",
+        "error"
+      ],
+      "default": null
+    },
+    {
+      "id": "passports_valid",
+      "type": "enum",
+      "values": [
+        "0",
+        "1",
+        "2"
+      ],
+      "default": null
+    },
+    {
+      "id": "passports_expired",
+      "type": "enum",
+      "values": [
+        "0",
+        "1",
+        "2",
+        "2+"
+      ],
+      "default": null
+    },
+    {
+      "id": "had_prior_doc",
+      "type": "enum",
+      "values": [
+        "yes",
+        "no"
+      ],
+      "default": null
+    },
+    {
+      "id": "both_parents_ua",
+      "type": "enum",
+      "values": [
+        "yes",
+        "no"
+      ],
+      "default": "yes"
+    },
+    {
+      "id": "orphan",
+      "type": "enum",
+      "values": [
+        "no",
+        "yes"
+      ],
+      "default": "no"
+    },
+    {
+      "id": "sex",
+      "type": "enum",
+      "values": [
+        "F",
+        "M"
+      ],
+      "default": "F"
+    },
+    {
+      "id": "attend",
+      "type": "enum",
+      "values": [
+        "yes",
+        "no_mobility",
+        "no_treatment"
+      ],
+      "default": "yes"
+    },
+    {
+      "id": "fee_exemption",
+      "type": "enum",
+      "values": [
+        "none",
+        "chornobyl",
+        "disability_1_2",
+        "child_disability",
+        "orphan_care",
+        "pow"
+      ],
+      "default": "none"
+    },
+    {
+      "id": "foreign_docs",
+      "type": "enum",
+      "values": [
+        "no",
+        "yes"
+      ],
+      "default": "no"
+    },
+    {
+      "id": "foreign_country",
+      "type": "enum",
+      "values": "<countries.json + OTHER>",
+      "default": null
+    },
+    {
+      "id": "legalization_regime",
+      "type": "enum",
+      "values": [
+        "exempt",
+        "apostille",
+        "legalization",
+        "unknown"
+      ],
+      "derived": "пошук foreign_country у countries.json",
+      "default": null
+    }
+  ],
+  "questions": [
+    {
+      "id": "age",
+      "stage": 1,
+      "type": "number",
+      "min": 0,
+      "max": 120,
+      "label": "Скільки повних років особі, на яку оформлюється паспорт?",
+      "help": "Станом на день подання документів. Для немовляти вкажіть 0.",
+      "suffix": "повних років",
+      "when": true
+    },
+    {
+      "id": "incapacitated",
+      "stage": 1,
+      "type": "choice",
+      "label": "Чи визнана ця особа судом недієздатною або обмежено дієздатною?",
+      "options": [
+        {
+          "v": "no",
+          "l": "Ні"
+        },
+        {
+          "v": "yes",
+          "l": "Так"
+        }
+      ],
+      "when": {
+        "fact": "age",
+        "op": "gte",
+        "value": 14
+      },
+      "basis": "Порядок п.7 пп.1–2"
+    },
+    {
+      "id": "filer",
+      "stage": 1,
+      "type": "choice",
+      "label": "Хто подає заяву-анкету?",
+      "options": [
+        {
+          "v": "parent",
+          "l": "Один із батьків (усиновлювачів)"
+        },
+        {
+          "v": "other_rep",
+          "l": "Інший законний представник — опікун, піклувальник"
+        }
+      ],
+      "when": {
+        "any": [
+          {
+            "fact": "age",
+            "op": "lt",
+            "value": 14
+          },
+          {
+            "fact": "incapacitated",
+            "op": "eq",
+            "value": "yes"
+          }
+        ]
+      },
+      "basis": "Порядок п.7 пп.2"
+    },
+    {
+      "id": "purpose",
+      "stage": 2,
+      "type": "choice",
+      "label": "Мета звернення",
+      "options": [
+        {
+          "v": "first",
+          "l": "Перше оформлення"
+        },
+        {
+          "v": "exchange",
+          "l": "Обмін наявного паспорта"
+        },
+        {
+          "v": "lost",
+          "l": "Замість втраченого або викраденого"
+        }
+      ],
+      "when": true
+    },
+    {
+      "id": "exchange_ground",
+      "stage": 2,
+      "type": "choice",
+      "label": "Підстава обміну",
+      "options": [
+        {
+          "v": "expired",
+          "l": "Закінчився строк дії (або закінчиться невдовзі)"
+        },
+        {
+          "v": "unusable",
+          "l": "Паспорт непридатний для використання / закінчилися сторінки"
+        },
+        {
+          "v": "info_change",
+          "l": "Змінилася внесена до паспорта інформація (у т. ч. прізвище або ім'я)"
+        },
+        {
+          "v": "error",
+          "l": "У паспорті виявлено помилку"
+        }
+      ],
+      "options_order": "За частотою звернень. Не сортувати за абеткою — порядок несе сенс.",
+      "when": {
+        "fact": "purpose",
+        "op": "eq",
+        "value": "exchange"
+      },
+      "basis": "Порядок п.6 — перелік вичерпний"
+    },
+    {
+      "id": "passports_valid",
+      "stage": 3,
+      "type": "tiles",
+      "label": "Скільки дійсних закордонних паспортів зараз на руках?",
+      "help": "Враховуйте лише ті, що не були анульовані — без проколів чи отворів у машинній зоні.",
+      "options": [
+        {
+          "v": "0",
+          "l": "0"
+        },
+        {
+          "v": "1",
+          "l": "1"
+        },
+        {
+          "v": "2",
+          "l": "2"
+        }
+      ],
+      "when": true
+    },
+    {
+      "id": "passports_expired",
+      "stage": 3,
+      "type": "tiles",
+      "label": "Скільки паспортів зі спливлим строком дії на руках?",
+      "help": "Враховуйте лише ті, що не були анульовані раніше (без проколів).",
+      "options": [
+        {
+          "v": "0",
+          "l": "0"
+        },
+        {
+          "v": "1",
+          "l": "1"
+        },
+        {
+          "v": "2",
+          "l": "2"
+        },
+        {
+          "v": "2+",
+          "l": "2+"
+        }
+      ],
+      "when": true
+    },
+    {
+      "id": "had_prior_doc",
+      "stage": 4,
+      "type": "choice",
+      "label": "Чи оформлювався раніше на цю особу будь-який документ, що посвідчує особу та підтверджує громадянство України?",
+      "help": "Паспорт громадянина України, попередній закордонний паспорт, посвідчення особи на повернення в Україну.",
+      "options": [
+        {
+          "v": "yes",
+          "l": "Так"
+        },
+        {
+          "v": "no",
+          "l": "Ні, жодного"
+        }
+      ],
+      "when": {
+        "fact": "purpose",
+        "op": "eq",
+        "value": "first"
+      }
+    },
+    {
+      "id": "both_parents_ua",
+      "stage": 4,
+      "type": "choice",
+      "label": "Чи обоє батьків були громадянами України на момент народження цієї особи?",
+      "options": [
+        {
+          "v": "yes",
+          "l": "Так, обоє"
+        },
+        {
+          "v": "no",
+          "l": "Ні — один або обидва не були"
+        }
+      ],
+      "when": {
+        "all": [
+          {
+            "fact": "purpose",
+            "op": "eq",
+            "value": "first"
+          },
+          {
+            "fact": "had_prior_doc",
+            "op": "eq",
+            "value": "no"
+          }
+        ]
+      },
+      "basis": "Порядок п.52 пп.1 абз.2"
+    },
+    {
+      "id": "orphan",
+      "stage": 4,
+      "type": "choice",
+      "label": "Чи є дитина сиротою або позбавленою батьківського піклування?",
+      "options": [
+        {
+          "v": "no",
+          "l": "Ні"
+        },
+        {
+          "v": "yes",
+          "l": "Так"
+        }
+      ],
+      "when": {
+        "fact": "age",
+        "op": "lt",
+        "value": 14
+      },
+      "basis": "Порядок п.56"
+    },
+    {
+      "id": "sex",
+      "stage": 4,
+      "type": "choice",
+      "label": "Стать",
+      "options": [
+        {
+          "v": "F",
+          "l": "Жіноча"
+        },
+        {
+          "v": "M",
+          "l": "Чоловіча"
+        }
+      ],
+      "when": {
+        "all": [
+          {
+            "fact": "age",
+            "op": "gte",
+            "value": 18
+          },
+          {
+            "fact": "age",
+            "op": "lt",
+            "value": 60
+          }
+        ]
+      },
+      "basis": "Порядок п.78-2"
+    },
+    {
+      "id": "attend",
+      "stage": 4,
+      "type": "choice",
+      "label": "Чи може особа, на яку оформлюється паспорт, особисто прибути до установи?",
+      "help": "Присутність осіб від 12 років обов'язкова для сканування відбитків пальців і фотографування.",
+      "options": [
+        {
+          "v": "yes",
+          "l": "Так"
+        },
+        {
+          "v": "no_mobility",
+          "l": "Ні — не може самостійно пересуватися через порушення функцій організму"
+        },
+        {
+          "v": "no_treatment",
+          "l": "Ні — направлення на лікування за кордон із сил оборони чи безпеки"
+        }
+      ],
+      "when": {
+        "fact": "age",
+        "op": "gte",
+        "value": 12
+      },
+      "basis": "Порядок п.7 пп.3, п.52 пп.6, п.53"
+    },
+    {
+      "id": "fee_exemption",
+      "stage": 4,
+      "type": "choice",
+      "label": "Чи належить особа до пільгової категорії зі звільнення від консульського збору?",
+      "options": [
+        {
+          "v": "none",
+          "l": "Ні"
+        },
+        {
+          "v": "chornobyl",
+          "l": "Постраждала внаслідок Чорнобильської катастрофи, категорія 1 або 2"
+        },
+        {
+          "v": "disability_1_2",
+          "l": "Інвалідність I або II групи"
+        },
+        {
+          "v": "child_disability",
+          "l": "Дитина з інвалідністю"
+        },
+        {
+          "v": "orphan_care",
+          "l": "Дитина-сирота або особа з їх числа"
+        },
+        {
+          "v": "pow",
+          "l": "Звільнена з полону (протягом року після звільнення)"
+        }
+      ],
+      "when": {
+        "fact": "age",
+        "op": "gte",
+        "value": 16
+      },
+      "basis": "Закон ст.20 ч.4"
+    },
+    {
+      "id": "foreign_docs",
+      "stage": 4,
+      "type": "choice",
+      "label": "Чи виданий іноземним органом документ, який ви подаєте?",
+      "help": "Свідоцтво про народження або документ на підтвердження обставин обміну. Посвідки на проживання й довідки поліції це не стосується — вони від легалізації звільнені.",
+      "options": [
+        {
+          "v": "no",
+          "l": "Ні, документи українські"
+        },
+        {
+          "v": "yes",
+          "l": "Так"
+        }
+      ],
+      "when": {
+        "any": [
+          {
+            "fact": "age",
+            "op": "lt",
+            "value": 14
+          },
+          {
+            "all": [
+              {
+                "fact": "purpose",
+                "op": "eq",
+                "value": "exchange"
+              },
+              {
+                "fact": "exchange_ground",
+                "op": "in",
+                "value": [
+                  "info_change",
+                  "error"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "foreign_country",
+      "stage": 4,
+      "type": "country",
+      "label": "Яка держава видала цей документ?",
+      "help": "Якщо потрібної держави немає в списку, оберіть останній варіант.",
+      "when": {
+        "fact": "foreign_docs",
+        "op": "eq",
+        "value": "yes"
+      }
+    }
+  ],
+  "documents": [
+    {
+      "id": "B_vod",
+      "kind": "mandatory",
+      "order": 10,
+      "title": "Військово-обліковий документ",
+      "note": "Надішліть е-ВОД у форматі PDF на консульську електронну пошту перед візитом або принесіть роздруківку з QR-кодом. Документ формується в застосунку «Резерв+». Без наявного та дійсного військово-облікового документа паспорт не буде надіслано до установи й видано.",
+      "link": {
+        "label": "reserveplus.mod.gov.ua",
+        "url": "https://reserveplus.mod.gov.ua"
+      },
+      "when": {
+        "all": [
+          {
+            "fact": "sex",
+            "op": "eq",
+            "value": "M"
+          },
+          {
+            "fact": "age",
+            "op": "gte",
+            "value": 18
+          },
+          {
+            "fact": "age",
+            "op": "lt",
+            "value": 60
+          }
+        ]
+      },
+      "basis": "Вимога установи на етапі подання",
+      "temporary": {
+        "reason": "Порядок п.78-2 передбачає електронну перевірку через «Трембіту» без пред’явлення документа, але механізм ще не запущено. Після запуску подання документа скасується, а цей рядок підлягає видаленню.",
+        "review_when": "запуск електронної взаємодії ВІС МЗС із Реєстром призовників"
+      }
+    },
+    {
+      "id": "B15",
+      "kind": "mandatory",
+      "order": 20,
+      "title": "Наявні закордонні паспорти",
+      "note": "Візьміть із собою всі закордонні паспорти, які є на руках — і дійсні, і зі спливлим строком дії.",
+      "extras": [
+        {
+          "when": {
+            "fact": "purpose",
+            "op": "eq",
+            "value": "exchange"
+          },
+          "text": "Паспорт, що підлягає обміну. Після оформлення нового він повертається вам і залишається з вами до моменту отримання нового документа. Зазвичай здається під час отримання. Якщо в ньому є чинні візи або він є підставою для отримання чи продовження дозвільних документів на проживання, подайте заяву — і його повернуть анульованим, з проколом."
+        },
+        {
+          "when": {
+            "fact": "passports_expired",
+            "op": "ne",
+            "value": "0"
+          },
+          "text": "Паспорти зі спливлим строком дії. Вилучаються та знищуються або, за вашою заявою, анулюються та повертаються вам з проколом."
+        },
+        {
+          "when": {
+            "fact": "passports_valid",
+            "op": "eq",
+            "value": "2"
+          },
+          "text": "Два дійсних паспорти. Закон не дозволяє мати понад два, тож один із них здається вже під час подання документів. Його теж можна повернути анульованим за заявою."
+        }
+      ],
+      "when": {
+        "any": [
+          {
+            "fact": "purpose",
+            "op": "eq",
+            "value": "exchange"
+          },
+          {
+            "fact": "passports_valid",
+            "op": "in",
+            "value": [
+              "1",
+              "2"
+            ]
+          },
+          {
+            "fact": "passports_expired",
+            "op": "ne",
+            "value": "0"
+          }
+        ]
+      },
+      "basis": "Порядок п.22 абз.3; п.52 абз. після пп.6; п.55 пп.1, 3; Закон ст.22 ч.1 абз.2",
+      "anchor": "Водночас здаються всі наявні в особи паспорти"
+    },
+    {
+      "id": "B1",
+      "kind": "mandatory",
+      "order": 30,
+      "title": "Паспорт громадянина України або свідоцтво про народження",
+      "extras": [
+        {
+          "when": {
+            "fact": "purpose",
+            "op": "in",
+            "value": [
+              "first",
+              "lost"
+            ]
+          },
+          "text": "Основний документ, що посвідчує особу та підтверджує громадянство України."
+        },
+        {
+          "when": {
+            "fact": "purpose",
+            "op": "eq",
+            "value": "exchange"
+          },
+          "text": "Подається за наявності. Потрібен, якщо ви народилися в Україні і в закордонному паспорті зазначено лише область, без міста чи села: для заяви-анкети потрібен точний населений пункт. Якщо місцем народження зазначено іноземну державу, додаткових документів не потрібно. Якщо внутрішнього паспорта немає — підійде свідоцтво про народження."
+        }
+      ],
+      "when": {
+        "fact": "age",
+        "op": "gte",
+        "value": 14
+      },
+      "basis": "Порядок п.52 пп.1 абз.1",
+      "anchor": "для особи, яка досягла 14-річного віку"
+    },
+    {
+      "id": "B3",
+      "kind": "mandatory",
+      "order": 35,
+      "title": "Свідоцтво про народження",
+      "note": "Українське свідоцтво: оригінал або витяг з Державного реєстру актів цивільного стану.",
+      "extras": [
+        {
+          "when": {
+            "fact": "foreign_docs",
+            "op": "eq",
+            "value": "yes"
+          },
+          "text": "{regime}"
+        }
+      ],
+      "when": {
+        "fact": "age",
+        "op": "lt",
+        "value": 14
+      },
+      "basis": "Порядок п.52 пп.2; Закон ст.22 ч.5; Порядок п.15",
+      "anchor": "у разі оформлення паспорта для виїзду за кордон особі, яка не досягла 14-річного"
+    },
+    {
+      "id": "B2",
+      "kind": "mandatory",
+      "order": 40,
+      "title": "Довідка про реєстрацію особи громадянином України",
+      "note": "Потрібна, бо на момент народження не обоє батьків були громадянами України.",
+      "when": {
+        "all": [
+          {
+            "fact": "purpose",
+            "op": "eq",
+            "value": "first"
+          },
+          {
+            "fact": "had_prior_doc",
+            "op": "eq",
+            "value": "no"
+          },
+          {
+            "fact": "both_parents_ua",
+            "op": "eq",
+            "value": "no"
+          }
+        ]
+      },
+      "basis": "Порядок п.52 пп.1 абз.2 (ред. ПКМУ № 1220 від 28.10.2022)",
+      "anchor": "за винятком випадків, коли батьки особи на момент її народження були громадянами України"
+    },
+    {
+      "id": "B4",
+      "kind": "mandatory",
+      "order": 50,
+      "title": "Документ про постійне проживання або тимчасове перебування за кордоном",
+      "note": "Посвідка на проживання. За її відсутності — договір оренди житла, трудовий договір, довідка з роботи чи навчального закладу. Подається без легалізації та без перекладу.",
+      "when": true,
+      "basis": "Закон ст.22 ч.11 пп.1; Порядок п.52 пп.3; звільнення — п.15 абз.2",
+      "anchor": "без їх засвідчення у встановленому порядку та перекладу"
+    },
+    {
+      "id": "B5",
+      "kind": "mandatory",
+      "order": 60,
+      "title": "Паспортні документи законного представника",
+      "note": "Заяву подає один із батьків або законний представник — зі своїм паспортом.",
+      "extras": [
+        {
+          "when": {
+            "all": [
+              {
+                "fact": "purpose",
+                "op": "eq",
+                "value": "first"
+              },
+              {
+                "fact": "had_prior_doc",
+                "op": "eq",
+                "value": "no"
+              },
+              {
+                "fact": "both_parents_ua",
+                "op": "eq",
+                "value": "yes"
+              },
+              {
+                "fact": "age",
+                "op": "lt",
+                "value": 14
+              }
+            ]
+          },
+          "text": "Подаються паспорти обох батьків. Вони підтверджують, що на момент народження дитини обоє перебували в громадянстві України — у такому разі окрема довідка про громадянство не потрібна."
+        }
+      ],
+      "when": {
+        "fact": "filer",
+        "op": "ne",
+        "value": "self"
+      },
+      "basis": "Порядок п.52 пп.4; п.52 пп.1 абз.2",
+      "anchor": "документ, що посвідчує особу законного представника"
+    },
+    {
+      "id": "B6",
+      "kind": "mandatory",
+      "order": 65,
+      "title": "Документ, що підтверджує повноваження законного представника",
+      "note": "Для батьків не потрібен — спорідненість підтверджується свідоцтвом про народження.",
+      "when": {
+        "fact": "filer",
+        "op": "eq",
+        "value": "other_rep"
+      },
+      "basis": "Порядок п.52 пп.4",
+      "anchor": "крім випадків, коли законним представником є один із батьків"
+    },
+    {
+      "id": "B10",
+      "kind": "mandatory",
+      "order": 70,
+      "title": "Одна кольорова фотокартка розміром 10×15 см",
+      "note": "Вимоги до фото: біле однорідне тло без тіней і сторонніх предметів, обличчя займає 70–80 % кадру, погляд прямо в кадр, очі розплющені, рот закритий, друк на якісному фотопапері без ретуші та згинів.",
+      "extras": [
+        {
+          "when": {
+            "fact": "age",
+            "op": "lt",
+            "value": 12
+          },
+          "text": "Для дітей до 12 років особиста присутність не потрібна — документи подає один із батьків із фотокарткою."
+        }
+      ],
+      "link": {
+        "label": "Наказ МВС № 875",
+        "url": "https://zakon.rada.gov.ua/laws/show/z1146-19#Text"
+      },
+      "when": {
+        "any": [
+          {
+            "fact": "age",
+            "op": "lt",
+            "value": 12
+          },
+          {
+            "fact": "attend",
+            "op": "in",
+            "value": [
+              "no_mobility",
+              "no_treatment"
+            ]
+          }
+        ]
+      },
+      "basis": "Порядок п.52 пп.6 (ред. ПКМУ № 1709); Наказ МВС № 875 від 18.10.2019",
+      "anchor": "одну кольорову фотокартку розміром 10-15 сантиметрів"
+    },
+    {
+      "id": "B13",
+      "kind": "mandatory",
+      "order": 75,
+      "title": "Втрачений паспорт або його копія",
+      "note": "Якщо копії немає — інформація про раніше оформлені документи.",
+      "when": {
+        "fact": "purpose",
+        "op": "eq",
+        "value": "lost"
+      },
+      "basis": "Порядок п.54 пп.1",
+      "anchor": "за відсутності - його копію (у разі наявності)"
+    },
+    {
+      "id": "B14",
+      "kind": "mandatory",
+      "order": 76,
+      "title": "Довідка компетентного органу держави про звернення щодо втрати або викрадення",
+      "note": "Подається без легалізації та без перекладу.",
+      "when": {
+        "fact": "purpose",
+        "op": "eq",
+        "value": "lost"
+      },
+      "basis": "Порядок п.54 пп.2; звільнення — п.15 абз.2",
+      "anchor": "що підтверджує факт звернення заявника з приводу його втрати"
+    },
+    {
+      "id": "B16",
+      "kind": "mandatory",
+      "order": 78,
+      "title": "Документи, що підтверджують обставини обміну",
+      "note": "Свідоцтво про шлюб чи розірвання шлюбу, про зміну імені, рішення суду — залежно від підстави.",
+      "extras": [
+        {
+          "when": {
+            "fact": "foreign_docs",
+            "op": "eq",
+            "value": "yes"
+          },
+          "text": "{regime}"
+        }
+      ],
+      "when": {
+        "all": [
+          {
+            "fact": "purpose",
+            "op": "eq",
+            "value": "exchange"
+          },
+          {
+            "fact": "exchange_ground",
+            "op": "in",
+            "value": [
+              "info_change",
+              "error"
+            ]
+          }
+        ]
+      },
+      "basis": "Порядок п.55 пп.2",
+      "anchor": "у підпунктах 1 і 2 пункту 6 цього Порядку"
+    },
+    {
+      "id": "B18",
+      "kind": "mandatory",
+      "order": 79,
+      "title": "Документ про влаштування дитини",
+      "note": "Один із: контракт з директором закладу, договір про прийомну сім'ю, про дитячий будинок сімейного типу, про патронат, рішення органу опіки або рішення суду.",
+      "when": {
+        "all": [
+          {
+            "fact": "age",
+            "op": "lt",
+            "value": 14
+          },
+          {
+            "fact": "orphan",
+            "op": "eq",
+            "value": "yes"
+          }
+        ]
+      },
+      "basis": "Порядок п.56",
+      "anchor": "договору про влаштування дитини до прийомної сім'ї"
+    },
+    {
+      "id": "B7_exempt",
+      "kind": "mandatory",
+      "order": 82,
+      "title": "Оригінал документа про звільнення від сплати збору",
+      "note": "Повертається вам після пред'явлення.",
+      "when": {
+        "fact": "fee_exemption",
+        "op": "ne",
+        "value": "none"
+      },
+      "basis": "Порядок п.52 пп.5; Закон ст.20 ч.4",
+      "anchor": "або оригінал документа про звільнення від його сплати"
+    },
+    {
+      "id": "B8",
+      "kind": "optional",
+      "order": 100,
+      "title": "Відомості про зареєстроване або задеклароване місце проживання",
+      "note": "Якщо маєте: витяг з реєстру територіальної громади, е-паспорт або паспорт-книжечка зразка 1994 року.",
+      "when": true,
+      "basis": "Порядок п.52 пп.5-1 (нове — ПКМУ № 1709)",
+      "anchor": "витяг з реєстру територіальної громади"
+    },
+    {
+      "id": "B9",
+      "kind": "optional",
+      "order": 110,
+      "title": "Документ про реєстраційний номер картки платника податків (РНОКПП)",
+      "note": "Не обов'язковий, але наполегливо радимо подати — оригінал, паперову або електронну копію. Без внесення РНОКПП новий паспорт не відображатиметься в застосунку «Дія» і буде обмежено доступ до пов'язаних електронних послуг.",
+      "link": {
+        "label": "Роз'яснення про РНОКПП",
+        "url": "https://latvia.mfa.gov.ua/kp/faq/rnokpp"
+      },
+      "when": true,
+      "basis": "Порядок п.52 пп.5-2 (нове — ПКМУ № 1709)",
+      "anchor": "Особа може пред'явити копію документа, що засвідчує реєстрацію"
+    }
+  ],
+  "notices": [
+    {
+      "id": "N3",
+      "kind": "warning",
+      "when": {
+        "all": [
+          {
+            "fact": "purpose",
+            "op": "eq",
+            "value": "exchange"
+          },
+          {
+            "fact": "exchange_ground",
+            "op": "eq",
+            "value": "info_change"
+          }
+        ]
+      },
+      "title": "Один місяць на подання",
+      "text": "Якщо змінилася внесена до паспорта інформація, документи для обміну подаються протягом одного місяця з дати настання цих обставин.",
+      "basis": "Порядок п.22 абз.1"
+    },
+    {
+      "id": "N4",
+      "kind": "warning",
+      "when": {
+        "fact": "attend",
+        "op": "in",
+        "value": [
+          "no_mobility",
+          "no_treatment"
+        ]
+      },
+      "title": "Можливий виїзд консульського працівника",
+      "text": "За письмовим зверненням особи або її законного представника консульський працівник виїжджає за місцем проживання чи проходження лікування. Особисто прибувати не потрібно.",
+      "basis": "Порядок п.53; п.7 пп.3"
+    }
+  ],
+  "regime_text": {
+    "exempt": "Свідоцтво, видане в державі {country}: приймається без апостиля та консульської легалізації — держава звільнена за міжнародним договором ({basis}). Потрібен нотаріально засвідчений переклад українською.",
+    "apostille": "Свідоцтво, видане в державі {country}: приймається лише з апостилем, проставленим компетентним органом цієї держави, та нотаріально засвідченим перекладом українською.",
+    "legalization": "Свідоцтво, видане в державі {country}: підлягає консульській легалізації — спершу МЗС держави-видавця, потім закордонна дипломатична установа України — і нотаріальному перекладу українською.",
+    "unknown": "Цієї держави немає в довіднику. Уточніть режим легалізації у причетній закордонній дипломатичній установі України. Нотаріально засвідчений переклад українською потрібен у будь-якому разі."
+  },
+  "computed": {
+    "validity": {
+      "label": "Строк дії паспорта",
+      "rules": [
+        {
+          "when": {
+            "fact": "age",
+            "op": "lt",
+            "value": 16
+          },
+          "value": "4 роки"
+        },
+        {
+          "when": true,
+          "value": "10 років"
+        }
+      ],
+      "basis": "Порядок п.4; Закон ст.22 ч.3"
+    },
+    "fee": {
+      "label": "Розмір плати",
+      "base": 37,
+      "consular": 83,
+      "currency": "EUR",
+      "note": "Сплачується безготівково на місці: банківською карткою або смартфоном через POS-термінал.",
+      "note_pow": "Для осіб, звільнених з полону, закон знімає адміністративний (консульський) збір ширшим формулюванням, ніж для решти пільгових категорій. Точну суму уточніть в установі.",
+      "consular_waived_when": {
+        "any": [
+          {
+            "fact": "age",
+            "op": "lt",
+            "value": 16
+          },
+          {
+            "fact": "fee_exemption",
+            "op": "in",
+            "value": [
+              "chornobyl",
+              "disability_1_2",
+              "child_disability",
+              "orphan_care",
+              "pow"
+            ]
+          }
+        ]
+      },
+      "basis": "Закон ст.20 ч.4"
+    },
+    "term": {
+      "label": "Строк оформлення",
+      "value": "До трьох місяців. Паспорт виготовляється в Україні та пересилається до установи.",
+      "basis": "Закон ст.22 ч.14 абз.3"
+    },
+    "equeue": {
+      "label": "Послуга в е-Черзі",
+      "rules": [
+        {
+          "when": {
+            "fact": "age",
+            "op": "lt",
+            "value": 12
+          },
+          "value": "Оформлення закордонного паспорта дітям до 12"
+        },
+        {
+          "when": {
+            "fact": "age",
+            "op": "lt",
+            "value": 16
+          },
+          "value": "Оформлення закордонного паспорта дітям 12 - 16 років"
+        },
+        {
+          "when": true,
+          "value": "Оформлення закордонного паспорта"
+        }
+      ],
+      "warning": "Просимо уважно обирати саме ту послугу, яка потрібна. Змінити тип послуги під час візиту неможливо.",
+      "basis": "Перелік послуг е-Черги МЗС України"
+    }
+  }
+}</script>
+<script type="application/json" id="countries">{
+  "meta": {
+    "version": "0.1",
+    "checked_on": "2026-08-17",
+    "warning": "ЧЕРНЕТКА. Рядки з verified=false не публікувати без звірки: ETS 063 і Гаазька — за депозитарієм, П1 — за переліком Мін'юсту. Перелік у ЦЛ 22438 уже застарів щонайменше на дві держави.",
+    "sources": [
+      "Додаток до ЦЛ ДКС № 71/61513-020-22438-ВН від 08.03.2024 (перелік Мін'юсту)",
+      "ПКМУ № 107 від 04.02.2023",
+      "Гаазька конвенція 1961 — потребує звірки з HCCH"
+    ],
+    "installation": {
+      "eu_top": [
+        "LV",
+        "LT",
+        "EE",
+        "PL",
+        "DE",
+        "CZ"
+      ],
+      "equeue_url": "https://latvia.mfa.gov.ua/konsulski-pitannya/online"
+    }
+  },
+  "grounds": {
+    "P1": {
+      "label": "Договір про правову допомогу",
+      "effect": "exempt"
+    },
+    "P2": {
+      "label": "ПКМУ № 107, воєнний стан",
+      "effect": "exempt",
+      "temporary": true
+    },
+    "P4": {
+      "label": "Гаазька конвенція 1961",
+      "effect": "apostille"
+    },
+    "NONE": {
+      "label": "Договірної підстави немає",
+      "effect": "legalization"
+    }
+  },
+  "countries": [
+    {
+      "code": "EG",
+      "name": "Єгипет",
+      "regime": "legalization",
+      "grounds": [
+        "NONE"
+      ],
+      "basis": "Договірної підстави немає",
+      "verified": false
+    },
+    {
+      "code": "IL",
+      "name": "Ізраїль",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "IN",
+      "name": "Індія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "IE",
+      "name": "Ірландія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "IS",
+      "name": "Ісландія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "ES",
+      "name": "Іспанія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "IT",
+      "name": "Італія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "AU",
+      "name": "Австралія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "AT",
+      "name": "Австрія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "AZ",
+      "name": "Азербайджан",
+      "regime": "exempt",
+      "grounds": [
+        "P2"
+      ],
+      "basis": "ПКМУ № 107 від 04.02.2023 — на час воєнного стану",
+      "verified": false,
+      "note": "Звільнення тимчасове: діє під час воєнного стану та шість місяців після його припинення."
+    },
+    {
+      "code": "AL",
+      "name": "Албанія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "AR",
+      "name": "Аргентина",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "BE",
+      "name": "Бельгія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "BG",
+      "name": "Болгарія",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір між Україною та Республікою Болгарія 2004",
+      "verified": true
+    },
+    {
+      "code": "BA",
+      "name": "Боснія і Герцеговина",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "BR",
+      "name": "Бразилія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "BY",
+      "name": "Білорусь",
+      "regime": "exempt",
+      "grounds": [
+        "P2"
+      ],
+      "basis": "ПКМУ № 107 від 04.02.2023 — на час воєнного стану",
+      "verified": false,
+      "note": "Звільнення тимчасове: діє під час воєнного стану та шість місяців після його припинення."
+    },
+    {
+      "code": "VN",
+      "name": "В'єтнам",
+      "regime": "legalization",
+      "grounds": [
+        "NONE"
+      ],
+      "basis": "Договірної підстави немає",
+      "verified": false
+    },
+    {
+      "code": "GB",
+      "name": "Велика Британія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "AM",
+      "name": "Вірменія",
+      "regime": "exempt",
+      "grounds": [
+        "P2"
+      ],
+      "basis": "ПКМУ № 107 від 04.02.2023 — на час воєнного стану",
+      "verified": false,
+      "note": "Звільнення тимчасове: діє під час воєнного стану та шість місяців після його припинення."
+    },
+    {
+      "code": "GR",
+      "name": "Греція",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "GE",
+      "name": "Грузія",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір між Україною та Республікою Грузія 1995",
+      "verified": true
+    },
+    {
+      "code": "DK",
+      "name": "Данія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "EE",
+      "name": "Естонія",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір між Україною і Естонською Республікою 1995",
+      "verified": true
+    },
+    {
+      "code": "KZ",
+      "name": "Казахстан",
+      "regime": "exempt",
+      "grounds": [
+        "P2"
+      ],
+      "basis": "ПКМУ № 107 від 04.02.2023 — на час воєнного стану",
+      "verified": false,
+      "note": "Звільнення тимчасове: діє під час воєнного стану та шість місяців після його припинення."
+    },
+    {
+      "code": "CA",
+      "name": "Канада",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "QA",
+      "name": "Катар",
+      "regime": "legalization",
+      "grounds": [
+        "NONE"
+      ],
+      "basis": "Договірної підстави немає",
+      "verified": false
+    },
+    {
+      "code": "KG",
+      "name": "Киргизстан",
+      "regime": "exempt",
+      "grounds": [
+        "P2"
+      ],
+      "basis": "ПКМУ № 107 від 04.02.2023 — на час воєнного стану",
+      "verified": false,
+      "note": "Звільнення тимчасове: діє під час воєнного стану та шість місяців після його припинення."
+    },
+    {
+      "code": "CN",
+      "name": "Китай",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "CY",
+      "name": "Кіпр",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "LV",
+      "name": "Латвія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": true,
+      "note": "Документи цивільного стану приймаються лише з апостилем."
+    },
+    {
+      "code": "LT",
+      "name": "Литва",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір між Україною і Литовською Республікою 1993",
+      "verified": true
+    },
+    {
+      "code": "LU",
+      "name": "Люксембург",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "LI",
+      "name": "Ліхтенштейн",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "MT",
+      "name": "Мальта",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "MX",
+      "name": "Мексика",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "MD",
+      "name": "Молдова",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір між Україною і Республікою Молдова 1993",
+      "verified": true
+    },
+    {
+      "code": "NZ",
+      "name": "Нова Зеландія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "NO",
+      "name": "Норвегія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "NL",
+      "name": "Нідерланди",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "DE",
+      "name": "Німеччина",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "AE",
+      "name": "ОАЕ",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "PL",
+      "name": "Польща",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір між Україною та Республікою Польща 1993",
+      "verified": true
+    },
+    {
+      "code": "PT",
+      "name": "Португалія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "KR",
+      "name": "Південна Корея",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "MK",
+      "name": "Північна Македонія",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір між Україною та Республікою Македонія 2000",
+      "verified": true
+    },
+    {
+      "code": "RU",
+      "name": "Росія",
+      "regime": "exempt",
+      "grounds": [
+        "P2"
+      ],
+      "basis": "ПКМУ № 107 від 04.02.2023 — на час воєнного стану",
+      "verified": false,
+      "note": "Звільнення тимчасове: діє під час воєнного стану та шість місяців після його припинення."
+    },
+    {
+      "code": "RO",
+      "name": "Румунія",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір між Україною і Румунією 2002",
+      "verified": true
+    },
+    {
+      "code": "US",
+      "name": "США",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "SA",
+      "name": "Саудівська Аравія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "RS",
+      "name": "Сербія",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір СРСР — ФНРЮ 1962",
+      "verified": true
+    },
+    {
+      "code": "SK",
+      "name": "Словаччина",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "SI",
+      "name": "Словенія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "TJ",
+      "name": "Таджикистан",
+      "regime": "exempt",
+      "grounds": [
+        "P2"
+      ],
+      "basis": "ПКМУ № 107 від 04.02.2023 — на час воєнного стану",
+      "verified": false,
+      "note": "Звільнення тимчасове: діє під час воєнного стану та шість місяців після його припинення."
+    },
+    {
+      "code": "TH",
+      "name": "Таїланд",
+      "regime": "legalization",
+      "grounds": [
+        "NONE"
+      ],
+      "basis": "Договірної підстави немає",
+      "verified": false
+    },
+    {
+      "code": "TR",
+      "name": "Туреччина",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "TM",
+      "name": "Туркменістан",
+      "regime": "exempt",
+      "grounds": [
+        "P2"
+      ],
+      "basis": "ПКМУ № 107 від 04.02.2023 — на час воєнного стану",
+      "verified": false,
+      "note": "Звільнення тимчасове: діє під час воєнного стану та шість місяців після його припинення."
+    },
+    {
+      "code": "HU",
+      "name": "Угорщина",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "UZ",
+      "name": "Узбекистан",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір між Україною і Республікою Узбекистан 1998",
+      "verified": true
+    },
+    {
+      "code": "FR",
+      "name": "Франція",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "FI",
+      "name": "Фінляндія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "HR",
+      "name": "Хорватія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "CZ",
+      "name": "Чехія",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір між Україною і Чеською Республікою 2001",
+      "verified": true
+    },
+    {
+      "code": "ME",
+      "name": "Чорногорія",
+      "regime": "exempt",
+      "grounds": [
+        "P1"
+      ],
+      "basis": "Договір СРСР — ФНРЮ 1962",
+      "verified": true
+    },
+    {
+      "code": "CH",
+      "name": "Швейцарія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "SE",
+      "name": "Швеція",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    },
+    {
+      "code": "JP",
+      "name": "Японія",
+      "regime": "apostille",
+      "grounds": [
+        "P4"
+      ],
+      "basis": "Гаазька конвенція 1961",
+      "verified": false
+    }
+  ]
+}</script>
+<script>
+"use strict";
+(function () {
+  const RULES = JSON.parse(document.getElementById("rules").textContent);
+  const GEO = JSON.parse(document.getElementById("countries").textContent);
+  const BY_CODE = Object.fromEntries(GEO.countries.map(c => [c.code, c]));
+  const INST = GEO.meta.installation;
+  const STAGE_NAMES = { 1: "Хто і для кого", 2: "Що оформлюємо", 3: "Що вже на руках", 4: "Обставини" };
+
+  let answers = {};
+
+  /* ---------- придатність значення ----------
+     Ключова відмінність від «непорожнього рядка»: значення має бути
+     таким, з яким правила справді можуть працювати. Інакше вікові
+     умови мовчки давали б false і перелік виходив би неповним. */
+  function isUsable(q, v) {
+    if (v === undefined || v === null || v === "") return false;
+    if (q.type === "number") {
+      const s = String(v).trim();
+      if (!/^\d{1,3}$/.test(s)) return false;
+      const n = Number(s);
+      return n >= q.min && n <= q.max;
+    }
+    if (q.type === "country") return v === "OTHER" || !!BY_CODE[v];
+    return q.options.some(o => o.v === v);
+  }
+
+  function facts() {
+    const f = {};
+    RULES.facts.forEach(spec => { f[spec.id] = spec.default; });
+    RULES.questions.forEach(q => {
+      const v = answers[q.id];
+      if (isUsable(q, v)) f[q.id] = q.type === "number" ? Number(v) : v;
+    });
+    // похідний факт: режим береться з довідника, а не з відповіді
+    const c = f.foreign_country ? BY_CODE[f.foreign_country] : null;
+    f.legalization_regime = f.foreign_country ? (c ? c.regime : "unknown") : null;
+    return f;
+  }
+
+  function evalPred(p, f) {
+    if (p === true) return true;
+    if (p === false || p == null) return false;
+    if (p.all) return p.all.every(x => evalPred(x, f));
+    if (p.any) return p.any.some(x => evalPred(x, f));
+    if (p.not) return !evalPred(p.not, f);
+    const v = f[p.fact];
+    if (v === null || v === undefined) return false;
+    switch (p.op) {
+      case "eq":  return v === p.value;
+      case "ne":  return v !== p.value;
+      case "in":  return p.value.includes(v);
+      case "gte": return Number(v) >= p.value;
+      case "gt":  return Number(v) >  p.value;
+      case "lte": return Number(v) <= p.value;
+      case "lt":  return Number(v) <  p.value;
+      default: throw new Error("невідомий оператор: " + p.op);
+    }
+  }
+
+  const visibleQuestions = () => { const f = facts(); return RULES.questions.filter(q => evalPred(q.when, f)); };
+  const unanswered = () => visibleQuestions().filter(q => !isUsable(q, answers[q.id]));
+
+  function prune() {
+    for (let i = 0; i < 12; i++) {
+      const vis = new Set(visibleQuestions().map(q => q.id));
+      const drop = Object.keys(answers).filter(k => !vis.has(k));
+      if (!drop.length) return;
+      drop.forEach(k => delete answers[k]);
+    }
+  }
+
+  /* ---------- рендер ---------- */
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  function renderQuestion(q) {
+    const raw = answers[q.id];
+    const head = `<legend>${q.type === "number" ? `<label for="f_${q.id}">${esc(q.label)}</label>` : esc(q.label)}</legend>` +
+                 (q.help ? `<p class="help">${esc(q.help)}</p>` : "");
+    const foot = q.basis ? `<p class="basis">${esc(q.basis)}</p>` : "";
+
+    if (q.type === "number") {
+      const bad = raw !== undefined && raw !== "" && !isUsable(q, raw);
+      return `<fieldset>${head}
+        <div class="num-row">
+          <input type="text" id="f_${q.id}" data-q="${q.id}" inputmode="numeric"
+                 autocomplete="off" maxlength="3" class="num-input${bad ? " bad" : ""}"
+                 ${bad ? 'aria-invalid="true" aria-describedby="e_' + q.id + '"' : ""}
+                 value="${raw !== undefined ? esc(raw) : ""}">
+          ${q.suffix ? `<span class="suffix">${esc(q.suffix)}</span>` : ""}
+        </div>
+        ${bad ? `<p class="field-error" id="e_${q.id}">Вкажіть ціле число від ${q.min} до ${q.max}.</p>` : ""}
+        ${foot}</fieldset>`;
+    }
+
+    if (q.type === "country") {
+      const top = INST.eu_top.map(c => BY_CODE[c]).filter(Boolean);
+      const topSet = new Set(top.map(c => c.code));
+      const rest = GEO.countries.filter(c => !topSet.has(c.code));
+      const opt = c => `<option value="${esc(c.code)}"${raw === c.code ? " selected" : ""}>${esc(c.name)}</option>`;
+      return `<fieldset>${head}
+        <select class="country" id="f_${q.id}" data-q="${q.id}">
+          <option value=""${raw ? "" : " selected"} disabled>— оберіть державу —</option>
+          ${top.length ? `<optgroup label="Найчастіше">${top.map(opt).join("")}</optgroup>` : ""}
+          <optgroup label="Усі держави">${rest.map(opt).join("")}</optgroup>
+          <optgroup label="—"><option value="OTHER"${raw === "OTHER" ? " selected" : ""}>Немає в списку</option></optgroup>
+        </select>
+        ${foot}</fieldset>`;
+    }
+
+    if (q.type === "tiles") {
+      return `<fieldset>${head}
+        <div class="tiles" data-q="${q.id}">${q.options.map(o => `
+          <label class="tile">
+            <input type="radio" name="${q.id}" value="${esc(o.v)}"${raw === o.v ? " checked" : ""}>
+            <span>${esc(o.l)}</span>
+          </label>`).join("")}</div>
+        ${foot}</fieldset>`;
+    }
+
+    return `<fieldset>${head}
+      <div class="opts" data-q="${q.id}">${q.options.map(o => `
+        <label class="opt">
+          <input type="radio" name="${q.id}" value="${esc(o.v)}"${raw === o.v ? " checked" : ""}>
+          <span>${esc(o.l)}</span>
+        </label>`).join("")}</div>
+      ${foot}</fieldset>`;
+  }
+
+  function renderSurvey() {
+    const vis = visibleQuestions();
+    const byStage = new Map();
+    vis.forEach(q => { if (!byStage.has(q.stage)) byStage.set(q.stage, []); byStage.get(q.stage).push(q); });
+
+    document.getElementById("stages").innerHTML = [...byStage.entries()].map(([st, qs]) => `
+      <section class="stage">
+        <h2 class="stage-name"><span class="stage-num">${st}</span>${esc(STAGE_NAMES[st] || "")}</h2>
+        ${qs.map(renderQuestion).join("")}
+      </section>`).join("");
+
+    document.querySelectorAll("[data-q]").forEach(el => {
+      const id = el.dataset.q;
+      el.addEventListener(el.tagName === "INPUT" ? "input" : "change", e => set(id, e.target.value));
+    });
+
+    syncActions();
+  }
+
+  const shapeOf = () => visibleQuestions().map(q => q.id).join("|");
+
+  function set(id, value) {
+    const before = shapeOf();
+    answers[id] = value;
+    prune();
+    document.getElementById("results").hidden = true;
+    if (shapeOf() === before) { refreshOnly(id); return; }   // структура та сама — поле не чіпаємо
+
+    /* Структура змінилася: перемальовуємо, але повертаємо каретку.
+       Працює саме тому, що поле віку — type="text": у type="number"
+       властивість selectionStart специфікацією не підтримується. */
+    const src = document.getElementById("f_" + id);
+    const hadFocus = document.activeElement === src;
+    const caret = hadFocus && src && src.selectionStart != null ? src.selectionStart : null;
+    renderSurvey();
+    if (hadFocus) {
+      const el = document.getElementById("f_" + id);
+      if (el) { el.focus(); if (caret != null) { try { el.setSelectionRange(caret, caret); } catch (_) {} } }
+    }
+  }
+
+  /* Оновлює лише те, що не чіпає позицію курсора: стан кнопки, лічильник,
+     клас і підпис помилки біля числового поля. Саме перемальовування
+     розмітки на кожен символ і збивало фокус на другій цифрі. */
+  function refreshOnly(id) {
+    const q = RULES.questions.find(x => x.id === id);
+    if (q && q.type === "number") {
+      const el = document.getElementById("f_" + id);
+      const bad = answers[id] !== "" && !isUsable(q, answers[id]);
+      if (el) { el.classList.toggle("bad", bad); el.setAttribute("aria-invalid", bad ? "true" : "false"); }
+      let msg = document.getElementById("e_" + id);
+      if (bad && !msg) {
+        msg = document.createElement("p");
+        msg.className = "field-error"; msg.id = "e_" + id;
+        msg.textContent = `Вкажіть ціле число від ${q.min} до ${q.max}.`;
+        el.closest("fieldset").appendChild(msg);
+      } else if (!bad && msg) msg.remove();
+    }
+    syncActions();
+  }
+
+  function syncActions() {
+    const left = unanswered();
+    document.getElementById("go").disabled = left.length > 0;
+    document.getElementById("pending").textContent =
+      left.length === 0 ? "" :
+      left.length === 1 ? "Залишилося одне питання." : `Залишилося питань: ${left.length}.`;
+  }
+
+  /* ---------- результат ---------- */
+  function evaluate() {
+    const f = facts();
+    const docs = RULES.documents.filter(d => evalPred(d.when, f));
+    const nots = RULES.notices.filter(n => evalPred(n.when, f));
+    const fee = RULES.computed.fee;
+    const waived = evalPred(fee.consular_waived_when, f);
+    return {
+      facts: f,
+      mandatory: docs.filter(d => d.kind === "mandatory").sort((a, b) => a.order - b.order),
+      optional: docs.filter(d => d.kind === "optional").sort((a, b) => a.order - b.order),
+      blockers: nots.filter(n => n.kind === "blocker"),
+      warnings: nots.filter(n => n.kind === "warning"),
+      validity: RULES.computed.validity.rules.find(r => evalPred(r.when, f)).value,
+      equeue: RULES.computed.equeue.rules.find(r => evalPred(r.when, f)).value,
+      feeTotal: fee.base + (waived ? 0 : fee.consular),
+      feeWaived: waived
+    };
+  }
+
+  const docList = (items, optional, f) => `<ul class="docs">` + items.map(d => {
+      const ex = subs(d, f);
+      return `<li${optional ? ' class="opt-doc"' : ""}>
+        <div class="doc-title">${esc(d.title)}</div>
+        ${d.note ? `<p class="doc-note">${esc(fill(d.note, f))}</p>` : ""}
+        ${ex.length ? `<ul class="sub">${ex.map(e => `<li>${esc(fill(e.text, f))}</li>`).join("")}</ul>` : ""}
+        ${d.link ? `<p class="doc-note"><a href="${esc(d.link.url)}" target="_blank" rel="noopener noreferrer">${esc(d.link.label)}</a></p>` : ""}
+        <p class="basis">${esc(d.basis)}</p>
+      </li>`; }).join("") + `</ul>`;
+
+  function fill(t, f) {
+    const c = f.foreign_country ? BY_CODE[f.foreign_country] : null;
+    const reg = RULES.regime_text[f.legalization_regime] || "";
+    return t.replace(/\{regime\}/g, reg)
+            .replace(/\{country\}/g, c ? c.name : "—")
+            .replace(/\{basis\}/g, c ? c.basis : "—");
+  }
+
+  /* Підпункти документа: показуються лише ті, чия умова справдилася.
+     Так умова лишається перевірюваною, а не ховається в тексті. */
+  const subs = (d, f) => (d.extras || []).filter(e => evalPred(e.when, f));
+
+  const cards = (items, cls, strip, f) => items.map(n => `
+      <div class="card card--${cls}">
+        <p class="label-strip">${strip}</p>
+        <h3>${esc(n.title)}</h3>
+        <p>${esc(fill(n.text, f))}</p>
+        <p class="basis">${esc(n.basis)}</p>
+      </div>`).join("");
+
+  function show() {
+    const r = evaluate(), fee = RULES.computed.fee, out = [];
+    out.push(`<h2>Ваш перелік документів</h2>`);
+    if (r.blockers.length || r.warnings.length) {
+      out.push(`<div class="sect"><p class="sect-head">Зверніть увагу перед візитом</p>` +
+        cards(r.blockers, "stop", "Обов'язкова дія", r.facts) +
+        cards(r.warnings, "note", "До відома", r.facts) + `</div>`);
+    }
+    out.push(`<div class="sect"><p class="sect-head">Обов'язкові документи</p>${docList(r.mandatory, false, r.facts)}</div>`);
+    if (r.optional.length) out.push(`<div class="sect"><p class="sect-head">Додатково (за наявності)</p>${docList(r.optional, true, r.facts)}</div>`);
+    out.push(`<div class="sect"><p class="sect-head">Деталі послуги</p>
+      <table class="facts">
+        <tr><th>Строк дії паспорта</th><td>${esc(r.validity)}</td></tr>
+        <tr><th>Розмір плати</th><td><span class="sum">${r.feeTotal} €</span>${
+          r.feeWaived ? `<br>Консульський збір ${fee.consular} € не справляється.`
+                      : `<br>${fee.base} € (вартість бланка) та ${fee.consular} € консульського збору.`
+        }<br>${esc(fee.note)}${
+          r.facts.fee_exemption === "pow" ? `<br>${esc(fee.note_pow)}` : ""}</td></tr>
+        <tr><th>Строк оформлення</th><td>${esc(RULES.computed.term.value)}</td></tr>
+        <tr><th>Послуга в е-Черзі</th><td><strong>${esc(r.equeue)}</strong><br>${esc(RULES.computed.equeue.warning)}</td></tr>
+      </table>
+      <p class="print-only">Запис: ${esc(INST.equeue_url)}</p>
+      <p class="basis">Довідник держав звірено ${esc(GEO.meta.checked_on)}.</p></div>`);
+
+    document.getElementById("results-body").innerHTML = out.join("");
+    document.getElementById("stamp").textContent =
+      `Реєстр правил v${RULES.meta.version}. Довідково; остаточний перелік визначає консульський працівник.`;
+    const res = document.getElementById("results");
+    res.hidden = false;
+    res.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth", block: "start" });
+  }
+
+  document.getElementById("equeue").href = INST.equeue_url;
+  document.getElementById("toggle-basis").addEventListener("click", e => {
+    const on = document.body.classList.toggle("show-basis");
+    e.target.setAttribute("aria-pressed", on ? "true" : "false");
+    e.target.textContent = on ? "Сховати правові підстави" : "Показати правові підстави";
+  });
+  document.getElementById("go").addEventListener("click", show);
+  document.getElementById("print").addEventListener("click", () => window.print());
+  document.getElementById("again").addEventListener("click", () => {
+    answers = {};
+    document.getElementById("results").hidden = true;
+    renderSurvey();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  document.getElementById("legal-basis").innerHTML =
+    `<p>Правова основа</p><ul>` + RULES.meta.legal_links.map(l =>
+      `<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)}</a></li>`).join("") + `</ul>`;
+
+  renderSurvey();
+
+  window.__form = { rules: RULES, isUsable, facts, evalPred, visibleQuestions, unanswered, evaluate,
+                    setAnswers: a => { answers = Object.assign({}, a); }, getAnswers: () => Object.assign({}, answers) };
+})();
+</script>
+</body>
+</html>
