@@ -24,6 +24,9 @@
      товщиною межі та підписом. Читається у відтінках сірого. */
   --ink:#0d0e10;
   --ink-2:#4f555d;
+  /* Найсвітліший сірий, що ще дає 4.5:1 на тлі банера — для дрібного
+     службового тексту. Світліше вже не читається за WCAG AA. */
+  --ink-3:#646b76;
   --line:#dcdfe4;
   --line-2:#a9b0b9;
   --page:#f2f3f5;
@@ -46,22 +49,23 @@ body{
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
 
 .hero{background:var(--hero);padding:56px 20px 64px;text-align:center;margin-bottom:56px}
-.hero-inner{max-width:900px;margin:0 auto}
+.hero-inner{max-width:800px;margin:0 auto}
 h1{
   font-family:"e-Ukraine Head","e-Ukraine",inherit;
   font-size:clamp(29px,4.2vw,48px);line-height:1.12;letter-spacing:-.024em;
-  font-weight:700;margin:0 auto 24px;max-width:22ch;
+  font-weight:700;margin:0 auto 24px;text-wrap:balance;
 }
-.hero .lede{font-size:19px;line-height:1.55;color:var(--ink-2);max-width:64ch;margin:0 auto}
-.hero .scope-line{
-  margin:22px auto 0;max-width:66ch;font-size:17px;line-height:1.5;
-  padding-top:20px;border-top:1px solid rgba(13,14,16,.14);
+.hero .lede{font-size:19px;line-height:1.55;color:var(--ink-2);margin:0 auto;text-wrap:pretty}
+/* Службовий блок: тонка лінія відділяє його від ліда, дрібний кегль
+   і приглушений сірий відводять на другий план. Кольору --ink-3, а не
+   світлішого: нижче 4.5:1 дрібний текст перестає проходити WCAG AA. */
+.hero .meta-notes{
+  margin:32px auto 0;padding-top:24px;max-width:740px;
+  border-top:1px solid rgba(13,14,16,.14);
 }
-.hero .scope-line b{font-weight:600;color:var(--ink)}
-.hero .meta-notes{margin:26px auto 0;max-width:70ch;align-items:center;text-align:center;font-size:15px}
-.meta-notes{display:flex;flex-direction:column;gap:8px}
-.meta-notes p{margin:0;font-size:15px;line-height:1.45;color:var(--ink-2)}
-.meta-notes b{font-weight:600;color:var(--ink)}
+.meta-notes{display:flex;flex-direction:column;gap:6px}
+.hero .meta-notes p{margin:0;font-size:13px;line-height:1.55;color:var(--ink-3);text-wrap:pretty}
+.meta-notes b{font-weight:600;color:var(--ink-2)}
 
 .panel{background:var(--paper);border-radius:var(--r);padding:24px 20px}
 @media(min-width:640px){.panel{padding:38px 44px}}
@@ -69,7 +73,7 @@ h1{
   .stage,.sect{display:grid;grid-template-columns:200px minmax(0,1fr);gap:40px}
   .stage-name{margin:0;position:sticky;top:26px;align-self:start}
   .sect-head{margin:0;border-bottom:0;padding-bottom:0;position:sticky;top:26px;align-self:start}
-  .sect{border-top:1px solid var(--line);padding-top:28px;margin-top:28px}
+  .sect{border-top:1px solid var(--line);padding-top:22px;margin-top:22px}
   .sect:first-child{border-top:0;padding-top:0;margin-top:0}
 }
 
@@ -88,7 +92,7 @@ h1{
 fieldset{border:0;margin:0 0 34px;padding:0}
 fieldset:last-child{margin-bottom:0}
 legend{padding:0;font-size:21px;line-height:1.35;font-weight:500;letter-spacing:-.01em;margin-bottom:6px}
-.help{margin:0 0 14px;font-size:17px;line-height:1.5;color:var(--ink-2);max-width:60ch}
+.help{margin:0 0 14px;font-size:17px;line-height:1.5;color:var(--ink-2);max-width:68ch}
 .basis{margin:12px 0 0;font-size:15px;color:var(--ink-2)}
 
 .opts{display:flex;flex-direction:column;gap:10px}
@@ -143,21 +147,25 @@ select.country:focus-visible{outline:3px solid var(--focus);outline-offset:2px;b
   border-left:4px solid var(--ink);padding-left:12px}
 
 .actions{margin-top:36px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-button{
+/* Посилання на е-Чергу мусить виглядати кнопкою нарівні з рештою: доти,
+   доки правило стояло лише на button, <a> лишався без відступів і радіуса. */
+button,a.btn-primary{
   font:inherit;font-size:18px;font-weight:500;padding:16px 30px;
   border-radius:100px;border:2px solid transparent;cursor:pointer;
 }
-button:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+a.btn-primary{display:inline-block;text-decoration:none;line-height:1.2}
+button:focus-visible,a.btn-primary:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
 .btn-primary{background:var(--ink);color:#fff}
 .btn-primary:hover:not(:disabled){background:#2a2d32}
 .btn-primary:disabled{background:var(--line);color:#7c838c;cursor:not-allowed}
 .btn-quiet{background:var(--paper);color:var(--ink);border-color:var(--line-2)}
 .btn-quiet:hover{background:var(--page)}
 .pending{margin:0;font-size:17px;color:var(--ink-2)}
+.actions-hint{margin:12px 0 0;font-size:15px;line-height:1.45;color:var(--ink-2);max-width:72ch}
 
 h2{font-family:"e-Ukraine Head","e-Ukraine",inherit;
-   font-size:clamp(24px,4vw,32px);line-height:1.2;letter-spacing:-.018em;font-weight:700;margin:0 0 26px}
-.sect{margin-top:38px}
+   font-size:clamp(24px,4vw,32px);line-height:1.2;letter-spacing:-.018em;font-weight:700;margin:0 0 20px}
+.sect{margin-top:28px}
 .sect:first-child{margin-top:0}
 .sect-head{
   font-size:14px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
@@ -167,15 +175,15 @@ h2{font-family:"e-Ukraine Head","e-Ukraine",inherit;
 ul.docs{list-style:none;margin:0;padding:0}
 ul.docs li{
   border-left:4px solid var(--ink);
-  padding:2px 0 2px 20px;margin-bottom:26px;
+  padding:2px 0 2px 20px;margin-bottom:18px;
 }
 ul.docs li:last-child{margin-bottom:0}
 ul.docs li.opt-doc{border-left-style:dotted;border-left-color:var(--line-2)}
 .doc-title{font-size:19px;font-weight:600;line-height:1.4;letter-spacing:-.005em}
-.doc-note{margin:7px 0 0;font-size:17px;line-height:1.55;color:var(--ink-2);max-width:60ch}
-ul.sub{margin:8px 0 0;padding:0;list-style:none;max-width:60ch}
-ul.sub li{border:0;padding:0 0 0 16px;margin:0 0 7px;position:relative;
-  font-size:17px;line-height:1.5;color:var(--ink-2)}
+.doc-note{margin:5px 0 0;font-size:16px;line-height:1.5;color:var(--ink-2);max-width:72ch}
+ul.sub{margin:6px 0 0;padding:0;list-style:none;max-width:72ch}
+ul.sub li{border:0;padding:0 0 0 16px;margin:0 0 5px;position:relative;
+  font-size:16px;line-height:1.45;color:var(--ink-2)}
 ul.sub li::before{content:"—";position:absolute;left:0;color:var(--line-2)}
 .toggle-basis{
   display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;
@@ -187,9 +195,9 @@ ul.sub li::before{content:"—";position:absolute;left:0;color:var(--line-2)}
 body.show-basis .toggle-basis::after{content:"−"}
 body:not(.show-basis) .basis{display:none}
 
-.card{border-radius:var(--r);padding:22px 24px;margin-bottom:14px}
-.card h3{margin:0 0 8px;font-size:19px;font-weight:500;line-height:1.35}
-.card p{margin:0;font-size:17px;line-height:1.5;max-width:60ch}
+.card{border-radius:var(--r);padding:18px 20px;margin-bottom:12px}
+.card h3{margin:0 0 6px;font-size:19px;font-weight:500;line-height:1.35}
+.card p{margin:0;font-size:16px;line-height:1.5;max-width:72ch}
 .card .basis{margin-top:12px}
 .card--stop{background:var(--paper);border:3px solid var(--ink)}
 .card--note{background:var(--soft);border:1px solid var(--line)}
@@ -200,10 +208,10 @@ body:not(.show-basis) .basis{display:none}
 
 .facts-card{border:1px solid var(--line);border-radius:var(--r);display:grid;gap:0}
 @media(min-width:800px){.facts-card{grid-template-columns:1fr 1fr}}
-.facts-col{padding:28px 30px}
+.facts-col{padding:22px 24px}
 .facts-col + .facts-col{border-top:1px solid var(--line)}
 @media(min-width:800px){.facts-col + .facts-col{border-top:0;border-left:1px solid var(--line)}}
-.fact{margin-bottom:24px}
+.fact{margin-bottom:18px}
 .fact:last-child{margin-bottom:0}
 .fact dt{font-size:16px;color:var(--ink-2);margin-bottom:4px}
 .fact dd{margin:0;font-size:19px;line-height:1.4;font-weight:500}
@@ -213,14 +221,47 @@ body:not(.show-basis) .basis{display:none}
 .footnote{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:15px}
 [hidden]{display:none !important}
 
+/* Друкується лише результат: банер, анкета й перемикач підстав зникають,
+   типографіка стискається так, щоб звичайний перелік ліг на один аркуш А4.
+   Друк на екранній щільності давав чотири сторінки, з яких три — анкета. */
 @media print{
-  body{background:#fff;padding:0;font-size:12pt}
-  .noprint{display:none !important}
-  .panel{padding:0}
-  .card{break-inside:avoid;border:1px solid #000}
-  .print-only{display:block;margin-top:14px;font-size:11pt}
-  .card--stop{border-width:3px}
-  ul.docs li{break-inside:avoid;border-left-color:#000}
+  @page{margin:12mm}
+  html,body{background:#fff}
+  body{padding:0;font-size:10.5pt;line-height:1.4;color:#000}
+  .noprint,.hero,#survey,.toggle-basis{display:none !important}
+  .wrap{max-width:none;padding:0}
+  .panel{padding:0;border-radius:0}
+  .print-only{display:block}
+  .print-sub{margin:-10px 0 14px;font-size:9pt;color:#000}
+  h2{font-size:17pt;margin:0 0 12px}
+  .sect{display:block;margin:0 0 14px;padding:0;border-top:0}
+  .sect-head{position:static;font-size:8pt;letter-spacing:.08em;color:#000;
+             margin:0 0 7px;padding-bottom:4px;border-bottom:1px solid #000}
+  .card{break-inside:avoid;border:1px solid #000;border-radius:0;
+        padding:8px 10px;margin-bottom:8px;background:#fff}
+  .card--stop{border-width:2.5px}
+  .card h3{font-size:11pt;margin:0 0 3px}
+  .card p{font-size:9.5pt;line-height:1.35;max-width:none}
+  .label-strip{font-size:7.5pt;margin:0 0 5px;color:#000}
+  ul.docs li{break-inside:avoid;border-left:2.5px solid #000;
+             padding:0 0 0 10px;margin-bottom:11px}
+  ul.docs li.opt-doc{border-left-style:dotted}
+  .doc-title{font-size:10.5pt}
+  .doc-note{margin-top:2px;font-size:9pt;line-height:1.3;color:#000;max-width:none}
+  ul.sub{margin-top:4px;max-width:none}
+  ul.sub li{font-size:9pt;line-height:1.3;margin-bottom:3px;color:#000}
+  .facts-card{break-inside:avoid;border:1px solid #000;border-radius:0;
+              grid-template-columns:1fr 1fr}
+  .facts-col{padding:10px 12px}
+  .facts-col + .facts-col{border-top:0;border-left:1px solid #000}
+  .fact{margin-bottom:9px}
+  .fact dt{font-size:8.5pt;color:#000;margin-bottom:2px}
+  .fact dd{font-size:10pt;line-height:1.3}
+  .fact dd small{font-size:8.5pt;color:#000;margin-top:3px;line-height:1.35}
+  .basis{font-size:8pt;margin-top:5px;color:#000}
+  .legal-basis{background:#fff;border:1px solid #000;border-radius:0;padding:8px 10px}
+  .footnote{margin-top:10px;padding-top:6px;font-size:8pt;color:#000}
+  a{color:#000}
 }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto !important}}
 </style>
@@ -230,10 +271,8 @@ body:not(.show-basis) .basis{display:none}
   <div class="hero-inner">
     <h1>Форма перевірки документів, необхідних для оформлення закордонного паспорта</h1>
     <p class="lede">Відповідаєте на 6–10 запитань — отримуєте індивідуальний перелік документів, основні правила та послідовність дій, розмір оплати, точну назву потрібної послуги в е-Черзі, а також іншу корисну інформацію. Результати збережіть у телефоні, за потреби роздрукуйте, візьміть із собою.</p>
-    <p class="scope-line"><b>Для кого.</b> Інструмент створюється для допомоги у підготовці пакета документів для подачі до посольства або консульства України. Перелік буде інший при зверненні до ДП «Документ».</p>
     <div class="meta-notes">
-      <p><b>Неофіційний інструмент</b> на стадії тестування. Відгуки та пропозиції надсилайте на <a href="mailto:oleksandr.bereza@mfa.gov.ua">oleksandr.bereza@mfa.gov.ua</a>. Остаточний перелік документів визначає консульський співробітник.</p>
-      <p><b>Приватність.</b> Відповіді залишаються у вашому браузері.</p>
+      <p>Це неофіційний інструмент, що допомагає готувати документи для подачі до посольств і консульств України. Остаточний перелік визначає консульський співробітник. При зверненні до ДП «Документ» перелік буде інший. Відповіді, надані тут, не передаються далі — вони залишаються у вашому браузері. Якщо є бажання залишити відгуки та пропозиції, заповніть <a href="https://forms.cloud.microsoft/e/WSGMxnix2Q" target="_blank" rel="noopener noreferrer">коротку форму</a>.</p>
     </div>
   </div>
 </header>
@@ -256,10 +295,11 @@ body:not(.show-basis) .basis{display:none}
 
       <div class="actions noprint">
         <button type="button" id="again" class="btn-quiet">Заповнити заново</button>
-        <button type="button" id="print" class="btn-quiet">Роздрукувати результати</button>
-        <a id="equeue" class="btn-primary" style="text-decoration:none;display:inline-block"
-           target="_blank" rel="noopener noreferrer">Перейти до реєстрації в е-Черзі</a>
+        <button type="button" id="savepdf" class="btn-quiet">Зберегти PDF</button>
+        <button type="button" id="print" class="btn-quiet">Роздрукувати</button>
+        <a id="equeue" class="btn-primary" target="_blank" rel="noopener noreferrer">Е-Черга МЗС</a>
       </div>
+      <p class="actions-hint noprint">Обидві кнопки відкривають вікно друку браузера: щоб зберегти файл, у полі «Принтер» оберіть «Зберегти як PDF». Друкується лише перелік, без запитань.</p>
       <p class="footnote" id="stamp"></p>
     </section>
   </main>
@@ -267,7 +307,7 @@ body:not(.show-basis) .basis{display:none}
 
 <script type="application/json" id="rules">{
   "meta": {
-    "version": "5.0",
+    "version": "5.1",
     "scope": "Оформлення паспорта громадянина України для виїзду за кордон у закордонній дипломатичній установі",
     "sources": {
       "Закон": "ЗУ № 5492-VI від 20.11.2012, ред. від 14.06.2025",
@@ -289,7 +329,9 @@ body:not(.show-basis) .basis{display:none}
       }
     ],
     "open_questions": [
-      "Звільнені з полону: Закон ст.20 ч.4 знімає «адміністративний (консульський) збір» — 0 € чи 37 €?"
+      "Звільнені з полону: Закон ст.20 ч.4 знімає «адміністративний (консульський) збір» — 0 € чи 37 €?",
+      "Блокер N5: потрібне нормативне посилання на те, що ЗДУ не оформлює паспорт громадянина України. Поки що це вимога установи, як і B_vod.",
+      "Блокер N5 у напруженні з Порядком п.52 пп.1 абз.2: норма прямо передбачає випадок, коли особі жодного документа не оформлювалося, і вимагає лише довідку про реєстрацію громадянином України. Тобто за текстом Порядку ЗДУ такий пакет приймає, а за практикою — ні. Треба вирішити, що показувати."
     ]
   },
   "facts": [
@@ -362,7 +404,6 @@ body:not(.show-basis) .basis{display:none}
       "values": [
         "0",
         "1",
-        "2",
         "2+"
       ],
       "default": null
@@ -460,7 +501,7 @@ body:not(.show-basis) .basis{display:none}
       "stage": 1,
       "type": "country",
       "label": "У якій країні ви плануєте звертатися до консульської установи?",
-      "help": "Від цього залежать валюта й розмір консульського збору. Перелік документів однаковий для всіх установ.",
+      "help": "Від цього залежать валюта й розмір консульського збору. Загальний перелік документів однаковий для всіх установ; різняться лише вимоги до іноземних документів — залежно від держави, яка їх видала.",
       "when": true,
       "basis": "Тариф консульського збору відповідної ЗДУ"
     },
@@ -618,14 +659,11 @@ body:not(.show-basis) .basis{display:none}
           "l": "1"
         },
         {
-          "v": "2",
-          "l": "2"
-        },
-        {
           "v": "2+",
           "l": "2+"
         }
       ],
+      "options_order": "Варіанти «2» і «2+» зведено в один: жодне правило їх не розрізняє — єдиний предикат на цьому факті перевіряє лише «не нуль».",
       "when": true
     },
     {
@@ -952,7 +990,8 @@ body:not(.show-basis) .basis{display:none}
       "id": "B1",
       "kind": "mandatory",
       "order": 30,
-      "title": "Паспорт громадянина України або свідоцтво про народження",
+      "title": "Паспорт громадянина України",
+      "note": "Або інший документ, що посвідчує особу та підтверджує громадянство України. Свідоцтво про народження таким документом не є.",
       "extras": [
         {
           "when": {
@@ -963,7 +1002,7 @@ body:not(.show-basis) .basis{display:none}
               "lost"
             ]
           },
-          "text": "Основний документ, що посвідчує особу та підтверджує громадянство України."
+          "text": "Це основний документ пакета: він установлює особу заявника й підтверджує громадянство."
         },
         {
           "when": {
@@ -971,7 +1010,7 @@ body:not(.show-basis) .basis{display:none}
             "op": "eq",
             "value": "exchange"
           },
-          "text": "Подається за наявності. Потрібен, якщо ви народилися в Україні і в закордонному паспорті зазначено лише область, без міста чи села: для заяви-анкети потрібен точний населений пункт. Якщо місцем народження зазначено іноземну державу, додаткових документів не потрібно. Якщо внутрішнього паспорта немає — підійде свідоцтво про народження."
+          "text": "Подається за наявності. Потрібен, якщо ви народилися в Україні і в закордонному паспорті зазначено лише область, без міста чи села: для заяви-анкети потрібен точний населений пункт. Якщо місцем народження зазначено іноземну державу, додаткових документів не потрібно. Якщо внутрішнього паспорта немає, точний населений пункт підтвердить свідоцтво про народження."
         }
       ],
       "when": {
@@ -1266,6 +1305,32 @@ body:not(.show-basis) .basis{display:none}
     }
   ],
   "notices": [
+    {
+      "id": "N5",
+      "kind": "blocker",
+      "when": {
+        "all": [
+          {
+            "fact": "age",
+            "op": "gte",
+            "value": 14
+          },
+          {
+            "fact": "purpose",
+            "op": "eq",
+            "value": "first"
+          },
+          {
+            "fact": "had_prior_doc",
+            "op": "eq",
+            "value": "no"
+          }
+        ]
+      },
+      "title": "Спершу потрібен паспорт громадянина України",
+      "text": "Від 14 років до пакета входить документ, що посвідчує особу та підтверджує громадянство України; свідоцтво про народження ним не є. Закордонна дипломатична установа паспорт громадянина України не оформлює: за кордоном це робить ДП «Документ», в Україні — підрозділ ДМС. Оформіть його спершу, і лише потім звертайтеся по закордонний паспорт. Решту переліку наведено нижче — він знадобиться пізніше.",
+      "basis": "Порядок п.52 пп.1 абз.1; маршрут до ДП «Документ» — вимога установи, нормативного посилання ще немає"
+    },
     {
       "id": "N3",
       "kind": "warning",
@@ -2597,6 +2662,11 @@ body:not(.show-basis) .basis{display:none}
   function show() {
     const r = evaluate(), fee = RULES.computed.fee, out = [];
     out.push(`<h2>Ваш перелік документів</h2>`);
+    /* Друкований аркуш лишається без банера, тож підпис із державою й датою
+       додається сюди — інакше роздруківка не має жодного заголовка контексту. */
+    const postC = BY_CODE[r.facts.post_country];
+    out.push(`<p class="print-only print-sub">${postC ? esc(postC.name) + " · " : ""}` +
+             `${new Date().toLocaleDateString("uk-UA")} · неофіційний довідковий перелік</p>`);
     if (r.blockers.length || r.warnings.length) {
       out.push(`<div class="sect"><p class="sect-head">Зверніть увагу перед візитом</p>` +
         cards(r.blockers, "stop", "Обов'язкова дія", r.facts) +
@@ -2638,6 +2708,7 @@ body:not(.show-basis) .basis{display:none}
   });
   document.getElementById("go").addEventListener("click", show);
   document.getElementById("print").addEventListener("click", () => window.print());
+  document.getElementById("savepdf").addEventListener("click", () => window.print());
   document.getElementById("again").addEventListener("click", () => {
     answers = {};
     document.getElementById("results").hidden = true;
