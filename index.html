@@ -36,15 +36,38 @@
   --link:#0b57d0;
   --soft:#f5f6f8;
   --hero:#e7eef6;
+  /* Множник кегля: 0.9 / 1 / 1.15 / 1.3. Керується смугою доступності вгорі. */
+  --fs:1;
   --r:16px;
   --r-sm:12px;
 }
+html.hc{--ink-2:#0d0e10;--ink-3:#26292e;--line:#8b929b;--line-2:#3d434b}
+html.hc .doc-note,html.hc ul.sub li,html.hc .card p,html.hc .help{font-weight:500}
+
+/* Смуга доступності. Не косметика: пояснення до документів були найдрібнішим
+   текстом на сторінці — 16px проти 18px основного, — і саме на них скаржаться
+   далекозорі. Тепер їх можна збільшити, не чіпаючи решту верстки. */
+.a11y{background:var(--ink);color:#fff}
+.a11y-inner{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+/* Смуга керування не масштабується разом зі змістом: інакше, збільшивши текст,
+   людина роздуває й самі кнопки і втрачає півекрана. На вузькому екрані підпис
+   ховається — лишається піктограма, і все вміщується в один рядок. */
+.a11y-main{display:flex;align-items:center;gap:10px;margin-right:auto}
+.a11y-btn{font:inherit;font-size:15px;font-weight:600;line-height:1;
+  min-width:46px;min-height:44px;padding:0 14px;border-radius:10px;
+  border:2px solid rgba(255,255,255,.55);background:transparent;color:#fff;cursor:pointer}
+.a11y-btn:hover{border-color:#fff;background:rgba(255,255,255,.12)}
+.a11y-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.a11y-btn[aria-pressed="true"]{background:#fff;color:var(--ink);border-color:#fff}
+.a11y-btn:disabled{opacity:.45;cursor:not-allowed}
+.a11y-status{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{
   margin:0;padding:0 0 80px;background:var(--paper);color:var(--ink);
   font-family:"e-Ukraine",-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
-  font-size:18px;line-height:1.55;font-weight:400;
+  font-size:calc(18px * var(--fs));line-height:1.55;font-weight:400;
 }
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
 
@@ -52,10 +75,10 @@ body{
 .hero-inner{max-width:800px;margin:0 auto}
 h1{
   font-family:"e-Ukraine Head","e-Ukraine",inherit;
-  font-size:clamp(29px,4.2vw,48px);line-height:1.12;letter-spacing:-.024em;
+  font-size:calc(clamp(29px,4.2vw,48px) * var(--fs));line-height:1.12;letter-spacing:-.024em;
   font-weight:700;margin:0 auto 24px;text-wrap:balance;
 }
-.hero .lede{font-size:19px;line-height:1.55;color:var(--ink-2);margin:0 auto;text-wrap:pretty}
+.hero .lede{font-size:calc(19px * var(--fs));line-height:1.55;color:var(--ink-2);margin:0 auto;text-wrap:pretty}
 /* Службовий блок: тонка лінія відділяє його від ліда, дрібний кегль
    і приглушений сірий відводять на другий план. Кольору --ink-3, а не
    світлішого: нижче 4.5:1 дрібний текст перестає проходити WCAG AA. */
@@ -64,7 +87,7 @@ h1{
   border-top:1px solid rgba(13,14,16,.14);
 }
 .meta-notes{display:flex;flex-direction:column;gap:6px}
-.hero .meta-notes p{margin:0;font-size:13px;line-height:1.55;color:var(--ink-3);text-wrap:pretty}
+.hero .meta-notes p{margin:0;font-size:calc(13px * var(--fs));line-height:1.55;color:var(--ink-3);text-wrap:pretty}
 .meta-notes b{font-weight:600;color:var(--ink-2)}
 
 .panel{background:var(--paper);border-radius:var(--r);padding:24px 20px}
@@ -81,25 +104,25 @@ h1{
 .stage:first-child{margin-top:0;padding-top:0;border-top:0}
 .stage-name{
   display:flex;align-items:center;gap:12px;margin:0 0 26px;
-  font-size:15px;font-weight:500;letter-spacing:.02em;color:var(--ink-2);
+  font-size:calc(15px * var(--fs));font-weight:500;letter-spacing:.02em;color:var(--ink-2);
 }
 .stage-num{
   flex:none;width:30px;height:30px;border-radius:50%;
-  background:var(--ink);color:#fff;font-size:15px;font-weight:500;
+  background:var(--ink);color:#fff;font-size:calc(15px * var(--fs));font-weight:500;
   display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums;
 }
 
 fieldset{border:0;margin:0 0 34px;padding:0}
 fieldset:last-child{margin-bottom:0}
-legend{padding:0;font-size:21px;line-height:1.35;font-weight:500;letter-spacing:-.01em;margin-bottom:6px}
-.help{margin:0 0 14px;font-size:17px;line-height:1.5;color:var(--ink-2);max-width:68ch}
-.basis{margin:12px 0 0;font-size:15px;color:var(--ink-2)}
+legend{padding:0;font-size:calc(21px * var(--fs));line-height:1.35;font-weight:500;letter-spacing:-.01em;margin-bottom:6px}
+.help{margin:0 0 14px;font-size:calc(17px * var(--fs));line-height:1.5;color:var(--ink-2);max-width:68ch}
+.basis{margin:12px 0 0;font-size:calc(15px * var(--fs));color:var(--ink-2)}
 
 .opts{display:flex;flex-direction:column;gap:10px}
 .opt{
   display:flex;gap:14px;align-items:flex-start;
   border:2px solid var(--line);border-radius:var(--r-sm);
-  padding:16px 18px;cursor:pointer;background:var(--paper);font-size:18px;line-height:1.45;
+  padding:16px 18px;cursor:pointer;background:var(--paper);font-size:calc(18px * var(--fs));line-height:1.45;
 }
 .opt:hover{border-color:var(--line-2)}
 .opt input{flex:none;margin:2px 0 0;width:22px;height:22px;accent-color:var(--ink)}
@@ -109,18 +132,18 @@ legend{padding:0;font-size:21px;line-height:1.35;font-weight:500;letter-spacing:
 
 .num-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .num-input{
-  font:inherit;font-size:26px;font-weight:500;width:150px;padding:14px 18px;
+  font:inherit;font-size:calc(26px * var(--fs));font-weight:500;width:150px;padding:14px 18px;
   border:2px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper);color:inherit;
   font-variant-numeric:tabular-nums;text-align:center;
 }
 .num-input:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-color:var(--ink)}
 .num-input.bad{border-color:var(--ink);background:#f7f7f8}
-.suffix{font-size:18px;color:var(--ink-2)}
+.suffix{font-size:calc(18px * var(--fs));color:var(--ink-2)}
 a{color:var(--link);text-decoration:underline;text-underline-offset:2px}
 a:hover{text-decoration-thickness:2px}
 a:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 select.country{
-  font:inherit;font-size:18px;padding:16px 18px;width:100%;max-width:520px;
+  font:inherit;font-size:calc(18px * var(--fs));padding:16px 18px;width:100%;max-width:520px;
   border:2px solid var(--line-2);border-radius:var(--r-sm);background:var(--paper);color:inherit;
 }
 select.country:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-color:var(--ink)}
@@ -132,25 +155,25 @@ select.country:focus-visible{outline:3px solid var(--focus);outline-offset:2px;b
   display:flex;align-items:center;justify-content:center;
   min-width:76px;height:72px;padding:0 16px;
   border:2px solid var(--line);border-radius:var(--r-sm);background:var(--paper);
-  font-size:26px;font-weight:500;font-variant-numeric:tabular-nums;cursor:pointer;
+  font-size:calc(26px * var(--fs));font-weight:500;font-variant-numeric:tabular-nums;cursor:pointer;
 }
 .tile span:hover{border-color:var(--line-2)}
 .tile input:checked + span{border-color:var(--ink);background:var(--ink);color:#fff}
 .tile input:focus-visible + span{outline:3px solid var(--focus);outline-offset:2px}
 .legal-basis{
-  background:var(--soft);border-radius:var(--r);padding:18px 20px;margin:16px 0 0;font-size:16px;
+  background:var(--soft);border-radius:var(--r);padding:18px 20px;margin:16px 0 0;font-size:calc(16px * var(--fs));
 }
 .legal-basis p{margin:0 0 8px;font-weight:500}
 .legal-basis ul{margin:0;padding-left:20px}
 .legal-basis li{margin-bottom:4px;color:var(--ink-2)}
-.field-error{margin:12px 0 0;font-size:17px;font-weight:500;
+.field-error{margin:12px 0 0;font-size:calc(17px * var(--fs));font-weight:500;
   border-left:4px solid var(--ink);padding-left:12px}
 
 .actions{margin-top:36px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 /* Посилання на е-Чергу мусить виглядати кнопкою нарівні з рештою: доти,
    доки правило стояло лише на button, <a> лишався без відступів і радіуса. */
 button,a.btn-primary{
-  font:inherit;font-size:18px;font-weight:500;padding:16px 30px;
+  font:inherit;font-size:calc(18px * var(--fs));font-weight:500;padding:16px 30px;
   border-radius:100px;border:2px solid transparent;cursor:pointer;
 }
 a.btn-primary{display:inline-block;text-decoration:none;line-height:1.2}
@@ -160,15 +183,15 @@ button:focus-visible,a.btn-primary:focus-visible{outline:3px solid var(--focus);
 .btn-primary:disabled{background:var(--line);color:#7c838c;cursor:not-allowed}
 .btn-quiet{background:var(--paper);color:var(--ink);border-color:var(--line-2)}
 .btn-quiet:hover{background:var(--page)}
-.pending{margin:0;font-size:17px;color:var(--ink-2)}
-.actions-hint{margin:12px 0 0;font-size:15px;line-height:1.45;color:var(--ink-2);max-width:72ch}
+.pending{margin:0;font-size:calc(17px * var(--fs));color:var(--ink-2)}
+.actions-hint{margin:12px 0 0;font-size:calc(15px * var(--fs));line-height:1.45;color:var(--ink-2);max-width:72ch}
 
 h2{font-family:"e-Ukraine Head","e-Ukraine",inherit;
-   font-size:clamp(24px,4vw,32px);line-height:1.2;letter-spacing:-.018em;font-weight:700;margin:0 0 20px}
+   font-size:calc(clamp(24px,4vw,32px) * var(--fs));line-height:1.2;letter-spacing:-.018em;font-weight:700;margin:0 0 20px}
 .sect{margin-top:28px}
 .sect:first-child{margin-top:0}
 .sect-head{
-  font-size:14px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  font-size:calc(14px * var(--fs));font-weight:600;letter-spacing:.09em;text-transform:uppercase;
   color:var(--ink-2);margin:0 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line);
 }
 
@@ -179,30 +202,30 @@ ul.docs li{
 }
 ul.docs li:last-child{margin-bottom:0}
 ul.docs li.opt-doc{border-left-style:dotted;border-left-color:var(--line-2)}
-.doc-title{font-size:19px;font-weight:600;line-height:1.4;letter-spacing:-.005em}
-.doc-note{margin:5px 0 0;font-size:16px;line-height:1.5;color:var(--ink-2);max-width:72ch}
+.doc-title{font-size:calc(19px * var(--fs));font-weight:600;line-height:1.4;letter-spacing:-.005em}
+.doc-note{margin:5px 0 0;font-size:calc(16px * var(--fs));line-height:1.5;color:var(--ink-2);max-width:72ch}
 ul.sub{margin:6px 0 0;padding:0;list-style:none;max-width:72ch}
 ul.sub li{border:0;padding:0 0 0 16px;margin:0 0 5px;position:relative;
-  font-size:16px;line-height:1.45;color:var(--ink-2)}
+  font-size:calc(16px * var(--fs));line-height:1.45;color:var(--ink-2)}
 ul.sub li::before{content:"—";position:absolute;left:0;color:var(--line-2)}
 .toggle-basis{
   display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;
   background:none;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  padding:22px 4px;margin:40px 0 0;font-size:20px;font-weight:500;color:var(--ink);
+  padding:22px 4px;margin:40px 0 0;font-size:calc(20px * var(--fs));font-weight:500;color:var(--ink);
   cursor:pointer;text-align:left;border-radius:0}
 .toggle-basis:hover{color:var(--link)}
-.toggle-basis::after{content:"+";font-size:28px;font-weight:400;line-height:1}
+.toggle-basis::after{content:"+";font-size:calc(28px * var(--fs));font-weight:400;line-height:1}
 body.show-basis .toggle-basis::after{content:"−"}
 body:not(.show-basis) .basis{display:none}
 
 .card{border-radius:var(--r);padding:18px 20px;margin-bottom:12px}
-.card h3{margin:0 0 6px;font-size:19px;font-weight:500;line-height:1.35}
-.card p{margin:0;font-size:16px;line-height:1.5;max-width:72ch}
+.card h3{margin:0 0 6px;font-size:calc(19px * var(--fs));font-weight:500;line-height:1.35}
+.card p{margin:0;font-size:calc(16px * var(--fs));line-height:1.5;max-width:72ch}
 .card .basis{margin-top:12px}
 .card--stop{background:var(--paper);border:3px solid var(--ink)}
 .card--note{background:var(--soft);border:1px solid var(--line)}
 
-.label-strip{font-size:14px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+.label-strip{font-size:calc(14px * var(--fs));font-weight:500;letter-spacing:.07em;text-transform:uppercase;
   margin:0 0 10px;color:var(--ink-2)}
 .card--stop .label-strip{color:var(--ink)}
 
@@ -213,12 +236,17 @@ body:not(.show-basis) .basis{display:none}
 @media(min-width:800px){.facts-col + .facts-col{border-top:0;border-left:1px solid var(--line)}}
 .fact{margin-bottom:18px}
 .fact:last-child{margin-bottom:0}
-.fact dt{font-size:16px;color:var(--ink-2);margin-bottom:4px}
-.fact dd{margin:0;font-size:19px;line-height:1.4;font-weight:500}
-.fact dd small{display:block;margin-top:6px;font-size:16px;font-weight:400;color:var(--ink-2);line-height:1.5}
-.sum{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.fact dt{font-size:calc(16px * var(--fs));color:var(--ink-2);margin-bottom:4px}
+.fact dd{margin:0;font-size:calc(19px * var(--fs));line-height:1.4;font-weight:500}
+.fact dd small{display:block;margin-top:6px;font-size:calc(16px * var(--fs));font-weight:400;color:var(--ink-2);line-height:1.5}
+.sum{font-size:calc(24px * var(--fs));font-weight:700;font-variant-numeric:tabular-nums}
 
-.footnote{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:15px}
+ul.posts{list-style:none;margin:0;padding:0}
+ul.posts li{margin:0 0 10px;font-size:calc(17px * var(--fs));line-height:1.5}
+ul.posts li:last-child{margin-bottom:0}
+ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
+
+.footnote{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-2);font-size:calc(15px * var(--fs))}
 [hidden]{display:none !important}
 
 /* Друкується лише результат: банер, анкета й перемикач підстав зникають,
@@ -258,6 +286,8 @@ body:not(.show-basis) .basis{display:none}
   .fact dt{font-size:8.5pt;color:#000;margin-bottom:2px}
   .fact dd{font-size:10pt;line-height:1.3}
   .fact dd small{font-size:8.5pt;color:#000;margin-top:3px;line-height:1.35}
+  ul.posts li{font-size:9.5pt;line-height:1.35;margin-bottom:5px}
+  ul.posts .print-only{font-size:8.5pt;color:#000}
   .basis{font-size:8pt;margin-top:5px;color:#000}
   .legal-basis{background:#fff;border:1px solid #000;border-radius:0;padding:8px 10px}
   .footnote{margin-top:10px;padding-top:6px;font-size:8pt;color:#000}
@@ -267,10 +297,22 @@ body:not(.show-basis) .basis{display:none}
 </style>
 </head>
 <body>
+<div class="a11y noprint">
+  <div class="wrap a11y-inner" role="group" aria-label="Версія для людей із порушенням зору">
+    <button type="button" id="a11y-toggle" class="a11y-btn a11y-main" aria-pressed="false">
+      <span aria-hidden="true" style="display:flex"><svg width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 8s4.2-6.4 12-6.4S25 8 25 8s-4.2 6.4-12 6.4S1 8 1 8Z"/><circle cx="13" cy="8" r="3.1"/></svg></span>
+      <span id="a11y-toggle-text">Людям із порушенням зору</span>
+    </button>
+    <button type="button" id="fs-down" class="a11y-btn" aria-label="Зменшити текст" hidden>А−</button>
+    <button type="button" id="fs-up" class="a11y-btn" aria-label="Збільшити текст" hidden>А+</button>
+    <span class="a11y-status" role="status" aria-live="polite" id="a11y-status"></span>
+  </div>
+</div>
+
 <header class="hero">
   <div class="hero-inner">
     <h1>Форма перевірки документів, необхідних для оформлення закордонного паспорта</h1>
-    <p class="lede">Відповідаєте на 6–10 запитань — отримуєте індивідуальний перелік документів, основні правила та послідовність дій, розмір оплати, точну назву потрібної послуги в е-Черзі, а також іншу корисну інформацію. Результати збережіть у телефоні, за потреби роздрукуйте, візьміть із собою.</p>
+    <p class="lede">Відповідаєте на 6–10 запитань — отримуєте індивідуальний перелік документів, основні правила та послідовність дій. Результати збережіть у телефоні або роздрукуйте.</p>
     <div class="meta-notes">
       <p>Це неофіційний інструмент, що допомагає готувати документи для подачі до посольств і консульств України. Остаточний перелік визначає консульський співробітник. При зверненні до ДП «Документ» перелік буде інший. Відповіді, надані тут, не передаються далі — вони залишаються у вашому браузері. Якщо є бажання залишити відгуки та пропозиції, заповніть <a href="https://forms.cloud.microsoft/e/WSGMxnix2Q" target="_blank" rel="noopener noreferrer">коротку форму</a>.</p>
     </div>
@@ -295,11 +337,11 @@ body:not(.show-basis) .basis{display:none}
 
       <div class="actions noprint">
         <button type="button" id="again" class="btn-quiet">Заповнити заново</button>
-        <button type="button" id="savepdf" class="btn-quiet">Зберегти PDF</button>
-        <button type="button" id="print" class="btn-quiet">Роздрукувати</button>
+        <button type="button" id="copy" class="btn-quiet">Копіювати перелік</button>
+        <button type="button" id="print" class="btn-quiet">Роздрукувати або зберегти PDF</button>
         <a id="equeue" class="btn-primary" target="_blank" rel="noopener noreferrer">Е-Черга МЗС</a>
       </div>
-      <p class="actions-hint noprint">Обидві кнопки відкривають вікно друку браузера: щоб зберегти файл, у полі «Принтер» оберіть «Зберегти як PDF». Друкується лише перелік, без запитань.</p>
+      <p class="actions-hint noprint">Кнопка друку відкриває вікно браузера: щоб зберегти файл, у полі «Принтер» оберіть «Зберегти як PDF». Друкується лише перелік, без запитань. «Копіювати» кладе перелік у буфер обміну — зручно вставити в нотатки чи месенджер на телефоні.</p>
       <p class="footnote" id="stamp"></p>
     </section>
   </main>
@@ -307,11 +349,13 @@ body:not(.show-basis) .basis{display:none}
 
 <script type="application/json" id="rules">{
   "meta": {
-    "version": "5.1",
+    "version": "6.6",
     "scope": "Оформлення паспорта громадянина України для виїзду за кордон у закордонній дипломатичній установі",
     "sources": {
       "Закон": "ЗУ № 5492-VI від 20.11.2012, ред. від 14.06.2025",
-      "Порядок": "затв. ПКМУ № 152 від 07.05.2014, ред. від 01.01.2026 (ПКМУ № 1709 від 24.12.2025)"
+      "Порядок": "затв. ПКМУ № 152 від 07.05.2014, ред. від 01.01.2026 (ПКМУ № 1709 від 24.12.2025)",
+      "Тариф": "Положення про консульський збір, затв. Наказом МЗС № 182 від 23.04.2018",
+      "Статут": "Консульський статут України, затв. Указом Президента № 127/94 від 02.04.1994"
     },
     "note": "ПКМУ № 152 містить три додатки з власною нумерацією. Усі посилання — на Порядок.",
     "legal_links": [
@@ -329,9 +373,15 @@ body:not(.show-basis) .basis{display:none}
       }
     ],
     "open_questions": [
-      "Звільнені з полону: Закон ст.20 ч.4 знімає «адміністративний (консульський) збір» — 0 € чи 37 €?",
-      "Блокер N5: потрібне нормативне посилання на те, що ЗДУ не оформлює паспорт громадянина України. Поки що це вимога установи, як і B_vod.",
-      "Блокер N5 у напруженні з Порядком п.52 пп.1 абз.2: норма прямо передбачає випадок, коли особі жодного документа не оформлювалося, і вимагає лише довідку про реєстрацію громадянином України. Тобто за текстом Порядку ЗДУ такий пакет приймає, а за практикою — ні. Треба вирішити, що показувати."
+      "Абз.2 п.52 пп.1 — довідка про реєстрацію громадянином. Після рішення ДКС вона лишається в переліку ЗДУ тільки для дітей до 14 років, і тригером там служить громадянство батьків при народженні, як і в нормі. Для 14+ питання зняте: без паспортного документа пакет не приймається незалежно від довідки."
+    ],
+    "resolved": [
+      "Довідка про реєстрацію особи громадянином України після 16.01.2026 не скасована й не замінена: її видають тим, у кого батьки мають різне громадянство. До 16.01.2026 реєстрація за народженням була окремою консульською дією, і довідку діставали й діти двох батьків-громадян. Закон № 4502-IX від 18.06.2025, чинний з 16.01.2026. Джерело — паспортний відділ; у нормі про звуження кола прямо не сказано.",
+      "Чи замінює довідка про реєстрацію громадянином паспортний документ для особи від 14 років — ні. Позиція ДКС: норма Порядку п.52 пп.1 разом з обов'язковістю паспорта громадянина України з 14 років означають, що ПГУВК оформлюється лише за наявності паспортного документа. Довідка підтверджує громадянство, але особи не посвідчує, тож абз.2 додає документ, а не підставляє його замість абз.1. Тому блокер N5 спрацьовує незалежно від наявності довідки, а сама довідка лишається в переліку ЗДУ тільки для дітей до 14 років.",
+      "Обов'язковість паспорта громадянина України з 14 років — Закон № 5492-VI, ст.21 ч.2: «Кожен громадянин України, який досяг чотирнадцятирічного віку, зобов'язаний отримати паспорт громадянина України». Разом зі ст.21 ч.1 (ПГУ посвідчує особу та підтверджує громадянство) це і є нормативна опора блокера N5.",
+      "Заява батьків (Закон ст.22 ч.11 пп.2) до переліку не входить. ПКМУ № 1220 від 28.10.2022 переписав Порядок на «заяву-анкету одного з батьків»: окремої заяви від другого з батьків не потрібно, а сама «заява» зведена до заяви-анкети, яку формує працівник на місці. Вікову межу згодом знижено з 16 до 14 років (Закон № 3709-IX від 09.05.2024), і чинна редакція п.7 пп.2 стоїть на 14 — форма використовує саме її. ЗАСТЕРЕЖЕННЯ для юриста: ст.22 ч.11 пп.2 Закону не скасована й формально чинна, а постанова Кабміну закон не скасовує. Форма йде за Порядком, бо саме його застосовує установа, але колізія існує і при погодженні інструмента спливе.",
+      "Звільнені з полону платять 37 € — стільки ж, скільки решта пільгових категорій. Виводиться з двох текстів. Тариф (Наказ МЗС № 182, розділ І) містить дві окремі консульські дії: поз.1 «Оформлення паспорта громадянина України для виїзду за кордон (крім осіб до 16 років)» — 90 USD / 83 €, і поз.2 «Автоматизована обробка даних при оформленні паспорта..., у тому числі для осіб до 16 років» — 40 USD / 37 €. Закон ст.20 ч.4 знімає збір «за оформлення паспорта», тобто поз.1. Доказ від протилежного: у тому самому реченні Закону перелічено осіб до 16 років, а Тариф прямо каже, що поз.2 з них справляється, — отже звільнення поз.2 не охоплює. Формулювання для полонених ширше лише в частині «адміністративний (консульський)», але об'єкт той самий: оформлення паспорта.",
+      "Маршрут «ПГУ оформлює ДП «Документ»» має нормативну опору: Консульський статут (Указ № 127/94), ст.40 — «Консул видає паспорти громадян України для виїзду за кордон, продовжує строк їх дії та вносить до них зміни», паспорта громадянина України серед функцій консула немає; ПКМУ № 678 від 10.06.2022 — експериментальний проєкт щодо оформлення паспорта громадянина України громадянам, які перебувають за межами України, через відокремлені підрозділи ДП «Документ»."
     ]
   },
   "facts": [
@@ -372,6 +422,7 @@ body:not(.show-basis) .basis{display:none}
       "type": "enum",
       "values": [
         "first",
+        "second",
         "exchange",
         "lost"
       ],
@@ -503,7 +554,8 @@ body:not(.show-basis) .basis{display:none}
       "label": "У якій країні ви плануєте звертатися до консульської установи?",
       "help": "Від цього залежать валюта й розмір консульського збору. Загальний перелік документів однаковий для всіх установ; різняться лише вимоги до іноземних документів — залежно від держави, яка їх видала.",
       "when": true,
-      "basis": "Тариф консульського збору відповідної ЗДУ"
+      "basis": "Тариф консульського збору відповідної ЗДУ",
+      "context": "post"
     },
     {
       "id": "age",
@@ -580,6 +632,10 @@ body:not(.show-basis) .basis{display:none}
           "l": "Перше оформлення"
         },
         {
+          "v": "second",
+          "l": "Другий паспорт — додатково до наявного"
+        },
+        {
           "v": "exchange",
           "l": "Обмін наявного паспорта"
         },
@@ -588,7 +644,10 @@ body:not(.show-basis) .basis{display:none}
           "l": "Замість втраченого або викраденого"
         }
       ],
-      "when": true
+      "when": true,
+      "help": "Другий паспорт — це оформлення, а не обмін: наявний лишається чинним. Закон дозволяє мати не більше двох дійсних паспортів.",
+      "options_order": "Спершу оформлення (перше й другий), далі обмін, далі втрата. Порядок відповідає Порядку п.6: обмін стосується раніше виданого паспорта, а другий паспорт — це оформлення.",
+      "basis": "Порядок п.6 — підстави обміну; Закон ст.22 ч.1 абз.2 — не більше двох дійсних паспортів"
     },
     {
       "id": "exchange_ground",
@@ -622,53 +681,8 @@ body:not(.show-basis) .basis{display:none}
       "basis": "Порядок п.6 — перелік вичерпний"
     },
     {
-      "id": "passports_valid",
-      "stage": 3,
-      "type": "tiles",
-      "label": "Скільки дійсних закордонних паспортів зараз на руках?",
-      "help": "Враховуйте лише ті, що не були анульовані — без проколів чи отворів у машинній зоні.",
-      "options": [
-        {
-          "v": "0",
-          "l": "0"
-        },
-        {
-          "v": "1",
-          "l": "1"
-        },
-        {
-          "v": "2",
-          "l": "2"
-        }
-      ],
-      "when": true
-    },
-    {
-      "id": "passports_expired",
-      "stage": 3,
-      "type": "tiles",
-      "label": "Скільки паспортів зі спливлим строком дії на руках?",
-      "help": "Враховуйте лише ті, що не були анульовані раніше (без проколів).",
-      "options": [
-        {
-          "v": "0",
-          "l": "0"
-        },
-        {
-          "v": "1",
-          "l": "1"
-        },
-        {
-          "v": "2+",
-          "l": "2+"
-        }
-      ],
-      "options_order": "Варіанти «2» і «2+» зведено в один: жодне правило їх не розрізняє — єдиний предикат на цьому факті перевіряє лише «не нуль».",
-      "when": true
-    },
-    {
       "id": "had_prior_doc",
-      "stage": 4,
+      "stage": 3,
       "type": "choice",
       "label": "Чи оформлювався раніше на цю особу будь-який документ, що посвідчує особу та підтверджує громадянство України?",
       "help": "Паспорт громадянина України, попередній закордонний паспорт, посвідчення особи на повернення в Україну.",
@@ -689,6 +703,69 @@ body:not(.show-basis) .basis{display:none}
       }
     },
     {
+      "id": "passports_valid",
+      "stage": 3,
+      "type": "tiles",
+      "label": "Скільки дійсних закордонних паспортів є зараз?",
+      "help": "Враховуйте лише ті, що не були анульовані — без проколів чи отворів у машинній зоні.",
+      "options": [
+        {
+          "v": "0",
+          "l": "0"
+        },
+        {
+          "v": "1",
+          "l": "1"
+        },
+        {
+          "v": "2",
+          "l": "2"
+        }
+      ],
+      "when": {
+        "fact": "purpose",
+        "op": "in",
+        "value": [
+          "second",
+          "exchange",
+          "lost"
+        ]
+      },
+      "basis": "Питання має сенс лише тоді, коли паспорт уже видавався"
+    },
+    {
+      "id": "passports_expired",
+      "stage": 3,
+      "type": "tiles",
+      "label": "Скільки паспортів зі спливлим строком дії є зараз?",
+      "help": "Враховуйте лише ті, що не були анульовані раніше (без проколів).",
+      "options": [
+        {
+          "v": "0",
+          "l": "0"
+        },
+        {
+          "v": "1",
+          "l": "1"
+        },
+        {
+          "v": "2+",
+          "l": "2+"
+        }
+      ],
+      "options_order": "Варіанти «2» і «2+» зведено в один: жодне правило їх не розрізняє — єдиний предикат на цьому факті перевіряє лише «не нуль».",
+      "when": {
+        "fact": "purpose",
+        "op": "in",
+        "value": [
+          "second",
+          "exchange",
+          "lost"
+        ]
+      },
+      "basis": "Питання має сенс лише тоді, коли паспорт уже видавався"
+    },
+    {
       "id": "both_parents_ua",
       "stage": 4,
       "type": "choice",
@@ -705,6 +782,11 @@ body:not(.show-basis) .basis{display:none}
       ],
       "when": {
         "all": [
+          {
+            "fact": "age",
+            "op": "lt",
+            "value": 14
+          },
           {
             "fact": "purpose",
             "op": "eq",
@@ -890,7 +972,8 @@ body:not(.show-basis) .basis{display:none}
         "fact": "foreign_docs",
         "op": "eq",
         "value": "yes"
-      }
+      },
+      "context": "origin"
     }
   ],
   "documents": [
@@ -934,7 +1017,74 @@ body:not(.show-basis) .basis{display:none}
       "kind": "mandatory",
       "order": 20,
       "title": "Наявні закордонні паспорти",
-      "note": "Візьміть із собою всі закордонні паспорти, які є на руках — і дійсні, і зі спливлим строком дії.",
+      "note_rules": [
+        {
+          "when": {
+            "all": [
+              {
+                "fact": "passports_valid",
+                "op": "in",
+                "value": [
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "fact": "passports_expired",
+                "op": "ne",
+                "value": "0"
+              }
+            ]
+          },
+          "text": "Візьміть із собою всі закордонні паспорти, які у вас є — і дійсні, і зі спливлим строком дії."
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "fact": "passports_valid",
+                "op": "eq",
+                "value": "1"
+              },
+              {
+                "fact": "passports_expired",
+                "op": "eq",
+                "value": "0"
+              }
+            ]
+          },
+          "text": "Візьміть із собою наявний дійсний закордонний паспорт."
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "fact": "passports_valid",
+                "op": "eq",
+                "value": "2"
+              },
+              {
+                "fact": "passports_expired",
+                "op": "eq",
+                "value": "0"
+              }
+            ]
+          },
+          "text": "Візьміть із собою обидва дійсні закордонні паспорти."
+        },
+        {
+          "when": {
+            "fact": "passports_expired",
+            "op": "ne",
+            "value": "0"
+          },
+          "text": "Візьміть із собою всі наявні паспорти зі спливлим строком дії."
+        },
+        {
+          "when": true,
+          "text": "Візьміть із собою всі наявні закордонні паспорти."
+        }
+      ],
       "extras": [
         {
           "when": {
@@ -954,9 +1104,18 @@ body:not(.show-basis) .basis{display:none}
         },
         {
           "when": {
-            "fact": "passports_valid",
-            "op": "eq",
-            "value": "2"
+            "all": [
+              {
+                "fact": "passports_valid",
+                "op": "eq",
+                "value": "2"
+              },
+              {
+                "fact": "purpose",
+                "op": "eq",
+                "value": "exchange"
+              }
+            ]
           },
           "text": "Два дійсних паспорти. Закон не дозволяє мати понад два, тож один із них здається вже під час подання документів. Його теж можна повернути анульованим за заявою."
         }
@@ -991,7 +1150,6 @@ body:not(.show-basis) .basis{display:none}
       "kind": "mandatory",
       "order": 30,
       "title": "Паспорт громадянина України",
-      "note": "Або інший документ, що посвідчує особу та підтверджує громадянство України. Свідоцтво про народження таким документом не є.",
       "extras": [
         {
           "when": {
@@ -1007,8 +1165,11 @@ body:not(.show-basis) .basis{display:none}
         {
           "when": {
             "fact": "purpose",
-            "op": "eq",
-            "value": "exchange"
+            "op": "in",
+            "value": [
+              "exchange",
+              "second"
+            ]
           },
           "text": "Подається за наявності. Потрібен, якщо ви народилися в Україні і в закордонному паспорті зазначено лише область, без міста чи села: для заяви-анкети потрібен точний населений пункт. Якщо місцем народження зазначено іноземну державу, додаткових документів не потрібно. Якщо внутрішнього паспорта немає, точний населений пункт підтвердить свідоцтво про народження."
         }
@@ -1019,14 +1180,24 @@ body:not(.show-basis) .basis{display:none}
         "value": 14
       },
       "basis": "Порядок п.52 пп.1 абз.1",
-      "anchor": "для особи, яка досягла 14-річного віку"
+      "anchor": "для особи, яка досягла 14-річного віку",
+      "note": "Або інший документ, що посвідчує особу та підтверджує громадянство України. Свідоцтво про народження таким документом не є."
     },
     {
       "id": "B3",
       "kind": "mandatory",
       "order": 35,
       "title": "Свідоцтво про народження",
-      "note": "Українське свідоцтво: оригінал або витяг з Державного реєстру актів цивільного стану.",
+      "note_rules": [
+        {
+          "when": {
+            "fact": "foreign_docs",
+            "op": "eq",
+            "value": "no"
+          },
+          "text": "Українське свідоцтво: оригінал або витяг з Державного реєстру актів цивільного стану."
+        }
+      ],
       "extras": [
         {
           "when": {
@@ -1050,9 +1221,14 @@ body:not(.show-basis) .basis{display:none}
       "kind": "mandatory",
       "order": 40,
       "title": "Довідка про реєстрацію особи громадянином України",
-      "note": "Потрібна, бо на момент народження не обоє батьків були громадянами України.",
+      "note": "Документ, яким завершується набуття або поновлення громадянства. Потрібна, бо на момент народження не обоє батьків були громадянами України.",
       "when": {
         "all": [
+          {
+            "fact": "age",
+            "op": "lt",
+            "value": 14
+          },
           {
             "fact": "purpose",
             "op": "eq",
@@ -1088,7 +1264,7 @@ body:not(.show-basis) .basis{display:none}
       "kind": "mandatory",
       "order": 60,
       "title": "Паспортні документи законного представника",
-      "note": "Заяву подає один із батьків або законний представник — зі своїм паспортом.",
+      "note": "Заяву подає один із батьків або законний представник — зі своїм паспортом: закордонним, а за його відсутності — паспортом громадянина України.",
       "extras": [
         {
           "when": {
@@ -1287,6 +1463,10 @@ body:not(.show-basis) .basis{display:none}
       "order": 100,
       "title": "Відомості про зареєстроване або задеклароване місце проживання",
       "note": "Якщо маєте: витяг з реєстру територіальної громади, е-паспорт або паспорт-книжечка зразка 1994 року.",
+      "link": {
+        "label": "Витяг про місце проживання — послуга в «Дії»",
+        "url": "https://diia.gov.ua/services/vityag-z-reyestru-teritorialnoyi-gromadi"
+      },
       "when": true,
       "basis": "Порядок п.52 пп.5-1 (нове — ПКМУ № 1709)",
       "anchor": "витяг з реєстру територіальної громади"
@@ -1328,8 +1508,8 @@ body:not(.show-basis) .basis{display:none}
         ]
       },
       "title": "Спершу потрібен паспорт громадянина України",
-      "text": "Від 14 років до пакета входить документ, що посвідчує особу та підтверджує громадянство України; свідоцтво про народження ним не є. Закордонна дипломатична установа паспорт громадянина України не оформлює: за кордоном це робить ДП «Документ», в Україні — підрозділ ДМС. Оформіть його спершу, і лише потім звертайтеся по закордонний паспорт. Решту переліку наведено нижче — він знадобиться пізніше.",
-      "basis": "Порядок п.52 пп.1 абз.1; маршрут до ДП «Документ» — вимога установи, нормативного посилання ще немає"
+      "text": "Від 14 років паспорт для виїзду за кордон оформлюється лише за наявності паспортного документа — паспорта громадянина України або іншого документа, що посвідчує особу та підтверджує громадянство. Свідоцтво про народження його не замінює: за Порядком воно подається лише дітям до 14 років. Довідка про реєстрацію громадянином теж не замінює — вона підтверджує громадянство, але особи не посвідчує. Закордонна дипломатична установа паспорт громадянина України не оформлює: за кордоном це робить ДП «Документ», в Україні — підрозділ ДМС. Оформіть його спершу, і лише потім звертайтеся по закордонний паспорт. Решту переліку наведено нижче — він знадобиться пізніше.",
+      "basis": "Закон ст.21 ч.2 — обов'язок отримати паспорт громадянина України з 14 років; Порядок п.52 пп.1 абз.1 і пп.2; Консульський статут ст.40 — консул видає лише паспорт для виїзду за кордон; ПКМУ № 678 від 10.06.2022 — паспорт громадянина України за кордоном оформлює ДП «Документ»; відмова — Порядок п.82 пп.4"
     },
     {
       "id": "N3",
@@ -1366,6 +1546,69 @@ body:not(.show-basis) .basis{display:none}
       "title": "Можливий виїзд консульського працівника",
       "text": "За письмовим зверненням особи або її законного представника консульський співробітник виїжджає за місцем проживання чи проходження лікування. Особисто прибувати не потрібно.",
       "basis": "Порядок п.53; п.7 пп.3"
+    },
+    {
+      "id": "N6",
+      "kind": "warning",
+      "when": {
+        "fact": "filer",
+        "op": "ne",
+        "value": "self"
+      },
+      "title": "Забрати паспорт може інша людина",
+      "text": "Той із батьків або законних представників, хто подає документи, може письмовою заявою у довільній формі визначити, хто саме забере готовий паспорт: другого з батьків, опікуна, піклувальника, повнолітніх сина чи дочку, рідних сестру, брата, діда або бабу. Не діє, якщо документи подає представник дитячого закладу або патронатний вихователь.",
+      "basis": "Порядок п.52, абзац доданий ПКМУ № 1220 від 28.10.2022"
+    },
+    {
+      "id": "N7",
+      "kind": "warning",
+      "when": {
+        "all": [
+          {
+            "fact": "purpose",
+            "op": "eq",
+            "value": "first"
+          },
+          {
+            "any": [
+              {
+                "fact": "age",
+                "op": "lt",
+                "value": 14
+              },
+              {
+                "fact": "had_prior_doc",
+                "op": "eq",
+                "value": "yes"
+              }
+            ]
+          }
+        ]
+      },
+      "title": "Перевірте, чи це справді перше оформлення",
+      "text": "Перше оформлення означає, що паспорта для виїзду за кордон цій особі ще не видавали — ні чинного, ні такого, у якого сплив строк дії. Якщо паспорт колись був, поверніться й оберіть «Обмін наявного паспорта» або «Замість втраченого чи викраденого»: перелік документів буде інший.",
+      "basis": "Порядок п.6 — обмін стосується раніше виданого паспорта"
+    },
+    {
+      "id": "N8",
+      "kind": "blocker",
+      "when": {
+        "all": [
+          {
+            "fact": "purpose",
+            "op": "eq",
+            "value": "second"
+          },
+          {
+            "fact": "passports_valid",
+            "op": "eq",
+            "value": "2"
+          }
+        ]
+      },
+      "title": "Третій паспорт оформити не можна",
+      "text": "Закон дозволяє мати не більше двох дійсних паспортів для виїзду за кордон, а їх уже два. Оформлення третього — підстава для відмови. Якщо один із наявних треба замінити, поверніться й оберіть «Обмін наявного паспорта»: тоді старий здається під час подання, і обмежень немає.",
+      "basis": "Закон ст.22 ч.1 абз.2; Порядок п.82 пп.3 (крім випадків п.22)"
     }
   ],
   "regime_text": {
@@ -1425,18 +1668,31 @@ body:not(.show-basis) .basis{display:none}
           "id": "processing",
           "label": "Автоматизована обробка даних",
           "waived_when": false,
-          "note": "справляється в усіх випадках, у тому числі з осіб до 16 років"
+          "note": "За Тарифом ця позиція справляється «у тому числі для осіб до 16 років» — тобто окремо від звільнення за Законом ст.20 ч.4"
         }
       ],
       "note": "Сплачується безготівково на місці: банківською карткою або смартфоном через POS-термінал.",
-      "note_pow": "Для осіб, звільнених з полону, закон знімає адміністративний (консульський) збір ширшим формулюванням, ніж для решти пільгових категорій. Точну суму уточніть в установі.",
       "note_unknown": "Тариф цієї установи не звірено. Наведено базові ставки в доларах США; збір справляється в національній валюті за тарифом установи.",
-      "basis": "Тариф консульського збору; Закон ст.20 ч.4"
+      "basis": "Наказ МЗС № 182 від 23.04.2018, Тариф, розділ І «Паспортні дії», позиції 1 і 2; Закон ст.20 ч.4 — перелік звільнених від консульського збору",
+      "note_exempt": "Звільнення знімає позицію «Оформлення паспорта». Позиція «Автоматизована обробка даних» справляється окремо і від неї не звільняє ніхто."
     },
     "term": {
       "label": "Строк оформлення",
-      "value": "До трьох місяців. Паспорт виготовляється в Україні та пересилається до установи.",
-      "basis": "Закон ст.22 ч.14 абз.3"
+      "rules": [
+        {
+          "when": {
+            "fact": "fee_exemption",
+            "op": "eq",
+            "value": "pow"
+          },
+          "value": "Для осіб, звільнених з полону, Закон установлює 10 робочих днів на оформлення і видачу — за заявою, поданою протягом року з дня звільнення. Фактичний строк залежить ще й від часу пересилання паспорта до установи, тож уточніть його в установі."
+        },
+        {
+          "when": true,
+          "value": "Паспорт оформлюється протягом трьох робочих днів, далі пересилається до установи. Загальний строк не може перевищувати трьох місяців."
+        }
+      ],
+      "basis": "Закон ст.22 ч.14 абз.2 і абз.3"
     },
     "equeue": {
       "label": "Послуга в е-Черзі",
@@ -1469,8 +1725,9 @@ body:not(.show-basis) .basis{display:none}
 }</script>
 <script type="application/json" id="countries">{
   "meta": {
-    "version": "0.1",
+    "version": "0.4",
     "checked_on": "2026-08-17",
+    "_posts_note": "Необов'язкове поле posts — установи України в цій державі та сторінки їхніх сайтів про оформлення паспорта. Кожен запис може нести й equeue_url — власну сторінку установи з роз'ясненням, як авторизуватися в е-Черзі; якщо не задано, кнопка веде на сторінку МЗС. Масив, бо в одній державі буває кілька ЗДУ (Польща, Німеччина, США): опитувальна форма для колег дає рівно один рядок на установу. Держава без posts просто не показує блоку «Докладніше» — мовчки, як і решта незаданих параметрів. Кожен запис несе власну дату звірки: посилання гниють, і без дати за рік це стане джерелом впевнених помилок.",
     "warning": "ЧЕРНЕТКА. Рядки з verified=false не публікувати без звірки: ETS 063 і Гаазька — за депозитарієм, П1 — за переліком Мін'юсту. Перелік у ЦЛ 22438 уже застарів щонайменше на дві держави.",
     "sources": [
       "Додаток до ЦЛ ДКС № 71/61513-020-22438-ВН від 08.03.2024 (перелік Мін'юсту)",
@@ -1490,10 +1747,12 @@ body:not(.show-basis) .basis{display:none}
         "RO",
         "SK"
       ],
-      "equeue_url": "https://id.e-consul.gov.ua",
+      "equeue_url": "https://mfa.gov.ua/consul/forua/e-cherga",
+      "_equeue_note": "Запасна адреса кнопки «Е-Черга МЗС», якщо установа не подала власної. Веде на роз'яснювальну сторінку МЗС, а не на id.e-consul.gov.ua: сама черга без пояснень, як у ній авторизуватися, — зачинені двері. Власне посилання установи задається в її записі: countries[].posts[].equeue_url.",
       "_note": "Параметри установи. eu_top — держави, що показуються вгорі списку: найбільші за кількістю громадян України за Євростатом плюс Балтія.",
       "rnokpp_url": ""
-    }
+    },
+    "_use_note": "Поле use — у яких списках показується держава. «post» — де планується подання документів, «origin» — де видано поданий документ. Поля немає — держава є в обох списках, це типовий випадок. Російська Федерація має лише «origin»: подання документів у РФ форма не пропонує за рішенням від 20.08.2026, але свідоцтво, видане в РФ, люди подають, і мовчати про його режим не можна. Не змінювати без прямої вказівки: PEREDACHA.md і zavdannya-dovidnyk-legalizatsii.md містять давніше рішення й у цьому пункті застаріли."
   },
   "grounds": {
     "P1": {
@@ -1829,7 +2088,14 @@ body:not(.show-basis) .basis{display:none}
       ],
       "basis": "Гаазька конвенція 1961",
       "verified": true,
-      "note": "Документи цивільного стану приймаються лише з апостилем."
+      "note": "Документи цивільного стану приймаються лише з апостилем.",
+      "posts": [
+        {
+          "name": "Посольство України в Латвійській Республіці",
+          "url": "https://latvia.mfa.gov.ua/kp/pass",
+          "checked_on": "2026-08-18"
+        }
+      ]
     },
     {
       "code": "LT",
@@ -1990,6 +2256,9 @@ body:not(.show-basis) .basis{display:none}
       ],
       "basis": "ПКМУ № 107 від 04.02.2023 — на час воєнного стану",
       "verified": false,
+      "use": [
+        "origin"
+      ],
       "note": "Звільнення тимчасове: діє під час воєнного стану та шість місяців після його припинення."
     },
     {
@@ -2198,9 +2467,9 @@ body:not(.show-basis) .basis{display:none}
 }</script>
 <script type="application/json" id="tariffs">{
   "meta": {
-    "version": "0.4",
+    "version": "0.5",
     "checked_on": "2026-08-17",
-    "source": "Тарифи консульського збору ЗДУ України",
+    "source": "Положення про консульський збір України, затв. Наказом МЗС № 182 від 23.04.2018. Тариф, розділ І «Паспортні дії»: поз.1 «Оформлення паспорта громадянина України для виїзду за кордон (крім осіб до 16 років)» — 90 USD / 83 €; поз.2 «Автоматизована обробка даних при оформленні паспорта…, у тому числі для осіб до 16 років» — 40 USD / 37 €.",
     "note": "Ставка в доларах США — базова, спільна для всіх установ. Національний еквівалент задається валютною зоною, а не окремою установою: перевірено, що тариф однаковий у різних установах однієї зони.",
     "warning": "Для зон, яких немає в переліку, показуються базові ставки в доларах США з приміткою, що збір справляється в національній валюті за тарифом установи."
   },
@@ -2217,6 +2486,7 @@ body:not(.show-basis) .basis{display:none}
       "processing": 37,
       "verified": true,
       "verified_by": [
+        "Наказ МЗС № 182",
         "LV",
         "DE"
       ],
@@ -2243,7 +2513,7 @@ body:not(.show-basis) .basis{display:none}
         "SI",
         "ES"
       ],
-      "note": "Ставку звірено за тарифами Латвії та Німеччини — однакова. Чорногорія користується євро односторонньо, до зони не включена: тариф не звірено."
+      "note": "Ставки збігаються з Тарифом у Наказі МЗС № 182 і з тарифами Латвії та Німеччини. Чорногорія користується євро односторонньо, до зони не включена: тариф не звірено."
     },
     {
       "id": "PLN",
@@ -2395,6 +2665,7 @@ body:not(.show-basis) .basis{display:none}
   const STAGE_NAMES = { 1: "Хто і для кого", 2: "Що оформлюємо", 3: "Що вже на руках", 4: "Обставини" };
 
   let answers = {};
+  let lastPlain = "";   // той самий перелік звичайним текстом — для буфера обміну
 
   /* ---------- придатність значення ----------
      Ключова відмінність від «непорожнього рядка»: значення має бути
@@ -2408,9 +2679,14 @@ body:not(.show-basis) .basis{display:none}
       const n = Number(s);
       return n >= q.min && n <= q.max;
     }
-    if (q.type === "country") return v === "OTHER" || !!BY_CODE[v];
+    if (q.type === "country") return v === "OTHER" || inContext(BY_CODE[v], q);
     return q.options.some(o => o.v === v);
   }
+
+  /* Одна держава може бути в одному списку й не бути в іншому: подання
+     документів у РФ форма не пропонує, а свідоцтво, видане в РФ, приймає
+     й пояснює його режим. Поля use немає — держава в обох списках. */
+  const inContext = (c, q) => !!c && (c.use || ["post", "origin"]).includes(q.context || "post");
 
   function facts() {
     const f = {};
@@ -2481,11 +2757,12 @@ body:not(.show-basis) .basis{display:none}
     }
 
     if (q.type === "country") {
+      const pool = GEO.countries.filter(c => inContext(c, q));
       const pref = (q.id === "foreign_country" && answers.post_country && answers.post_country !== "OTHER")
         ? [answers.post_country, ...INST.eu_top] : INST.eu_top;
-      const top = [...new Set(pref)].map(c => BY_CODE[c]).filter(Boolean);
+      const top = [...new Set(pref)].map(c => BY_CODE[c]).filter(c => inContext(c, q));
       const topSet = new Set(top.map(c => c.code));
-      const rest = GEO.countries.filter(c => !topSet.has(c.code));
+      const rest = pool.filter(c => !topSet.has(c.code));
       const opt = c => `<option value="${esc(c.code)}"${raw === c.code ? " selected" : ""}>${esc(c.name)}</option>`;
       return `<fieldset>${head}
         <select class="country" id="f_${q.id}" data-q="${q.id}">
@@ -2615,16 +2892,27 @@ body:not(.show-basis) .basis{display:none}
       blockers: nots.filter(n => n.kind === "blocker"),
       warnings: nots.filter(n => n.kind === "warning"),
       validity: RULES.computed.validity.rules.find(r => evalPred(r.when, f)).value,
+      term: RULES.computed.term.rules.find(r => evalPred(r.when, f)).value,
       fee: feeOf(f),
       equeue: RULES.computed.equeue.rules.find(r => evalPred(r.when, f)).value,
     };
   }
 
+  /* Пояснення документа теж залежить від відповідей. Доки воно було незмінним
+     рядком, форма суперечила анкеті: людині з одним паспортом радила взяти
+     «і дійсні, і зі спливлим», а тому, хто обрав іноземне свідоцтво, — «українське
+     свідоцтво». Спрацьовує перше правило, чия умова справдилася; не справдилася
+     жодна — пояснення не показується взагалі. */
+  function noteOf(d, f) {
+    if (d.note_rules) { const r = d.note_rules.find(x => evalPred(x.when, f)); return r ? r.text : null; }
+    return d.note || null;
+  }
+
   const docList = (items, optional, f) => `<ul class="docs">` + items.map(d => {
-      const ex = subs(d, f);
+      const ex = subs(d, f), nt = noteOf(d, f);
       return `<li${optional ? ' class="opt-doc"' : ""}>
         <div class="doc-title">${esc(d.title)}</div>
-        ${d.note ? `<p class="doc-note">${esc(fill(d.note, f))}</p>` : ""}
+        ${nt ? `<p class="doc-note">${esc(fill(nt, f))}</p>` : ""}
         ${ex.length ? `<ul class="sub">${ex.map(e => `<li>${esc(fill(e.text, f))}</li>`).join("")}</ul>` : ""}
         ${docLink(d)}
         <p class="basis">${esc(d.basis)}</p>
@@ -2659,6 +2947,42 @@ body:not(.show-basis) .basis{display:none}
         <p class="basis">${esc(n.basis)}</p>
       </div>`).join("");
 
+  /* Той самий перелік звичайним текстом. Потрібен для телефона: справжній PDF
+     потребував би сторонньої бібліотеки на пів мегабайта, а браузерний друк
+     на телефоні — це чотири кроки через меню «Поділитися». Текст у буфері
+     вставляється в нотатки чи месенджер одним рухом і лишається шукабельним. */
+  function plainText(r) {
+    const L = [], f = r.facts, c = BY_CODE[f.post_country];
+    L.push("ПЕРЕЛІК ДОКУМЕНТІВ ДЛЯ ОФОРМЛЕННЯ ЗАКОРДОННОГО ПАСПОРТА");
+    L.push((c ? c.name + " · " : "") + new Date().toLocaleDateString("uk-UA"));
+    L.push("");
+    [...r.blockers, ...r.warnings].forEach(n => {
+      L.push("! " + n.title); L.push("  " + fill(n.text, f)); L.push("");
+    });
+    const block = (head, items) => {
+      if (!items.length) return;
+      L.push(head);
+      items.forEach((d, i) => {
+        L.push(`${i + 1}. ${d.title}`);
+        const n = noteOf(d, f);
+        if (n) L.push("   " + fill(n, f));
+        subs(d, f).forEach(e => L.push("   — " + fill(e.text, f)));
+      });
+      L.push("");
+    };
+    block("ОБОВ'ЯЗКОВІ ДОКУМЕНТИ", r.mandatory);
+    block("ДОДАТКОВО (ЗА НАЯВНОСТІ)", r.optional);
+    L.push("ДЕТАЛІ ПОСЛУГИ");
+    L.push("Строк дії паспорта: " + r.validity);
+    L.push("Строк оформлення: " + r.term);
+    L.push("Розмір плати: " + r.fee.show(r.fee.total));
+    L.push("Послуга в е-Черзі: " + r.equeue);
+    ((c || {}).posts || []).forEach(p => L.push(p.name + ": " + p.url));
+    L.push("");
+    L.push("Довідково. Остаточний перелік визначає консульський співробітник.");
+    return L.join("\n");
+  }
+
   function show() {
     const r = evaluate(), fee = RULES.computed.fee, out = [];
     out.push(`<h2>Ваш перелік документів</h2>`);
@@ -2679,19 +3003,36 @@ body:not(.show-basis) .basis{display:none}
       <div class="facts-card">
         <div class="facts-col">
           <div class="fact"><dt>Строк дії паспорта</dt><dd>${esc(r.validity)}</dd></div>
-          <div class="fact"><dt>Строк оформлення</dt><dd>${esc(RULES.computed.term.value)}</dd></div>
+          <div class="fact"><dt>Строк оформлення</dt><dd>${esc(r.term)}</dd></div>
           <div class="fact"><dt>Розмір плати</dt><dd>${esc(r.fee.show(r.fee.total))}
             <small>${r.fee.lines.map(l => esc(l.label) + ": " + (l.waived ? "не справляється" : esc(r.fee.show(l.sum)))).join("<br>")}<br>${esc(RULES.computed.fee.note)}${
               r.fee.known ? "" : "<br>" + esc(RULES.computed.fee.note_unknown)}${
-              r.facts.fee_exemption === "pow" ? "<br>" + esc(RULES.computed.fee.note_pow) : ""}</small></dd></div>
+              r.fee.lines.some(l => l.waived) ? "<br>" + esc(RULES.computed.fee.note_exempt) : ""}</small></dd></div>
         </div>
         <div class="facts-col">
           <div class="fact"><dt>Послуга в е-Черзі</dt><dd>${esc(r.equeue)}
             <small>${esc(RULES.computed.equeue.warning)}</small></dd></div>
         </div>
       </div>
-      <p class="basis">Довідник держав звірено ${esc(GEO.meta.checked_on)}.</p></div>`);
+      <p class="basis">Довідник держав звірено ${esc(GEO.meta.checked_on)}.</p></div></div>`);
 
+    /* Сторінки установ. Держава без posts блоку не показує — так само мовчки,
+       як зникає посилання документа з незаданим link_param. На друку поруч із
+       назвою виводиться сама адреса: на папері клікнути нікуди. */
+    const posts = (BY_CODE[r.facts.post_country] || {}).posts || [];
+    if (posts.length) out.push(`<div class="sect"><p class="sect-head">Докладніше</p>
+      <ul class="posts">${posts.map(p => `<li>
+        Докладно на вебсторінці установи: <a href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">${esc(p.name)}</a>
+        <span class="print-only">${esc(p.url)}</span>
+      </li>`).join("")}</ul></div>`);
+
+    /* Кнопка е-Черги веде на сторінку установи з поясненням, як авторизуватися,
+       а не одразу в саму чергу: посилання на id.e-consul.gov.ua без роз'яснень —
+       зачинені двері. Немає власної сторінки — веде на роз'яснення МЗС. */
+    document.getElementById("equeue").href =
+      (posts.find(p => p.equeue_url) || {}).equeue_url || INST.equeue_url;
+
+    lastPlain = plainText(r);
     document.getElementById("results-body").innerHTML = out.join("");
     document.getElementById("stamp").textContent =
       `Реєстр правил v${RULES.meta.version}. Довідково; остаточний перелік визначає консульський співробітник.`;
@@ -2700,7 +3041,44 @@ body:not(.show-basis) .basis{display:none}
     res.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth", block: "start" });
   }
 
-  document.getElementById("equeue").href = INST.equeue_url;
+  /* Розмір тексту й контраст. Вибір не зберігається між відкриттями сторінки —
+     сховище браузера заборонено збіркою навмисно, і вимикати цю заборону заради
+     налаштування не варто. У межах одного заповнення форми цього досить. */
+  /* Одна кнопка вмикає режим: контраст одразу, а поруч з'являються А−/А+.
+     Вимкнення повертає і контраст, і кегль. Вибір не зберігається між
+     відкриттями сторінки — сховище браузера заборонено збіркою навмисно. */
+  const FS = [0.9, 1, 1.15, 1.3];
+  const FS_NAME = ["зменшений", "звичайний", "збільшений", "великий"];
+  const FS_DEFAULT = 1;
+  let a11yOn = false, fsStep = FS_DEFAULT;
+
+  function applyA11y(said) {
+    document.documentElement.style.setProperty("--fs", FS[fsStep]);
+    document.documentElement.classList.toggle("hc", a11yOn);
+    const t = document.getElementById("a11y-toggle");
+    t.setAttribute("aria-pressed", a11yOn ? "true" : "false");
+    document.getElementById("a11y-toggle-text").textContent =
+      a11yOn ? "Стандартна версія" : "Людям із порушенням зору";
+    const down = document.getElementById("fs-down"), up = document.getElementById("fs-up");
+    down.hidden = up.hidden = !a11yOn;
+    down.disabled = fsStep === 0;
+    up.disabled = fsStep === FS.length - 1;
+    if (said) document.getElementById("a11y-status").textContent = said;
+  }
+  document.getElementById("a11y-toggle").addEventListener("click", () => {
+    a11yOn = !a11yOn;
+    if (!a11yOn) fsStep = FS_DEFAULT;
+    applyA11y(a11yOn ? "Увімкнено версію для людей із порушенням зору"
+                     : "Повернуто стандартну версію");
+  });
+  document.getElementById("fs-up").addEventListener("click", () => {
+    fsStep = Math.min(fsStep + 1, FS.length - 1); applyA11y("Розмір тексту: " + FS_NAME[fsStep]);
+  });
+  document.getElementById("fs-down").addEventListener("click", () => {
+    fsStep = Math.max(fsStep - 1, 0); applyA11y("Розмір тексту: " + FS_NAME[fsStep]);
+  });
+  applyA11y();
+
   document.getElementById("toggle-basis").addEventListener("click", e => {
     const on = document.body.classList.toggle("show-basis");
     e.target.setAttribute("aria-pressed", on ? "true" : "false");
@@ -2708,7 +3086,25 @@ body:not(.show-basis) .basis{display:none}
   });
   document.getElementById("go").addEventListener("click", show);
   document.getElementById("print").addEventListener("click", () => window.print());
-  document.getElementById("savepdf").addEventListener("click", () => window.print());
+  document.getElementById("copy").addEventListener("click", async () => {
+    const btn = document.getElementById("copy");
+    let ok = false;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(lastPlain); ok = true;
+      } else {
+        /* Запасний шлях для старих браузерів: execCommand застарілий,
+           але в них іншого немає, а мовчазна відмова гірша за застарілий API. */
+        const ta = document.createElement("textarea");
+        ta.value = lastPlain; ta.setAttribute("readonly", "");
+        ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        ok = document.execCommand("copy"); ta.remove();
+      }
+    } catch (_) { ok = false; }
+    btn.textContent = ok ? "Скопійовано" : "Не вдалося скопіювати";
+    setTimeout(() => { btn.textContent = "Копіювати перелік"; }, 2500);
+  });
   document.getElementById("again").addEventListener("click", () => {
     answers = {};
     document.getElementById("results").hidden = true;
