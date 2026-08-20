@@ -53,26 +53,22 @@ html.hc .doc-note,html.hc ul.sub li,html.hc .card p,html.hc .help{font-weight:50
    потрібен більший текст, гортає найдовше. Тому кнопка мала, але лишається на
    екрані на будь-якій висоті прокрутки. */
 .a11y{position:fixed;right:14px;bottom:14px;z-index:60;
-  display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;
-  max-width:calc(100vw - 28px)}
+  display:flex;flex-direction:column;gap:10px}
 @supports(padding:env(safe-area-inset-bottom)){
   .a11y{bottom:calc(14px + env(safe-area-inset-bottom))}
 }
-/* Кнопка «Легше читати» стоїть праворуч і не рухається, коли поруч з'являються
-   А−/А+: інакше ціль тікала б з-під пальця саме в того, хто щойно її знайшов. */
-.a11y-main{order:3}
 /* Керування не масштабується разом зі змістом: інакше, збільшивши текст, людина
    роздуває й самі кнопки і втрачає півекрана. */
-.a11y-btn{font:inherit;font-size:15px;font-weight:600;line-height:1;
-  display:flex;align-items:center;gap:8px;
-  min-width:48px;min-height:48px;padding:0 16px;border-radius:26px;
+.a11y-btn{font:inherit;font-size:19px;font-weight:700;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  width:52px;height:52px;padding:0;border-radius:50%;
   border:2px solid #fff;background:var(--ink);color:#fff;cursor:pointer;
   box-shadow:0 3px 14px rgba(13,14,16,.38)}
-.a11y-btn:hover{background:#2a2d32}
+.a11y-btn:hover:not(:disabled){background:#2a2d32}
 .a11y-btn:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
-.a11y-btn[aria-pressed="true"]{background:#fff;color:var(--ink);border-color:var(--ink)}
-.a11y-btn[aria-pressed="true"]:hover{background:var(--page)}
-.a11y-btn:disabled{opacity:.5;cursor:not-allowed}
+/* Вимкнена кнопка не сіріє до невидимості: сірий на сірому — саме те, що погано
+   бачить той, для кого ця кнопка. Лишається чорна, але без обвідки й тіні. */
+.a11y-btn:disabled{cursor:default;box-shadow:none;border-color:var(--line);opacity:.6}
 .a11y-status{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 *{box-sizing:border-box}
@@ -145,6 +141,9 @@ legend{padding:0;font-size:calc(21px * var(--fs));line-height:1.35;font-weight:5
 .opt:has(input:checked){border-color:var(--ink);background:var(--pick)}
 .opt:has(input:checked) span{font-weight:500}
 .opt:focus-within{outline:3px solid var(--focus);outline-offset:2px}
+/* Місто під назвою установи: у Польщі й Німеччині назви різняться одним словом,
+   і саме місто відрізняє їх у пам'яті людини. */
+.opt span small{display:block;margin-top:3px;font-size:calc(15px * var(--fs));font-weight:400;color:var(--ink-2)}
 
 .num-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .num-input{
@@ -198,15 +197,26 @@ select.country:focus-visible{outline:3px solid var(--focus);outline-offset:2px;b
   font-size:calc(15px * var(--fs));line-height:1.45;color:var(--ink-2)}
 /* QR лишається чорним на білому за будь-яких налаштувань сторінки: висока
    контрастність чи інверсія кольорів зробили б його незчитуваним. */
-.video-qr{flex:none;width:104px;padding:5px;background:#fff;border-radius:6px}
-.video-qr svg{display:block;width:100%;height:auto}
+.qr-box{flex:none;width:104px;padding:5px;background:#fff;border-radius:6px}
+.qr-box svg{display:block;width:100%;height:auto}
+.qr-box:empty{display:none}
+/* Кнопка запису й код під карткою послуги. На екрані працює кнопка, на аркуші —
+   код: обидва беруть ту саму адресу, тож розійтися не можуть. */
+.equeue-go{display:flex;align-items:center;gap:16px;margin-top:18px;flex-wrap:wrap}
+.equeue-go .btn-primary{padding:14px 26px;font-size:calc(17px * var(--fs))}
+.equeue-print{font-size:calc(15px * var(--fs));line-height:1.4;color:var(--ink-2);max-width:38ch}
+.video-panel{margin:18px 0 0}
+.fold{margin:0}
+.btn-ico{display:inline-flex;vertical-align:-3px;margin-right:9px}
 .sub-narrow{display:none}
 /* На телефоні QR ховаємо: свій же екран камерою не зчитаєш, а код з'їдав пів
    картки й ламав заголовок на п'ять рядків. Лишається дотик — він там і
    природніший. На аркуші й на широкому екрані код повертається. */
 @media screen and (max-width:560px){
   .video-doc{gap:14px;padding:14px;max-width:none}
-  .video-qr{display:none}
+  /* На телефоні код нікому не потрібен: свій екран камерою не зчитаєш, а
+     кнопка й посилання поруч. На аркуші й на широкому екрані він лишається. */
+  .qr-box{display:none}
   .sub-wide{display:none}
   .sub-narrow{display:block}
 }
@@ -291,7 +301,10 @@ ul.sub li::before{content:"—";position:absolute;left:0;color:var(--line-2)}
   cursor:pointer;text-align:left;border-radius:0}
 .toggle-basis:hover{color:var(--link)}
 .toggle-basis::after{content:"+";font-size:calc(28px * var(--fs));font-weight:400;line-height:1}
-body.show-basis .toggle-basis::after{content:"−"}
+body.show-basis #toggle-basis::after{content:"−"}
+.toggle-basis.open::after{content:"−"}
+/* Дві гармошки поспіль: спільна лінія між ними, а не дві з проміжком. */
+#video-fold + .toggle-basis{margin-top:0;border-top:0}
 body:not(.show-basis) .basis{display:none}
 
 .card{border-radius:var(--r);padding:18px 20px;margin-bottom:12px}
@@ -361,7 +374,7 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
               grid-template-columns:1fr 1fr}
   .facts-col{padding:8px 10px}
   .facts-col + .facts-col{border-top:0;border-left:1px solid #000}
-  .fact{margin-bottom:9px}
+  .fact{margin-bottom:7px}
   .fact dt{font-size:8.5pt;color:#000;margin-bottom:2px}
   .fact dd{font-size:10pt;line-height:1.3}
   .fact dd small{font-size:8.5pt;color:#000;margin-top:3px;line-height:1.35}
@@ -372,11 +385,23 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
      а людина з тремтячими руками — не бере взагалі. */
   /* Ширину на аркуші тримаємо меншою, ніж на екрані: інакше блок не стає
      поруч із заголовком, зіскакує під нього — і забирає цілий аркуш. */
-  .video-doc{break-inside:avoid;border:1px solid #000;border-radius:0;
+  /* display:flex, бо .print-only вище ставить block — і код зіскакував би під
+     текст, роблячи блок удвічі вищим. Спіймано лічильником аркушів. */
+  .video-doc{display:flex;break-inside:avoid;border:1px solid #000;border-radius:0;
              margin:0;padding:6px 8px;gap:10px;max-width:96mm}
   .video-doc-title{font-size:10.5pt}
   .video-doc-sub{font-size:9pt;margin-top:2px;color:#000}
-  .video-qr{width:22mm;padding:0}
+  .qr-box{width:22mm;padding:0}
+  /* Кнопка «Реєструватися» на папері не працює — лишається код і рядок про те,
+     що з ним робити. Код стає в порожнє поле під короткою правою колонкою,
+     тому висоти аркушу він не додає. */
+  .equeue-go{margin-top:4px;gap:8px;align-items:flex-start}
+  /* 20 мм — нижня межа, яку ще впевнено бере камера телефона. Нижче не
+     опускаємось: check-qr.py читає код із готового PDF і не пропустить. */
+  .equeue-go .qr-box{width:20mm}
+  /* Ширину підпису тримаємо такою, щоб код став ПОРУЧ, а не під ним:
+     інакше блок удвічі вищий, а праворуч лишається порожнє поле. */
+  .equeue-print{font-size:9pt;color:#000;max-width:52mm}
   .legal-basis{background:#fff;border:1px solid #000;border-radius:0;padding:8px 10px}
   .footnote{margin-top:6px;padding-top:4px;font-size:8pt;color:#000}
   a{color:#000}
@@ -385,13 +410,9 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
 </style>
 </head>
 <body>
-<div class="a11y noprint" role="group" aria-label="Версія для людей із порушенням зору">
-  <button type="button" id="a11y-toggle" class="a11y-btn a11y-main" aria-pressed="false">
-    <span aria-hidden="true" style="display:flex"><svg width="26" height="16" viewBox="0 0 26 16" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M1 8s4.2-6.4 12-6.4S25 8 25 8s-4.2 6.4-12 6.4S1 8 1 8Z"/><circle cx="13" cy="8" r="3.1"/></svg></span>
-    <span id="a11y-toggle-text">Легше читати</span>
-  </button>
-  <button type="button" id="fs-down" class="a11y-btn" aria-label="Зменшити текст" hidden>А−</button>
-  <button type="button" id="fs-up" class="a11y-btn" aria-label="Збільшити текст" hidden>А+</button>
+<div class="a11y noprint" role="group" aria-label="Розмір тексту й контраст, для людей із порушенням зору">
+  <button type="button" id="fs-up" class="a11y-btn" aria-label="Збільшити текст і підвищити контраст">А+</button>
+  <button type="button" id="fs-down" class="a11y-btn" aria-label="Зменшити текст" disabled>А−</button>
   <span class="a11y-status" role="status" aria-live="polite" id="a11y-status"></span>
 </div>
 
@@ -419,33 +440,17 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
     <section id="results" hidden aria-live="polite">
       <div id="results-body"></div>
 
-      <a class="video-doc" id="video-doc" target="_blank" rel="noopener noreferrer" hidden>
-        <span class="video-mark" aria-hidden="true">
-          <svg viewBox="0 0 32 22" width="32" height="22">
-            <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor"/>
-            <path d="M13 7.2 21 11l-8 3.8z" fill="#fff"/>
-          </svg>
-        </span>
-        <span class="video-doc-text">
-          <span class="video-doc-title" id="video-doc-title"></span>
-          <span class="video-doc-sub noprint sub-wide">Натисніть цей рядок або наведіть камеру телефона на код.</span>
-          <span class="video-doc-sub noprint sub-narrow">Натисніть, щоб відкрити відео.</span>
-          <span class="video-doc-sub print-only">Наведіть камеру телефона на код — відкриється відео.</span>
-        </span>
-        <span class="video-qr" aria-hidden="true"><svg viewBox="0 0 41 41" shape-rendering="crispEdges" role="img" aria-label="QR-код із посиланням на відеоінструкцію"><rect width="41" height="41" fill="#fff"/><path fill="#000" d="M4 4h7v1h-7zM13 4h1v1h-1zM15 4h1v1h-1zM17 4h1v1h-1zM21 4h5v1h-5zM27 4h1v1h-1zM30 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM12 5h4v1h-4zM20 5h1v1h-1zM22 5h1v1h-1zM25 5h4v1h-4zM30 5h1v1h-1zM36 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM12 6h1v1h-1zM17 6h1v1h-1zM21 6h1v1h-1zM26 6h1v1h-1zM30 6h1v1h-1zM32 6h3v1h-3zM36 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM14 7h1v1h-1zM16 7h4v1h-4zM26 7h2v1h-2zM30 7h1v1h-1zM32 7h3v1h-3zM36 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM13 8h1v1h-1zM17 8h1v1h-1zM20 8h1v1h-1zM24 8h2v1h-2zM30 8h1v1h-1zM32 8h3v1h-3zM36 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM13 9h2v1h-2zM16 9h2v1h-2zM19 9h5v1h-5zM25 9h1v1h-1zM30 9h1v1h-1zM36 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h1v1h-1zM28 10h1v1h-1zM30 10h7v1h-7zM13 11h6v1h-6zM21 11h2v1h-2zM24 11h1v1h-1zM26 11h1v1h-1zM28 11h1v1h-1zM5 12h3v1h-3zM9 12h2v1h-2zM15 12h2v1h-2zM18 12h1v1h-1zM20 12h4v1h-4zM25 12h1v1h-1zM28 12h1v1h-1zM34 12h2v1h-2zM4 13h2v1h-2zM8 13h1v1h-1zM12 13h2v1h-2zM18 13h1v1h-1zM22 13h3v1h-3zM26 13h2v1h-2zM30 13h2v1h-2zM33 13h2v1h-2zM36 13h1v1h-1zM5 14h1v1h-1zM10 14h6v1h-6zM17 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM24 14h4v1h-4zM29 14h5v1h-5zM35 14h2v1h-2zM5 15h1v1h-1zM7 15h1v1h-1zM9 15h1v1h-1zM12 15h2v1h-2zM15 15h1v1h-1zM17 15h4v1h-4zM22 15h1v1h-1zM24 15h1v1h-1zM26 15h6v1h-6zM33 15h1v1h-1zM36 15h1v1h-1zM5 16h2v1h-2zM9 16h2v1h-2zM15 16h1v1h-1zM18 16h1v1h-1zM20 16h1v1h-1zM22 16h2v1h-2zM25 16h3v1h-3zM32 16h2v1h-2zM35 16h1v1h-1zM6 17h1v1h-1zM8 17h2v1h-2zM18 17h1v1h-1zM20 17h3v1h-3zM24 17h1v1h-1zM29 17h1v1h-1zM31 17h1v1h-1zM33 17h1v1h-1zM35 17h1v1h-1zM5 18h1v1h-1zM9 18h4v1h-4zM20 18h1v1h-1zM22 18h3v1h-3zM30 18h2v1h-2zM33 18h1v1h-1zM8 19h1v1h-1zM11 19h2v1h-2zM15 19h1v1h-1zM20 19h1v1h-1zM22 19h2v1h-2zM25 19h2v1h-2zM29 19h2v1h-2zM32 19h3v1h-3zM5 20h1v1h-1zM10 20h2v1h-2zM13 20h1v1h-1zM15 20h1v1h-1zM17 20h2v1h-2zM22 20h1v1h-1zM24 20h3v1h-3zM29 20h2v1h-2zM32 20h1v1h-1zM34 20h1v1h-1zM4 21h1v1h-1zM8 21h2v1h-2zM14 21h1v1h-1zM19 21h1v1h-1zM21 21h1v1h-1zM27 21h1v1h-1zM30 21h1v1h-1zM32 21h2v1h-2zM36 21h1v1h-1zM4 22h1v1h-1zM6 22h2v1h-2zM10 22h2v1h-2zM16 22h7v1h-7zM24 22h2v1h-2zM29 22h4v1h-4zM34 22h2v1h-2zM4 23h1v1h-1zM7 23h1v1h-1zM14 23h3v1h-3zM18 23h2v1h-2zM22 23h1v1h-1zM26 23h1v1h-1zM28 23h3v1h-3zM32 23h1v1h-1zM35 23h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM10 24h2v1h-2zM14 24h2v1h-2zM18 24h3v1h-3zM23 24h2v1h-2zM29 24h1v1h-1zM31 24h1v1h-1zM33 24h2v1h-2zM36 24h1v1h-1zM4 25h1v1h-1zM6 25h1v1h-1zM9 25h1v1h-1zM11 25h2v1h-2zM15 25h3v1h-3zM20 25h1v1h-1zM22 25h4v1h-4zM27 25h1v1h-1zM29 25h3v1h-3zM33 25h2v1h-2zM36 25h1v1h-1zM10 26h5v1h-5zM17 26h3v1h-3zM24 26h1v1h-1zM26 26h2v1h-2zM29 26h2v1h-2zM33 26h1v1h-1zM35 26h2v1h-2zM5 27h1v1h-1zM8 27h1v1h-1zM12 27h4v1h-4zM17 27h1v1h-1zM21 27h3v1h-3zM26 27h3v1h-3zM30 27h1v1h-1zM33 27h1v1h-1zM36 27h1v1h-1zM4 28h1v1h-1zM6 28h2v1h-2zM9 28h2v1h-2zM16 28h1v1h-1zM20 28h1v1h-1zM22 28h2v1h-2zM26 28h1v1h-1zM28 28h5v1h-5zM36 28h1v1h-1zM12 29h2v1h-2zM15 29h1v1h-1zM19 29h1v1h-1zM22 29h2v1h-2zM25 29h2v1h-2zM28 29h1v1h-1zM32 29h2v1h-2zM4 30h7v1h-7zM16 30h3v1h-3zM21 30h3v1h-3zM25 30h4v1h-4zM30 30h1v1h-1zM32 30h1v1h-1zM35 30h1v1h-1zM4 31h1v1h-1zM10 31h1v1h-1zM12 31h2v1h-2zM16 31h1v1h-1zM19 31h2v1h-2zM23 31h1v1h-1zM25 31h4v1h-4zM32 31h4v1h-4zM4 32h1v1h-1zM6 32h3v1h-3zM10 32h1v1h-1zM13 32h1v1h-1zM15 32h4v1h-4zM20 32h1v1h-1zM22 32h1v1h-1zM26 32h7v1h-7zM34 32h2v1h-2zM4 33h1v1h-1zM6 33h3v1h-3zM10 33h1v1h-1zM12 33h6v1h-6zM20 33h1v1h-1zM22 33h1v1h-1zM24 33h1v1h-1zM26 33h3v1h-3zM31 33h1v1h-1zM35 33h2v1h-2zM4 34h1v1h-1zM6 34h3v1h-3zM10 34h1v1h-1zM12 34h2v1h-2zM17 34h4v1h-4zM25 34h7v1h-7zM33 34h1v1h-1zM4 35h1v1h-1zM10 35h1v1h-1zM12 35h4v1h-4zM17 35h1v1h-1zM21 35h1v1h-1zM24 35h1v1h-1zM26 35h1v1h-1zM28 35h1v1h-1zM30 35h3v1h-3zM36 35h1v1h-1zM4 36h7v1h-7zM14 36h1v1h-1zM16 36h1v1h-1zM18 36h3v1h-3zM25 36h1v1h-1zM27 36h1v1h-1zM32 36h1v1h-1zM34 36h1v1h-1z"/></svg></span>
-      </a>
+      <div id="video-fold"></div>
 
       <button type="button" class="toggle-basis noprint" id="toggle-basis"
-              aria-pressed="false">Показати правові підстави</button>
+              aria-pressed="false" aria-controls="legal-basis">Показати правові підстави</button>
       <div class="legal-basis basis" id="legal-basis"></div>
 
       <div class="actions noprint">
-        <button type="button" id="again" class="btn-quiet">Заповнити заново</button>
-        <button type="button" id="copy" class="btn-quiet">Копіювати перелік</button>
-        <button type="button" id="listen" class="btn-quiet" hidden>
-          <span aria-hidden="true" style="display:inline-flex;vertical-align:-3px;margin-right:8px"><svg width="20" height="18" viewBox="0 0 20 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M9 1.6 4.6 5.4H1.8v7.2h2.8L9 16.4z" fill="currentColor"/><path d="M12.6 6.1a4 4 0 0 1 0 5.8M15.4 3.4a7.7 7.7 0 0 1 0 11.2" stroke-linecap="round"/></svg></span><span id="listen-text">Прослухати перелік</span></button>
-        <button type="button" id="print" class="btn-quiet">Роздрукувати або зберегти PDF</button>
-        <a id="equeue" class="btn-primary" target="_blank" rel="noopener noreferrer">Е-Черга МЗС</a>
+        <button type="button" id="again" class="btn-quiet"><span class="btn-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 10a6.6 6.6 0 1 1 2 4.7"/><path d="M2.2 15.3V10.6h4.7"/></svg></span>Заново</button>
+        <button type="button" id="copy" class="btn-quiet"><span class="btn-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="6.4" y="6.4" width="11" height="11" rx="2.4"/><path d="M13.6 3.4H4.8a1.4 1.4 0 0 0-1.4 1.4v8.8"/></svg></span><span id="copy-text">Копіювати</span></button>
+        <button type="button" id="listen" class="btn-quiet" hidden><span class="btn-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M9 2.6 4.6 6.4H1.8v7.2h2.8L9 17.4z" fill="currentColor"/><path d="M12.6 7.1a4 4 0 0 1 0 5.8M15.4 4.4a7.7 7.7 0 0 1 0 11.2" stroke-linecap="round"/></svg></span><span id="listen-text">Прослухати</span></button>
+        <button type="button" id="print" class="btn-primary"><span class="btn-ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M5.6 7.6V2.8h8.8v4.8"/><rect x="2.6" y="7.6" width="14.8" height="6.4" rx="1.8"/><path d="M5.6 11.6h8.8v5.6H5.6z" fill="var(--paper)"/></svg></span>Друк або PDF</button>
       </div>
       <p class="actions-hint noprint">Кнопка друку відкриває вікно браузера: щоб зберегти файл, у полі «Принтер» оберіть «Зберегти як PDF». Друкується лише перелік, без запитань. «Копіювати» кладе перелік у буфер обміну — зручно вставити в нотатки чи месенджер на телефоні.</p>
       <p class="actions-hint noprint" id="listen-note" hidden>«Прослухати» читає перелік голосом, вбудованим у ваш пристрій. Сторінка тексту нікуди не надсилає, але на частині пристроїв голос синтезується на серверах виробника браузера. Персональних даних у переліку немає — лише назви документів.</p>
@@ -489,7 +494,13 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
       "Обов'язковість паспорта громадянина України з 14 років — Закон № 5492-VI, ст.21 ч.2: «Кожен громадянин України, який досяг чотирнадцятирічного віку, зобов'язаний отримати паспорт громадянина України». Разом зі ст.21 ч.1 (ПГУ посвідчує особу та підтверджує громадянство) це і є нормативна опора блокера N5.",
       "Заява батьків (Закон ст.22 ч.11 пп.2) до переліку не входить. ПКМУ № 1220 від 28.10.2022 переписав Порядок на «заяву-анкету одного з батьків»: окремої заяви від другого з батьків не потрібно, а сама «заява» зведена до заяви-анкети, яку формує працівник на місці. Вікову межу згодом знижено з 16 до 14 років (Закон № 3709-IX від 09.05.2024), і чинна редакція п.7 пп.2 стоїть на 14 — форма використовує саме її. ЗАСТЕРЕЖЕННЯ для юриста: ст.22 ч.11 пп.2 Закону не скасована й формально чинна, а постанова Кабміну закон не скасовує. Форма йде за Порядком, бо саме його застосовує установа, але колізія існує і при погодженні інструмента спливе.",
       "Звільнені з полону платять 37 € — стільки ж, скільки решта пільгових категорій. Виводиться з двох текстів. Тариф (Наказ МЗС № 182, розділ І) містить дві окремі консульські дії: поз.1 «Оформлення паспорта громадянина України для виїзду за кордон (крім осіб до 16 років)» — 90 USD / 83 €, і поз.2 «Автоматизована обробка даних при оформленні паспорта..., у тому числі для осіб до 16 років» — 40 USD / 37 €. Закон ст.20 ч.4 знімає збір «за оформлення паспорта», тобто поз.1. Доказ від протилежного: у тому самому реченні Закону перелічено осіб до 16 років, а Тариф прямо каже, що поз.2 з них справляється, — отже звільнення поз.2 не охоплює. Формулювання для полонених ширше лише в частині «адміністративний (консульський)», але об'єкт той самий: оформлення паспорта.",
-      "Маршрут «ПГУ оформлює ДП «Документ»» має нормативну опору: Консульський статут (Указ № 127/94), ст.40 — «Консул видає паспорти громадян України для виїзду за кордон, продовжує строк їх дії та вносить до них зміни», паспорта громадянина України серед функцій консула немає; ПКМУ № 678 від 10.06.2022 — експериментальний проєкт щодо оформлення паспорта громадянина України громадянам, які перебувають за межами України, через відокремлені підрозділи ДП «Документ»."
+      "Маршрут «ПГУ оформлює ДП «Документ»» має нормативну опору: Консульський статут (Указ № 127/94), ст.40 — «Консул видає паспорти громадян України для виїзду за кордон, продовжує строк їх дії та вносить до них зміни», паспорта громадянина України серед функцій консула немає; ПКМУ № 678 від 10.06.2022 — експериментальний проєкт щодо оформлення паспорта громадянина України громадянам, які перебувають за межами України, через відокремлені підрозділи ДП «Документ».",
+      {
+        "question": "Чи можна платити карткою українського банку?",
+        "answer": "Залежить від установи, тому форма більше не відповідає за всіх. Спосіб оплати став полем установи (countries.json posts[].payment із переліку computed.payment.options), і показується лише там, де установа його підтвердила. Для Латвії — платіжна картка будь-якого банку.",
+        "was": "computed.fee.note стверджував за всі установи світу: «Сплачується безготівково на місці: банківською карткою або смартфоном через POS-термінал». Це правда для Риги й здогад для решти — той самий взірець помилки, що й незмінні пояснення до документів: форма робила висновок замість того, щоб спитати або промовчати.",
+        "resolved_on": "2026-08-20"
+      }
     ]
   },
   "facts": [
@@ -504,6 +515,12 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
       "id": "post_country",
       "type": "enum",
       "values": "<countries.json + OTHER>",
+      "default": null
+    },
+    {
+      "id": "post_office",
+      "type": "enum",
+      "values": "<countries.json posts[].id>",
       "default": null
     },
     {
@@ -652,6 +669,12 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
       ],
       "derived": "пошук foreign_country у countries.json",
       "default": null
+    },
+    {
+      "id": "posts_count",
+      "type": "number",
+      "derived": "кількість установ у обраній державі (countries.json posts[])",
+      "default": 0
     }
   ],
   "questions": [
@@ -664,6 +687,19 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
       "when": true,
       "basis": "Тариф консульського збору відповідної ЗДУ",
       "context": "post"
+    },
+    {
+      "id": "post_office",
+      "stage": 1,
+      "type": "post",
+      "label": "До якої установи ви плануєте звертатися?",
+      "help": "У цій державі кілька українських установ із консульськими функціями. Від вибору залежать сторінка з роз'ясненнями, посилання на запис у е-Чергу та спосіб оплати збору.",
+      "when": {
+        "fact": "posts_count",
+        "op": "gte",
+        "value": 2
+      },
+      "basis": "Перелік закордонних дипломатичних установ України"
     },
     {
       "id": "age",
@@ -1780,7 +1816,6 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
           "note": "За Тарифом ця позиція справляється «у тому числі для осіб до 16 років» — тобто окремо від звільнення за Законом ст.20 ч.4"
         }
       ],
-      "note": "Сплачується безготівково на місці: банківською карткою або смартфоном через POS-термінал.",
       "note_unknown": "Тариф цієї установи не звірено. Наведено базові ставки в доларах США; збір справляється в національній валюті за тарифом установи.",
       "basis": "Наказ МЗС № 182 від 23.04.2018, Тариф, розділ І «Паспортні дії», позиції 1 і 2; Закон ст.20 ч.4 — перелік звільнених від консульського збору",
       "note_exempt": "Звільнення знімає позицію «Оформлення паспорта». Позиція «Автоматизована обробка даних» справляється окремо і від неї не звільняє ніхто."
@@ -1829,6 +1864,19 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
       ],
       "warning": "Просимо уважно обирати саме ту послугу, яка потрібна. Змінити тип послуги під час візиту неможливо.",
       "basis": "Перелік послуг е-Черги МЗС України"
+    },
+    "payment": {
+      "label": "Чим можна платити",
+      "options": {
+        "any_card": "Платіжною карткою будь-якого банку — і українського, і місцевого.",
+        "local_card": "Лише карткою банку держави перебування.",
+        "cash": "Лише готівкою.",
+        "cash_and_card": "Готівкою або платіжною карткою.",
+        "transfer": "Банківським переказом наперед, до візиту."
+      },
+      "unknown": "Спосіб оплати ця установа ще не підтвердила — уточніть на її вебсторінці.",
+      "basis": "Дані установи, зібрані опитуванням ЗДУ",
+      "note_field": "Уточнення до способу оплати — необов'язкове поле payment_note у записі установи. Туди йде те, що відрізняє саме цю установу: чи приймають готівку, чи є термінал, чи треба платити наперед."
     }
   }
 }</script>
@@ -1836,7 +1884,7 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
   "meta": {
     "version": "0.4",
     "checked_on": "2026-08-17",
-    "_posts_note": "Необов'язкове поле posts — установи України в цій державі та сторінки їхніх сайтів про оформлення паспорта. Кожен запис може нести й equeue_url — власну сторінку установи з роз'ясненням, як авторизуватися в е-Черзі; якщо не задано, кнопка веде на сторінку МЗС. Масив, бо в одній державі буває кілька ЗДУ (Польща, Німеччина, США): опитувальна форма для колег дає рівно один рядок на установу. Держава без posts просто не показує блоку «Докладніше» — мовчки, як і решта незаданих параметрів. Кожен запис несе власну дату звірки: посилання гниють, і без дати за рік це стане джерелом впевнених помилок.",
+    "_posts_note": "Необов'язкове поле posts — установи України в цій державі з консульськими функціями. Кожен запис: id (стійкий ключ, не змінювати — на нього посилається відповідь у формі), name, city, url (сторінка про паспорт), equeue_url (власна сторінка запису; порожньо — кнопка веде на сторінку МЗС), payment (код із rules.computed.payment.options; порожньо — форма про оплату мовчить), checked_on. Якщо установ дві або більше, форма питає, до якої саме людина йде: від цього залежать сторінка, е-Черга і спосіб оплати. Почесні консули сюди не входять — паспортів вони не оформлюють. Держава без posts просто не показує блоку «Докладніше» — мовчки, як і решта незаданих параметрів. Кожен запис несе власну дату звірки: посилання гниють, і без дати за рік це стане джерелом впевнених помилок.",
     "warning": "ЧЕРНЕТКА. Рядки з verified=false не публікувати без звірки: ETS 063 і Гаазька — за депозитарієм, П1 — за переліком Мін'юсту. Перелік у ЦЛ 22438 уже застарів щонайменше на дві держави.",
     "sources": [
       "Додаток до ЦЛ ДКС № 71/61513-020-22438-ВН від 08.03.2024 (перелік Мін'юсту)",
@@ -2206,8 +2254,13 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
       "note": "Документи цивільного стану приймаються лише з апостилем.",
       "posts": [
         {
+          "id": "LV-riga",
           "name": "Посольство України в Латвійській Республіці",
+          "city": "Рига",
           "url": "https://latvia.mfa.gov.ua/kp/pass",
+          "equeue_url": "",
+          "payment": "any_card",
+          "payment_note": "Готівку не приймають: оплата на місці через POS-термінал, зокрема смартфоном.",
           "checked_on": "2026-08-18"
         }
       ]
@@ -2765,6 +2818,27 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
     }
   ]
 }</script>
+<script type="application/json" id="qr">{
+ "_note": "Згенеровано make-qr.py. Не редагувати вручну: збірка звіряє перелік адрес із countries.json і не збереться, якщо для якоїсь адреси коду немає.",
+ "error_correction": "Q",
+ "quiet_zone": 4,
+ "codes": {
+  "https://www.youtube.com/watch?v=1vl66nAKHxs": {
+   "what": "відеоінструкція",
+   "side": 33,
+   "version": 4,
+   "decoded_ok": true,
+   "bits": "/lR9P8F4U9BuoRCLt0XgZdukSMLsE2+hB/qqqv4A/NUAdhr0g2RhHZtQ/VPfapr1fpZhK3DRYBdCqR4C4NATIWzcQ1YuakYQoJZsw/se0gdkXSKzOYVtLOXrtA+cLZaR6OdJtgiy+IBom0Y/g53qUFky8eul6j+11+VcjuseH9EF6JVx/iuFCgA="
+  },
+  "https://mfa.gov.ua/consul/forua/e-cherga": {
+   "what": "е-Черга, запасна сторінка МЗС",
+   "side": 33,
+   "version": 4,
+   "decoded_ok": true,
+   "bits": "/hy9P8FNodBuqAprt0RWVdulmmrsEochB/qqqv4AjqYAdjDlA3LAL5t0/+lPN5DYcqbuCLnZ6zZEmI+P8vlIK8vMy3ftbjYkVbbXzjKe2jSWaTm8HEFl40JJNBvXfz7zEVUarwyT+IBOPca/mv7qEFJk8fujfJ+t172UvutZHtEFr9fx/kBUDgA="
+  }
+ }
+}</script>
 <script>
 "use strict";
 (function () {
@@ -2773,6 +2847,28 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
   const BY_CODE = Object.fromEntries(GEO.countries.map(c => [c.code, c]));
   const INST = GEO.meta.installation;
   const TAR = JSON.parse(document.getElementById("tariffs").textContent);
+  /* QR-коди. Матриці згенеровано під час збірки й звірено зчитуванням; тут
+     лише розгортаємо біти в картинку. Чорне на білому за будь-яких налаштувань
+     сторінки: висока контрастність чи інверсія зробили б код незчитуваним. */
+  const QR = JSON.parse(document.getElementById("qr").textContent);
+  function qrSvg(url, label) {
+    const c = QR.codes[url];
+    if (!c) return "";
+    const bytes = atob(c.bits), side = c.side, q = QR.quiet_zone || 4, box = side + q * 2;
+    const on = i => (bytes.charCodeAt(i >> 3) >> (7 - (i & 7))) & 1;
+    let d = "";
+    for (let y = 0; y < side; y++) {
+      for (let x = 0; x < side; ) {
+        if (!on(y * side + x)) { x++; continue; }
+        let n = 1;
+        while (x + n < side && on(y * side + x + n)) n++;
+        d += `M${x + q} ${y + q}h${n}v1h-${n}z`;
+        x += n;
+      }
+    }
+    return `<svg viewBox="0 0 ${box} ${box}" shape-rendering="crispEdges" role="img" aria-label="${esc(label)}">` +
+           `<rect width="${box}" height="${box}" fill="#fff"/><path fill="#000" d="${d}"/></svg>`;
+  }
   /* Тариф задається валютною зоною: у межах однієї зони ставка спільна,
      тож двадцять одна країна єврозони має один запис, а не двадцять один. */
   const POST = {};
@@ -2814,8 +2910,13 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
       return n >= q.min && n <= q.max;
     }
     if (q.type === "country") return v === "OTHER" || inContext(BY_CODE[v], q);
+    /* Установа придатна лише як установа саме тієї держави, яку обрано:
+       інакше зміна держави лишала б стару відповідь і форма показувала б
+       сторінку та оплату чужого посольства. */
+    if (q.type === "post") return postsOf(answers.post_country).some(p => p.id === v);
     return q.options.some(o => o.v === v);
   }
+  const postsOf = code => ((BY_CODE[code] || {}).posts || []);
 
   /* Одна держава може бути в одному списку й не бути в іншому: подання
      документів у РФ форма не пропонує, а свідоцтво, видане в РФ, приймає
@@ -2832,7 +2933,19 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
     // похідний факт: режим береться з довідника, а не з відповіді
     const c = f.foreign_country ? BY_CODE[f.foreign_country] : null;
     f.legalization_regime = f.foreign_country ? (c ? c.regime : "unknown") : null;
+    /* Скільки установ у державі — теж із довідника. Питання про вибір установи
+       з'являється саме за цим числом, а не за списком держав: щойно опитування
+       принесе другу установу, питання виникне саме собою. */
+    f.posts_count = postsOf(f.post_country).length;
     return f;
+  }
+  /* Установа, від якої залежать сторінка, е-Черга й оплата. Якщо в державі одна
+     установа — вона й береться, питати нема про що. Якщо жодної — null, і всі
+     похідні від неї місця мовчать. */
+  function postOf(f) {
+    const list = postsOf(f.post_country);
+    if (list.length === 1) return list[0];
+    return list.find(p => p.id === f.post_office) || null;
   }
 
   function evalPred(p, f) {
@@ -2860,6 +2973,10 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
 
   function prune() {
     for (let i = 0; i < 12; i++) {
+      /* Відповідь могла лишитися чинною за структурою, але втратити сенс:
+         обрали іншу державу — установа з попередньої там більше не існує. */
+      if (answers.post_office && !postsOf(answers.post_country).some(p => p.id === answers.post_office))
+        delete answers.post_office;
       const vis = new Set(visibleQuestions().map(q => q.id));
       const drop = Object.keys(answers).filter(k => !vis.has(k));
       if (!drop.length) return;
@@ -2905,6 +3022,20 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
           <optgroup label="Усі держави">${rest.map(opt).join("")}</optgroup>
           <optgroup label="—"><option value="OTHER"${raw === "OTHER" ? " selected" : ""}>Немає в списку</option></optgroup>
         </select>
+        ${foot}</fieldset>`;
+    }
+
+    /* Установи — звичайні варіанти відповіді, тільки список береться з довідника
+       обраної держави, а не з правил: правила не знають, скільки в якій державі
+       консульств, і знати не мусять. */
+    if (q.type === "post") {
+      const list = postsOf(answers.post_country);
+      return `<fieldset>${head}
+        <div class="opts" data-q="${q.id}">${list.map(p => `
+          <label class="opt">
+            <input type="radio" name="${q.id}" value="${esc(p.id)}"${raw === p.id ? " checked" : ""}>
+            <span>${esc(p.name)}${p.city ? `<small>${esc(p.city)}</small>` : ""}</span>
+          </label>`).join("")}</div>
         ${foot}</fieldset>`;
     }
 
@@ -3112,11 +3243,75 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
     L.push("Строк оформлення: " + r.term);
     L.push("Розмір плати: " + r.fee.show(r.fee.total));
     L.push("Послуга в е-Черзі: " + r.equeue);
+    L.push("Запис у е-Чергу: " + equeueUrl(f));
+    const pay = postOf(f);
+    if (pay) {
+      const P = RULES.computed.payment;
+      const main = pay.payment ? P.options[pay.payment] : P.unknown;
+      if (main) L.push(P.label + ": " + main + (pay.payment_note ? " " + pay.payment_note : ""));
+    }
     ((c || {}).posts || []).forEach(p => L.push(p.name + ": " + p.url));
     if ((INST.video || {}).url) L.push("Відеоінструкція: " + INST.video.url);
     L.push("");
     L.push("Довідково. Остаточний перелік визначає консульський співробітник.");
     return L.join("\n");
+  }
+
+  /* Кнопка й код е-Черги ведуть на сторінку установи з поясненням, як
+     авторизуватися, а не одразу в саму чергу: посилання на id.e-consul.gov.ua
+     без роз'яснень — зачинені двері. Немає власної сторінки — веде на
+     роз'яснення МЗС. Обидва — кнопка й QR — беруть ту саму адресу звідси,
+     тому розійтися вони не можуть. */
+  const equeueUrl = f => ((postOf(f) || {}).equeue_url || "").trim() || INST.equeue_url;
+
+  /* Спосіб оплати — власність установи, а не форми. Установа не подала —
+     форма каже, що не подала, і відсилає на її сторінку. Держава без установ
+     у довіднику мовчить зовсім: вигадувати за неї нічого. */
+  function paymentFact(f) {
+    const post = postOf(f);
+    if (!post) return "";
+    const P = RULES.computed.payment;
+    const main = post.payment ? P.options[post.payment] : P.unknown;
+    if (!main) return "";
+    return `<div class="fact"><dt>${esc(P.label)}</dt><dd>${esc(main)}` +
+           (post.payment_note ? `<small>${esc(post.payment_note)}</small>` : "") + `</dd></div>`;
+  }
+
+  /* Відеоінструкція показується двічі й по-різному, бо екран і аркуш просять
+     різного. На екрані — гармошка над правовими підставами: згорнута, місця не
+     займає, відкривається тим, кому треба. На аркуші гармошки немає взагалі, і
+     код мусить бути видним одразу — тому там компактний блок біля заголовка,
+     у вільному полі праворуч. Це два різні вузли, а не один переміщуваний:
+     переносити вузол на onbeforeprint означало б покластися на подію, яку
+     Safari й «зберегти як PDF» обробляють по-різному. */
+  const videoUrl = () => ((INST.video || {}).url || "").trim();
+  const videoTitle = () => (INST.video || {}).title || "Відеоінструкція на YouTube";
+  function videoPrintBlock() {
+    if (!videoUrl()) return "";
+    return `<a class="video-doc print-only" href="${esc(videoUrl())}" target="_blank" rel="noopener noreferrer">
+      <span class="video-doc-text"><span class="video-doc-title">${esc(videoTitle())}</span>
+        <span class="video-doc-sub">Наведіть камеру телефона на код.</span></span>
+      <span class="qr-box">${qrSvg(videoUrl(), "QR-код із посиланням на відеоінструкцію")}</span></a>`;
+  }
+  function videoPanel() {
+    if (!videoUrl()) return "";
+    return `<div class="fold noprint">
+      <button type="button" class="toggle-basis" id="toggle-video" aria-pressed="false"
+              aria-controls="video-panel">Дивитися відеоінструкцію</button>
+      <div class="video-panel" id="video-panel" hidden>
+        <a class="video-doc" href="${esc(videoUrl())}" target="_blank" rel="noopener noreferrer">
+          <span class="video-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 22" width="32" height="22">
+              <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor"/>
+              <path d="M13 7.2 21 11l-8 3.8z" fill="#fff"/>
+            </svg>
+          </span>
+          <span class="video-doc-text"><span class="video-doc-title">${esc(videoTitle())}</span>
+            <span class="video-doc-sub sub-wide">Натисніть цей рядок або наведіть камеру телефона на код.</span>
+            <span class="video-doc-sub sub-narrow">Натисніть, щоб відкрити відео.</span></span>
+          <span class="qr-box">${qrSvg(videoUrl(), "QR-код із посиланням на відеоінструкцію")}</span>
+        </a>
+      </div></div>`;
   }
 
   function show() {
@@ -3130,7 +3325,7 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
     out.push(`<div class="results-head"><div><h2>Ваш перелік документів</h2>` +
              `<p class="print-only print-sub">${postC ? esc(postC.name) + " · " : ""}` +
              `${new Date().toLocaleDateString("uk-UA")} · неофіційний довідковий перелік</p></div>` +
-             `<span id="video-slot"></span></div>`);
+             videoPrintBlock() + `</div>`);
     if (r.blockers.length || r.warnings.length) {
       out.push(`<div class="sect"><p class="sect-head">Зверніть увагу перед візитом</p>` +
         cards(r.blockers, "stop", "Обов'язкова дія", r.facts) +
@@ -3145,16 +3340,22 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
           <div class="fact"><dt>Строк дії паспорта</dt><dd>${esc(r.validity)}</dd></div>
           <div class="fact"><dt>Строк оформлення</dt><dd>${esc(r.term)}</dd></div>
           <div class="fact"><dt>Розмір плати</dt><dd>${esc(r.fee.show(r.fee.total))}
-            <small>${r.fee.lines.map(l => esc(l.label) + ": " + (l.waived ? "не справляється" : esc(r.fee.show(l.sum)))).join("<br>")}<br>${esc(RULES.computed.fee.note)}${
+            <small>${r.fee.lines.map(l => esc(l.label) + ": " + (l.waived ? "не справляється" : esc(r.fee.show(l.sum)))).join("<br>")}${
               r.fee.known ? "" : "<br>" + esc(RULES.computed.fee.note_unknown)}${
               r.fee.lines.some(l => l.waived) ? "<br>" + esc(RULES.computed.fee.note_exempt) : ""}</small></dd></div>
         </div>
         <div class="facts-col">
+          ${paymentFact(r.facts)}
           <div class="fact"><dt>Послуга в е-Черзі</dt><dd>${esc(r.equeue)}
             <small>${esc(RULES.computed.equeue.warning)}</small></dd></div>
+          <div class="equeue-go">
+            <a class="btn-primary noprint" id="equeue" href="${esc(equeueUrl(r.facts))}"
+               target="_blank" rel="noopener noreferrer">Реєструватися</a>
+            <span class="print-only equeue-print">Запис у е-Чергу — наведіть камеру телефона на код.</span>
+            <span class="qr-box">${qrSvg(equeueUrl(r.facts), "QR-код для запису в е-Чергу")}</span>
+          </div>
         </div>
-      </div>
-      <p class="basis">Довідник держав звірено ${esc(GEO.meta.checked_on)}.</p></div></div>`);
+      </div></div></div>`);
 
     /* Сторінки установ. Держава без posts блоку не показує — так само мовчки,
        як зникає посилання документа з незаданим link_param. На друку поруч із
@@ -3166,24 +3367,19 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
         <span class="print-only">${esc(p.url)}</span>
       </li>`).join("")}</ul></div>`);
 
-    /* Кнопка е-Черги веде на сторінку установи з поясненням, як авторизуватися,
-       а не одразу в саму чергу: посилання на id.e-consul.gov.ua без роз'яснень —
-       зачинені двері. Немає власної сторінки — веде на роз'яснення МЗС. */
-    document.getElementById("equeue").href =
-      (posts.find(p => p.equeue_url) || {}).equeue_url || INST.equeue_url;
-
     lastPlain = plainText(r);
-    /* Блок відео живе в розмітці, а не збирається рядком: у ньому QR, вкладений
-       під час збірки. Тому його переносять у щойно намальований заголовок, а не
-       створюють заново — так код на сторінці лишається рівно один.
-       Перед заміною вмісту його треба винести: після першого показу він лежить
-       усередині #results-body, і другий показ знищив би його разом із рештою
-       розмітки — форма мовчки втратила б відео на повторному заповненні. */
-    const vd = document.getElementById("video-doc");
-    if (vd) document.getElementById("results").appendChild(vd);
     document.getElementById("results-body").innerHTML = out.join("");
-    const slot = document.getElementById("video-slot");
-    if (vd && slot && !vd.hidden) slot.appendChild(vd);
+    const fold = document.getElementById("video-fold");
+    fold.innerHTML = videoPanel();
+    const vt = document.getElementById("toggle-video");
+    if (vt) vt.addEventListener("click", () => {
+      const panel = document.getElementById("video-panel");
+      const on = panel.hidden;
+      panel.hidden = !on;
+      vt.setAttribute("aria-pressed", on ? "true" : "false");
+      vt.classList.toggle("open", on);
+      vt.textContent = on ? "Сховати відеоінструкцію" : "Дивитися відеоінструкцію";
+    });
     document.getElementById("stamp").textContent =
       `Реєстр правил v${RULES.meta.version}. Довідково; остаточний перелік визначає консульський співробітник.`;
     const res = document.getElementById("results");
@@ -3194,39 +3390,32 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
   /* Розмір тексту й контраст. Вибір не зберігається між відкриттями сторінки —
      сховище браузера заборонено збіркою навмисно, і вимикати цю заборону заради
      налаштування не варто. У межах одного заповнення форми цього досить. */
-  /* Одна кнопка вмикає режим: контраст одразу, а поруч з'являються А−/А+.
-     Вимкнення повертає і контраст, і кегль. Вибір не зберігається між
-     відкриттями сторінки — сховище браузера заборонено збіркою навмисно. */
-  const FS = [0.9, 1, 1.15, 1.3];
-  const FS_NAME = ["зменшений", "звичайний", "збільшений", "великий"];
-  const FS_DEFAULT = 1;
-  let a11yOn = false, fsStep = FS_DEFAULT;
+  /* Дві кнопки замість трьох: А+ і А−. Перший крок угору вмикає і контраст —
+     кому потрібен більший текст, тому майже завжди потрібен і чіткіший. Крок
+     назад до звичайного розміру знімає й контраст, тож «як було» повертається
+     тією самою кнопкою, якою збільшували, без окремого перемикача.
+     Кнопки не підписані словами свідомо: А+/А− читається без пояснень і — на
+     відміну від «Людям із порушенням зору» — не вимагає визнати себе такою
+     людиною. Саме через це підпис і не спрацьовував. */
+  const FS = [1, 1.15, 1.3, 1.45];
+  const FS_NAME = ["звичайний", "збільшений", "великий", "найбільший"];
+  let fsStep = 0;
 
   function applyA11y(said) {
     document.documentElement.style.setProperty("--fs", FS[fsStep]);
-    document.documentElement.classList.toggle("hc", a11yOn);
-    const t = document.getElementById("a11y-toggle");
-    t.setAttribute("aria-pressed", a11yOn ? "true" : "false");
-    document.getElementById("a11y-toggle-text").textContent =
-      a11yOn ? "Звичайний вигляд" : "Легше читати";
+    document.documentElement.classList.toggle("hc", fsStep > 0);
     const down = document.getElementById("fs-down"), up = document.getElementById("fs-up");
-    down.hidden = up.hidden = !a11yOn;
     down.disabled = fsStep === 0;
     up.disabled = fsStep === FS.length - 1;
     if (said) document.getElementById("a11y-status").textContent = said;
   }
-  document.getElementById("a11y-toggle").addEventListener("click", () => {
-    a11yOn = !a11yOn;
-    if (!a11yOn) fsStep = FS_DEFAULT;
-    applyA11y(a11yOn ? "Увімкнено версію для людей із порушенням зору"
-                     : "Повернуто стандартну версію");
-  });
-  document.getElementById("fs-up").addEventListener("click", () => {
-    fsStep = Math.min(fsStep + 1, FS.length - 1); applyA11y("Розмір тексту: " + FS_NAME[fsStep]);
-  });
-  document.getElementById("fs-down").addEventListener("click", () => {
-    fsStep = Math.max(fsStep - 1, 0); applyA11y("Розмір тексту: " + FS_NAME[fsStep]);
-  });
+  const step = (d, msg) => {
+    const was = fsStep;
+    fsStep = Math.min(Math.max(fsStep + d, 0), FS.length - 1);
+    applyA11y(was === fsStep ? "" : msg + FS_NAME[fsStep]);
+  };
+  document.getElementById("fs-up").addEventListener("click", () => step(+1, "Текст "));
+  document.getElementById("fs-down").addEventListener("click", () => step(-1, "Текст "));
   applyA11y();
 
   document.getElementById("toggle-basis").addEventListener("click", e => {
@@ -3252,8 +3441,9 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
         ok = document.execCommand("copy"); ta.remove();
       }
     } catch (_) { ok = false; }
-    btn.textContent = ok ? "Скопійовано" : "Не вдалося скопіювати";
-    setTimeout(() => { btn.textContent = "Копіювати перелік"; }, 2500);
+    const label = document.getElementById("copy-text");
+    label.textContent = ok ? "Скопійовано" : "Не скопіювалося";
+    setTimeout(() => { label.textContent = "Копіювати"; }, 2500);
   });
   /* Читання вголос. Синтез робить браузер, а не сторінка: звідси жодного
      запиту не йде. Але напівправди тут не буде — на частині пристроїв сам
@@ -3267,7 +3457,7 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
   const listenBtn = document.getElementById("listen");
   const listenNote = document.getElementById("listen-note");
   const listenStatus = document.getElementById("listen-status");
-  const LISTEN_ON = "Прослухати перелік", LISTEN_OFF = "Зупинити читання";
+  const LISTEN_ON = "Прослухати", LISTEN_OFF = "Зупинити";
   let speaking = false;
 
   const ukVoices = () => (synth && synth.getVoices ? synth.getVoices() : []).filter(v => /^uk/i.test(v.lang));
@@ -3363,20 +3553,13 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
     renderSurvey();
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
-  /* Відеоінструкція. Адреса й підпис беруться з довідника, а QR намальовано
-     під час збірки з тієї самої адреси — інакше надрукований код і посилання
-     могли б розійтися, і паперу вірили б дарма. Немає адреси — немає блоку. */
-  (() => {
-    const v = INST.video || {}, box = document.getElementById("video-doc");
-    if (!v.url) return;
-    box.href = v.url;
-    document.getElementById("video-doc-title").textContent = v.title || "Відеоінструкція на YouTube";
-    box.hidden = false;
-  })();
-
+  /* Дата звірки довідника держав стоїть тут, а не під карткою послуги: це
+     примітка про джерело, і місце їй серед джерел. Під карткою вона мала
+     вигляд загубленого рядка, що з'являвся від натискання за півекрана. */
   document.getElementById("legal-basis").innerHTML =
     `<p>Правова основа</p><ul>` + RULES.meta.legal_links.map(l =>
-      `<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)}</a></li>`).join("") + `</ul>`;
+      `<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.label)}</a></li>`).join("") +
+    `</ul><p class="legal-checked">Довідник держав звірено ${esc(GEO.meta.checked_on)}.</p>`;
 
   renderSurvey();
 
