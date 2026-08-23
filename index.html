@@ -218,8 +218,13 @@ select.country:focus-visible{outline:3px solid var(--focus);outline-offset:2px;b
 /* Код відповідей — не окрема прикраса, а частина назви розділу: трохи легший
    за неї, моноширинний, щоб літери не злипалися й код можна було переписати
    з паперу без помилок. */
-.kod{font-weight:400;font-family:ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
-  font-size:.82em;letter-spacing:0;color:var(--ink-2);white-space:nowrap}
+/* На екрані код стоїть під назвою розділу, у вузькій колонці — тож мусить
+   переноситися. З nowrap він вилазив із своїх двохсот пікселів і лягав поверх
+   тексту документів. У друку колонки немає, там nowrap доречний. */
+.kod{display:block;margin-top:4px;font-weight:400;
+  font-family:ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+  font-size:.82em;letter-spacing:0;color:var(--ink-2);
+  white-space:normal;overflow-wrap:anywhere;text-transform:none}
 .qr-box svg{display:block;width:100%;height:auto}
 /* Кнопка запису й код під карткою послуги. На екрані працює кнопка, на аркуші —
    код: обидва беруть ту саму адресу, тож розійтися не можуть. */
@@ -406,7 +411,7 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
      насправді розділів на аркуші чотири, і жирного рядка їм цілком досить. */
   .sect-head{position:static;font-size:14pt;font-weight:700;letter-spacing:.01em;color:#000;
              margin:0 0 2px;padding:0;border-bottom:0;break-after:avoid}
-  .kod{font-size:12pt;color:#000}
+  .kod{display:inline;margin:0;font-size:12pt;color:#000;white-space:nowrap}
   /* Повідомлення без рамки й полів: позначка та заголовок стають в один
      рядок. Рамка навколо трьох повідомлень коштувала тридцять міліметрів —
      цілу десяту частину аркуша — і не додавала жодного слова. */
@@ -563,7 +568,7 @@ html.print-probe .h2-tail{font-size:14pt;font-weight:400;margin-top:2px;color:#0
 html.print-probe .sect{display:block;margin:0 0 7px;padding:0;border-top:0}
 html.print-probe .sect-head{position:static;font-size:14pt;font-weight:700;letter-spacing:.01em;color:#000;
              margin:0 0 2px;padding:0;border-bottom:0;break-after:avoid}
-html.print-probe .kod{font-size:12pt;color:#000}
+html.print-probe .kod{display:inline;margin:0;font-size:12pt;color:#000;white-space:nowrap}
 html.print-probe .card{break-inside:avoid;border:0;border-radius:0;padding:0 0 0 8px;
         margin-bottom:6px;background:#fff;border-left:2px solid #000}
 html.print-probe .card--stop{border-left-width:4px}
@@ -6857,9 +6862,14 @@ html.print-probe a{color:#000}
              `<h2>Перелік документів<span class="h2-tail">для оформлення закордонного паспорта</span></h2></div>` +
              `<div class="head-video">` + videoPrintLine() + videoPrintQr() + `</div></div>`);
     if (r.blockers.length || r.warnings.length) {
-      out.push(`<div class="sect"><p class="sect-head">Зверніть увагу перед візитом</p>` +
+      /* Повідомлення загорнуто в один вузол. На широкому екрані .sect — це
+         сітка «назва розділу | вміст», і кожна зайва дитина падає в НАСТУПНИЙ
+         рядок сітки, тобто в вузьку ліву колонку: друге повідомлення ставало
+         стовпчиком завширшки в два слова. Помітно це лише тоді, коли
+         повідомлень більше одного, — тому й прожило непоміченим. */
+      out.push(`<div class="sect"><p class="sect-head">Зверніть увагу перед візитом</p><div>` +
         cards(r.blockers, "stop", "Обов'язкова дія", r.facts) +
-        cards(r.warnings, "note", "До відома", r.facts) + `</div>`);
+        cards(r.warnings, "note", "До відома", r.facts) + `</div></div>`);
     }
     /* Код відповідей стоїть біля назви розділу, а не в підписі внизу: підпис
        читають востаннє, а це перше, про що питає консул, коли людина приносить
