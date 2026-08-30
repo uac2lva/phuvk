@@ -962,6 +962,15 @@ html.print-probe a.url{text-decoration:underline}
    "default": null
   },
   {
+   "id": "pmp",
+   "type": "enum",
+   "values": [
+    "no",
+    "yes"
+   ],
+   "default": "no"
+  },
+  {
    "id": "both_parents_ua",
    "type": "enum",
    "values": [
@@ -1373,6 +1382,32 @@ html.print-probe a.url{text-decoration:underline}
    "code_pair": "passports_valid:passports_expired",
    "help_avtor": "ОБ",
    "label_avtor": "ОБ"
+  },
+  {
+   "id": "pmp",
+   "stage": 4,
+   "type": "choice",
+   "label": "Чи оформлено виїзд на постійне проживання за кордон (ПМП)?",
+   "help": "Ідеться про консульське оформлення залишення на постійне проживання за кордоном: реєстрацію місця проживання в Україні знято, а в закордонному паспорті стоїть відмітка про ПМП.",
+   "options": [
+    {
+     "v": "no",
+     "l": "Ні",
+     "code": "БЕЗ"
+    },
+    {
+     "v": "yes",
+     "l": "Так, оформлено",
+     "code": "ПМП"
+    }
+   ],
+   "when": {
+    "fact": "age",
+    "op": "gte",
+    "value": 14
+   },
+   "basis": "звірити",
+   "check": "звірити пункт Порядку про оформлення закордонного паспорта особі, яка виїхала на постійне проживання за кордон"
   },
   {
    "id": "both_parents_ua",
@@ -2091,6 +2126,41 @@ html.print-probe a.url{text-decoration:underline}
      "text": "Якщо документа немає з собою, консул може перевірити його в «Дії» за QR-кодом і знімками екрана, надісланими на пошту консульського відділу. Це довше — тому краще беріть сам документ.",
      "avtor": "ОБ",
      "screen_only": true
+    },
+    {
+     "when": {
+      "all": [
+       {
+        "fact": "pmp",
+        "op": "eq",
+        "value": "yes"
+       },
+       {
+        "not": {
+         "all": [
+          {
+           "fact": "purpose",
+           "op": "in",
+           "value": [
+            "exchange",
+            "second"
+           ]
+          },
+          {
+           "fact": "passports_valid",
+           "op": "in",
+           "value": [
+            "1",
+            "2"
+           ]
+          }
+         ]
+        }
+       }
+      ]
+     },
+     "text": "Паспорта громадянина в особи з ПМП може не бути — тоді замість нього подається свідоцтво про народження.",
+     "check": "звірити: свідоцтво про народження замість паспорта громадянина для особи з ПМП"
     }
    ],
    "when": {
@@ -2179,7 +2249,18 @@ html.print-probe a.url{text-decoration:underline}
    "when": true,
    "basis": "Закон ст.22 ч.11 пп.1; Порядок п.52 пп.3; звільнення — п.15 абз.2",
    "anchor": "без їх засвідчення у встановленому порядку та перекладу",
-   "note_avtor": "ОБ"
+   "note_avtor": "ОБ",
+   "extras": [
+    {
+     "when": {
+      "fact": "pmp",
+      "op": "eq",
+      "value": "yes"
+     },
+     "text": "Підтвердженням є відмітка про ПМП у закордонному паспорті.",
+     "check": "звірити: чи достатньо відмітки про ПМП замість документа приймаючої держави"
+    }
+   ]
   },
   {
    "id": "B5",
@@ -2391,7 +2472,13 @@ html.print-probe a.url{text-decoration:underline}
     "url": "https://www.youtube.com/watch?v=1nGppnwH9bM",
     "label_avtor": "ОБ"
    },
-   "when": true,
+   "when": {
+    "not": {
+     "fact": "pmp",
+     "op": "eq",
+     "value": "yes"
+    }
+   },
    "basis": "Порядок п.52 пп.5-1 (нове — ПКМУ № 1709)",
    "anchor": "витяг з реєстру територіальної громади",
    "qr": true,
@@ -2563,6 +2650,11 @@ html.print-probe a.url{text-decoration:underline}
       "fact": "pgu_exchanged",
       "op": "eq",
       "value": "no"
+     },
+     {
+      "fact": "pmp",
+      "op": "ne",
+      "value": "yes"
      }
     ]
    },
