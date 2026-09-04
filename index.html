@@ -425,6 +425,7 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
      зменшено: раніше розділи розділяв сам проміжок, тепер це робить рамка. */
   .sect{display:block;margin:0 0 0.7mm;padding:0.15mm 1.2mm;
         border:0.4pt solid #000}
+  /* padding-top задається нижче, разом із назвою на рамці. */
   /* Смуга кодів — не розділ (назви в неї немає), але на аркуші стоїть у тому
      самому ряду, тож і рамку, і відступи має ті самі. */
   .links-band{margin:0 0 0.7mm;padding:0.15mm 1.2mm;border:0.4pt solid #000}
@@ -441,8 +442,25 @@ ul.posts .print-only{color:var(--ink-2);font-size:calc(15px * var(--fs))}
   /* Назва розділу — велика й жирна, без лінійки під нею. Лінійка різала аркуш
      на смуги і змушувала тримати назву дрібною, щоб смуг не було забагато;
      насправді розділів на аркуші чотири, і жирного рядка їм цілком досить. */
-  .sect-head{position:static;font-size:14pt;font-weight:700;letter-spacing:.01em;color:#000;
-             margin:0 0 2px;padding:0;border-bottom:0;break-after:avoid}
+  /* Назва розділу сідає на саму рамку — як напис на теці, а не як ще один
+     рядок усередині. Доти вона була 14 пунктів жирним, і назви документів
+     теж 14 пунктів жирним: на око вони зливалися, і людина не бачила, де
+     кінчаються обов'язкові документи й починаються ті, що за наявності.
+     Зменшити назви документів не можна (заборонено), збільшити назву розділу
+     коштувало б висоти — а місце на рамці не коштує нічого: рядок, який
+     назва займала всередині, звільняється. */
+  .sect{position:relative;padding-top:2.6mm}
+  .sect-head{position:absolute;top:-2.2mm;left:3mm;background:#fff;padding:0 1.5mm;
+             margin:0;font-size:14pt;font-weight:700;letter-spacing:.06em;color:#000;
+             border-bottom:0;break-after:avoid}
+  /* Обов'язкові документи пронумеровані, ті, що за наявності, — ні. Це друга
+     половина того самого розрізнення: номер видно навіть краєм ока, і людина
+     може перелічити, скільки паперів має зібрати. Нумерує лічильник CSS, тож
+     у розмітці нічого не змінюється й порядок береться той самий, що на
+     аркуші. */
+  ul.docs:not(.docs--opt){counter-reset:dok}
+  ul.docs:not(.docs--opt) > li{counter-increment:dok}
+  ul.docs:not(.docs--opt) .doc-title::before{content:counter(dok) ". "}
   /* Код відповідей — єдиний текст на аркуші, якому дозволено бути дрібним:
      це не читання, а рядок для набору чи диктування, і автор дозволив його
      зменшити окремо. Решта аркуша лишається 12 пунктами. */
@@ -619,8 +637,13 @@ html.print-probe .sect{display:block;margin:0 0 0.7mm;padding:0.15mm 1.2mm;
 html.print-probe .links-band{margin:0 0 0.7mm;padding:0.15mm 1.2mm;border:0.4pt solid #000}
 html.print-probe .sect > :last-child{margin-bottom:0}
 html.print-probe .sect ul.docs > li:last-child,html.print-probe .sect .card:last-child,html.print-probe .sect .fact:last-child,html.print-probe .sect .facts-col > :last-child{margin-bottom:0}
-html.print-probe .sect-head{position:static;font-size:14pt;font-weight:700;letter-spacing:.01em;color:#000;
-             margin:0 0 2px;padding:0;border-bottom:0;break-after:avoid}
+html.print-probe .sect{position:relative;padding-top:2.6mm}
+html.print-probe .sect-head{position:absolute;top:-2.2mm;left:3mm;background:#fff;padding:0 1.5mm;
+             margin:0;font-size:14pt;font-weight:700;letter-spacing:.06em;color:#000;
+             border-bottom:0;break-after:avoid}
+html.print-probe ul.docs:not(.docs--opt){counter-reset:dok}
+html.print-probe ul.docs:not(.docs--opt) > li{counter-increment:dok}
+html.print-probe ul.docs:not(.docs--opt) .doc-title::before{content:counter(dok) ". "}
 html.print-probe .kod{margin:0;font-size:9pt;line-height:1.15;color:#000;white-space:normal;overflow-wrap:anywhere}
 html.print-probe .kod-copy{text-decoration:none;color:#000;font:inherit}
 html.print-probe .card{break-inside:avoid;border:0;border-radius:0;padding:0 0 0 8px;
@@ -894,13 +917,25 @@ html.print-probe a.url{text-decoration:underline}
   },
   "stages_avtor": "ОБ",
   "sections": {
-   "notices": "Зверніть увагу перед візитом",
-   "mandatory": "Обов'язкові документи",
+   "notices": "Зверніть увагу перед візитом:",
+   "mandatory": "Обов'язкові документи:",
    "optional": "Документи за наявності:",
-   "facts": "Деталі послуги",
-   "post": "Установа"
+   "facts": "Деталі послуги:",
+   "post": "Установа:"
   },
-  "sections_avtor": "ОБ"
+  "sections_avtor": "ОБ",
+  "qr_band": {
+   "post": {
+    "title": "Докладно про послугу",
+    "sub": "на сайті установи",
+    "title_avtor": "ОБ",
+    "sub_avtor": "ОБ"
+   },
+   "equeue": {
+    "title": "Запис у е-Чергу",
+    "sub": "онлайн-реєстрація"
+   }
+  }
  },
  "facts": [
   {
@@ -2217,8 +2252,7 @@ html.print-probe a.url{text-decoration:underline}
     {
      "when": true,
      "text": "Якщо документа немає з собою, консул може перевірити його в «Дії» за QR-кодом і знімками екрана, надісланими на пошту консульського відділу. Це довше — тому краще беріть сам документ.",
-     "avtor": "ОБ",
-     "screen_only": true
+     "avtor": "ОБ"
     },
     {
      "when": {
@@ -2784,7 +2818,7 @@ html.print-probe a.url{text-decoration:underline}
  },
  "computed": {
   "validity": {
-   "label": "Строк дії паспорта",
+   "label": "Строк дії паспорта:",
    "rules": [
     {
      "when": {
@@ -5492,14 +5526,14 @@ html.print-probe a.url{text-decoration:underline}
 <script type="application/json" id="qr">{
  "_note": "Згенеровано make-qr.py. Не редагувати вручну: збірка звіряє перелік адрес із countries.json і не збереться, якщо для якоїсь адреси коду немає.",
  "error_correction": "Q",
- "quiet_zone": 4,
+ "quiet_zone": 2,
  "codes": {
   "https://uac2lva.github.io/phuvk/": {
    "what": "адреса самої форми — для плаката",
    "side": 29,
    "version": 3,
    "decoded_ok": true,
-   "decoded_by": "opencv+zxing",
+   "decoded_by": "zxing",
    "bits": "/u07/BAPEG6QYLt0b8XbrN2uwX9VB/qqr+AJhAB/ccmNqRD1b6i7kRMefa1gRVfy2B9tGCosDI6R2efLQGREGr7rv+LhS4l3qz7F+wBzDG/7N2oQXKcbutlP7dex6e6jd+UFVF2v5wUOAA=="
   },
   "https://www.youtube.com/watch?v=1vl66nAKHxs": {
@@ -5519,7 +5553,7 @@ html.print-probe a.url{text-decoration:underline}
    "bits": "/hy9P8FNodBuqAprt0RWVdulmmrsEochB/qqqv4AjqYAdjDlA3LAL5t0/+lPN5DYcqbuCLnZ6zZEmI+P8vlIK8vMy3ftbjYkVbbXzjKe2jSWaTm8HEFl40JJNBvXfz7zEVUarwyT+IBOPca/mv7qEFJk8fujfJ+t172UvutZHtEFr9fx/kBUDgA="
   },
   "https://reserveplus.mod.gov.ua": {
-   "what": "документ: Військово-обліковий документ",
+   "what": "документ: Електронний військово-обліковий документ (е-ВОД)",
    "side": 29,
    "version": 3,
    "decoded_ok": true,
@@ -6363,7 +6397,7 @@ html.print-probe a.url{text-decoration:underline}
    "side": 29,
    "version": 3,
    "decoded_ok": true,
-   "decoded_by": "zxing",
+   "decoded_by": "opencv+zxing",
    "bits": "/nX7/BCxkG6iZLt1CJXboecuwShxB/qqr+ALBQAbHjBhSPOOm+fZmZKtUZ+iU2VC+qFU+iJlIS2dnLP1sU2jHOY80yZTqMxOfjrS/oBN5HP7BOrQSzsYuq0/hddPC66ZK2cEJg1f5Vz4AA=="
   },
   "https://kenya.mfa.gov.ua": {
@@ -7375,8 +7409,11 @@ html.print-probe a.url{text-decoration:underline}
        вони з'їдали більше, ніж уся «Установа». На екрані смуги немає —
        там працюють кнопка й посилання. */
     const chosen = postOf(r.facts);
-    const left = [(chosen || {}).url, "Сторінка установи", "перелік і правила"];
-    const right = [equeueUrl(r.facts), "Запис у е-Чергу", "онлайн-реєстрація"];
+    /* Підписи — з даних, а не звідси: це текст, який читає людина, отже йому
+       місце там, де решта таких текстів, — під замком і в рукописі. */
+    const BAND = (RULES.meta || {}).qr_band || {};
+    const left = [(chosen || {}).url, (BAND.post || {}).title, (BAND.post || {}).sub];
+    const right = [equeueUrl(r.facts), (BAND.equeue || {}).title, (BAND.equeue || {}).sub];
     /* Під підписом — сама адреса. Досі аркуш не мав її взагалі: хто не зчитав
        код (немає смартфона, тремтять руки, код затерся на згині), не мав куди
        піти. Назву протоколу з початку адреси знімаємо — вона однакова в усіх,
